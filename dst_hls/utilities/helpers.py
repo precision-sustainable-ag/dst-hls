@@ -41,8 +41,12 @@ def read_roi_from_file(fpath):
         json -- json representation of the roi geometry
     """
     field = geopandas.read_file(fpath)
-    roi = json.loads(field.to_json())["features"][0]["geometry"]
-    roi = json.dumps(roi)
+    features = json.loads(field.to_json())["features"]
+    if len(features) == 1:
+        roi = features[0]["geometry"]
+        roi = json.dumps(roi)
+    else:
+        roi = features
     return roi
 
 

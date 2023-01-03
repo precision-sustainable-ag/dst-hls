@@ -6,6 +6,7 @@ import json
 
 # from functools import lru_cache
 import rioxarray
+from functools import lru_cache
 import pyproj
 from pyproj import Proj
 from shapely.ops import transform
@@ -14,6 +15,7 @@ import xarray as xr
 import rasterio
 import numpy as np
 from ..utilities.helpers import with_rio, create_session, index_from_filenames, georeference_raster
+from ..utilities.constants import S30BANDS, L30BANDS
 
 
 class Fetch:
@@ -21,6 +23,7 @@ class Fetch:
         self._masked_array = None
         self._hls_da = None
 
+    @lru_cache()
     def preprocess_roi(self, roi, target_epsg):
         roi = json.loads(roi)
         field_shape = Polygon(roi["coordinates"][0])
@@ -31,27 +34,44 @@ class Fetch:
         return geom_transformed
 
     @with_rio(create_session())
-    def fetch_images(self, dataframe, ids, bands, geom, get_rgb=False):
-        epsgs = list(dataframe['epsg'])
-        if epsgs.count(epsgs[0]) != len(epsgs):
-            print('ERROR, more than one coordinate system found!')
-            return
-        epsg = epsgs[0]
+    def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False):
+        # epsgs = list(dataframe['epsg'])
+        # if epsgs.count(epsgs[0]) != len(epsgs):
+        #     print('ERROR, more than one coordinate system found!')
+        #     return
+        # epsg = epsgs[0]
+        if ids is None:
+            ids = dataframe.id
         s3_links = []
+        epsg_list = []
         for idd in ids:
-            urls = list(dataframe.loc[dataframe["id"] == idd]['url'])[0]
+            df_row = dataframe.loc[dataframe["id"] == idd]
+            epsg = list(df_row['epsg'])[0]
+            urls = list(df_row['url'])[0]
             for band in bands:
-                s3_links.append(urls[band])
+                if 'L30' in idd:
+                    band_name = L30BANDS[band]
+                else:
+                    band_name = L30BANDS[band]
+                s3_links.append(urls[band_name])
+                epsg_list.append(epsg)
         new_dim = xr.Variable('uid', index_from_filenames(s3_links))
         chunks = dict(band=1, x=256, y=256)
-        roi = self.preprocess_roi(geom, epsg)
+        # roi = self.preprocess_roi(geom, epsg)
         tasks = []
-        for link in s3_links:
-            task = rioxarray.open_rasterio(link, chunks=chunks).squeeze('band', drop=True).rio.clip([roi])
+        for link, epsg in zip(s3_links, epsg_list):
+            print(link, epsg)
+            roi = self.preprocess_roi(geom, epsg)
+            print("roi processed")
+            task = rioxarray.open_rasterio(link, chunks=chunks).squeeze('band', drop=True)
+            print("squeezed")
+            task = task.rio.clip([roi])
+            print("clipped")
             tasks.append(task)
         self._hls_ts_da = xr.concat(tasks, dim=new_dim)
+        # self._hls_ts_da = self._hls_ts_da.rio.clip([roi])
         arr = self._hls_ts_da.to_masked_array()
-        self._masked_arrays = np.ma.masked_array(arr, mask=(arr == -9999), fill_value=-9999)
+        self._data_arrays = np.ma.masked_array(arr, mask=(arr == -9999), fill_value=-9999)
         if get_rgb:
             hls_da = rioxarray.open_rasterio(link, chunks=True)
             rgb_arrays = []
@@ -69,8 +89,8 @@ class Fetch:
 
     @property
     # @lru_cache(maxsize=10)
-    def masked_arrays(self):
-        return self._masked_arrays
+    def data_arrays(self):
+        return self._data_arrays
 
     @property
     # @lru_cache(maxsize=10)

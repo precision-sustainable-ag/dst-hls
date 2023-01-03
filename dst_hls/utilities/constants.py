@@ -1,10 +1,18 @@
 # S30 bands for NDVI calculation and quality filtering
 # -> BLUE, GREEN, RED, NIR, cloud
 S30BANDS = {
-            ndvi: ["B02", "B03", "B04", "B8A", "Fmask"],
-            }
+        "blue": "B02",
+        "green": "B03",
+        "red": "B04",
+        "nir": "B8A",
+        "cloud": "Fmask",
+        }
 # L30 bands for NDVI calculation and quality filtering
 # -> BLUE, GREEN, RED, NIR, cloud
 L30BANDS = {
-            ndvi: ["B02", "B03", "B04", "B05", "Fmask"],
-            }
+        "blue": "B02",
+        "green": "B03",
+        "red": "B04",
+        "nir": "B05",
+        "cloud": "Fmask",
+        }

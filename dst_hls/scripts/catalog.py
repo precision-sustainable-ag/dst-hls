@@ -66,7 +66,8 @@ class Catalog:
     def search_tiles(self,
                      roi,
                      collections=None,
-                     date_range="2021-05-01/2021-08-01"):
+                     date_range="2021-05-01/2021-08-01"
+                     ):
         """
         given a datetime range, an ROI geometry and a list of collection names,
             this function retrieves all available data collections
@@ -86,7 +87,11 @@ class Catalog:
         if not collections:
             collections = self.collections
         results = self.connection.search(
-            collections=collections, intersects=roi, datetime=date_range, limit=250
+            collections=collections,
+            max_items=None,
+            intersects=roi,
+            datetime=date_range,
+            limit=250,
         )
         all_items = results.get_all_items()
         geom = json.loads(roi)

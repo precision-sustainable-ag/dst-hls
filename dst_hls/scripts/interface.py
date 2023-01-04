@@ -3,7 +3,6 @@ script providing interface capabilities
 for categorizing and fetching
 images from HLS server
 """
-import json
 from .catalog import Catalog
 from .fetch import Fetch
 
@@ -13,7 +12,6 @@ class Interface:
         self.cat = None
 
     def ndvi_images(self, geometry, date_range="2021-05-01/2021-08-02"):
-        # roi = json.loads(geometry)
         self.cat = Catalog()
         self.colls = self.cat.search_tiles(geometry,
                                            date_range=date_range

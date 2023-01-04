@@ -52,7 +52,7 @@ class Fetch:
                 if 'L30' in idd:
                     band_name = L30BANDS[band]
                 else:
-                    band_name = L30BANDS[band]
+                    band_name = S30BANDS[band]
                 s3_links.append(urls[band_name])
                 epsg_list.append(epsg)
         new_dim = xr.Variable('uid', index_from_filenames(s3_links))

@@ -34,16 +34,14 @@ script provindg catalog information and
 interaction with the HLS data server
 &#34;&#34;&#34;
 import json
+import numpy as np
 from functools import lru_cache
 from decouple import config
 from pystac_client import Client
+from shapely.geometry import Polygon
+import pandas as pd
 from ..utilities.auth import setup_netrc, authenticate
-from ..utilities.helpers import read_roi_from_file
-
-# S30 bands for NDVI calculation and quality filtering -&gt; NIR, RED, BLUE, cloud
-S30BANDS = [&#34;B8A&#34;, &#34;B04&#34;, &#34;B02&#34;, &#34;Fmask&#34;]
-# L30 bands for NDVI calculation and quality filtering -&gt; NIR, RED, BLUE, cloud
-L30BANDS = [&#34;B05&#34;, &#34;B04&#34;, &#34;B02&#34;, &#34;Fmask&#34;]
+from ..utilities.helpers import read_roi_from_file, url_to_s3, epsg_from_id
 
 
 class Catalog:
@@ -89,14 +87,18 @@ class Catalog:
         geom = read_roi_from_file(fpath)
         return geom
 
-    @lru_cache(maxsize=2)
+    @lru_cache(maxsize=20)
     def connect_to_provider(self, provider=None):
         if not provider:
             provider = self.provider_name
         self.connection = Client.open(f&#34;{self.stac_url}/{provider}/&#34;)
 
-    @lru_cache(maxsize=2)
-    def search_tiles(self, roi, collections=None, date_range=&#34;2021-05-01/2021-08-01&#34;):
+    @lru_cache(maxsize=20)
+    def search_tiles(self,
+                     roi,
+                     collections=None,
+                     date_range=&#34;2021-05-01/2021-08-01&#34;
+                     ):
         &#34;&#34;&#34;
         given a datetime range, an ROI geometry and a list of collection names,
             this function retrieves all available data collections
@@ -115,21 +117,69 @@ class Catalog:
         self.connect_to_provider()
         if not collections:
             collections = self.collections
-        print(&#34;type(roi) &#34;, type(roi))
-        if type(roi) == dict:
-            roi = json.dumps(roi)
         results = self.connection.search(
-            collections=collections, intersects=roi, datetime=date_range, limit=250
+            collections=collections,
+            max_items=None,
+            intersects=roi,
+            datetime=date_range,
+            limit=250,
         )
-        self.all_items = results.get_all_items()
+        all_items = results.get_all_items()
+        geom = json.loads(roi)
+        source = Polygon(geom[&#34;coordinates&#34;][0])
+        all_items_containing = []
+        for item in all_items:
+            target = Polygon(item.geometry[&#34;coordinates&#34;][0])
+            if source.within(target):
+                all_items_containing.append(item)
+        self.all_items = tuple(all_items_containing)
         return self.all_items
 
-    @lru_cache(maxsize=2)
+    def to_pandas(self):
+        d = []
+        for col in self.all_items:
+            cloud_cover = col.properties[&#34;eo:cloud_cover&#34;]
+            datetime = col.datetime
+            geometry = col.geometry
+            id_val = col.id
+            epsg = epsg_from_id(id_val)
+            links = {}
+            for k, v in col.assets.items():
+                url = url_to_s3(v.href)
+                links[k] = url
+            d.append(
+                [
+                    id_val,
+                    col,
+                    cloud_cover,
+                    datetime,
+                    epsg,
+                    links,
+                    geometry,
+                ]
+            )
+        d = np.array(d)
+        columns = [
+            &#34;id&#34;,
+            &#34;item&#34;,
+            &#34;cloud_cover&#34;,
+            &#34;datetime&#34;,
+            &#34;epsg&#34;,
+            &#34;url&#34;,
+            &#34;geometry&#34;,
+        ]
+        df = pd.DataFrame(data=d, columns=columns)
+        df[&#34;datetime&#34;] = pd.to_datetime(df[&#34;datetime&#34;])
+        df = df.sort_values(by=[&#34;datetime&#34;], ascending=True)
+        df = df.reset_index(drop=True)
+        return df
+
+    @lru_cache(maxsize=20)
     def ndvi_bands_links(self, items, max_cloud_cover=100, s3_links=False):
         &#34;&#34;&#34;
         retrieves ndvi band urls for found collection of images
         Arguments:
-            items {list} -- collection of images found for
+            items {tuple} -- collection of images found for
                 a time range and location
         Keyword Arguments:
             max_cloud_cover {int} -- max allowed cloud cover
@@ -140,7 +190,7 @@ class Catalog:
             list -- list of links to all ndvi bands
         &#34;&#34;&#34;
         links = []
-        for i in items:
+        for i in list(items):
             if i.properties[&#34;eo:cloud_cover&#34;] &lt;= max_cloud_cover:
                 if i.collection_id == &#34;HLSS30.v2.0&#34;:
                     bands = S30BANDS
@@ -216,14 +266,18 @@ class Catalog:
         geom = read_roi_from_file(fpath)
         return geom
 
-    @lru_cache(maxsize=2)
+    @lru_cache(maxsize=20)
     def connect_to_provider(self, provider=None):
         if not provider:
             provider = self.provider_name
         self.connection = Client.open(f&#34;{self.stac_url}/{provider}/&#34;)
 
-    @lru_cache(maxsize=2)
-    def search_tiles(self, roi, collections=None, date_range=&#34;2021-05-01/2021-08-01&#34;):
+    @lru_cache(maxsize=20)
+    def search_tiles(self,
+                     roi,
+                     collections=None,
+                     date_range=&#34;2021-05-01/2021-08-01&#34;
+                     ):
         &#34;&#34;&#34;
         given a datetime range, an ROI geometry and a list of collection names,
             this function retrieves all available data collections
@@ -242,21 +296,69 @@ class Catalog:
         self.connect_to_provider()
         if not collections:
             collections = self.collections
-        print(&#34;type(roi) &#34;, type(roi))
-        if type(roi) == dict:
-            roi = json.dumps(roi)
         results = self.connection.search(
-            collections=collections, intersects=roi, datetime=date_range, limit=250
+            collections=collections,
+            max_items=None,
+            intersects=roi,
+            datetime=date_range,
+            limit=250,
         )
-        self.all_items = results.get_all_items()
+        all_items = results.get_all_items()
+        geom = json.loads(roi)
+        source = Polygon(geom[&#34;coordinates&#34;][0])
+        all_items_containing = []
+        for item in all_items:
+            target = Polygon(item.geometry[&#34;coordinates&#34;][0])
+            if source.within(target):
+                all_items_containing.append(item)
+        self.all_items = tuple(all_items_containing)
         return self.all_items
 
-    @lru_cache(maxsize=2)
+    def to_pandas(self):
+        d = []
+        for col in self.all_items:
+            cloud_cover = col.properties[&#34;eo:cloud_cover&#34;]
+            datetime = col.datetime
+            geometry = col.geometry
+            id_val = col.id
+            epsg = epsg_from_id(id_val)
+            links = {}
+            for k, v in col.assets.items():
+                url = url_to_s3(v.href)
+                links[k] = url
+            d.append(
+                [
+                    id_val,
+                    col,
+                    cloud_cover,
+                    datetime,
+                    epsg,
+                    links,
+                    geometry,
+                ]
+            )
+        d = np.array(d)
+        columns = [
+            &#34;id&#34;,
+            &#34;item&#34;,
+            &#34;cloud_cover&#34;,
+            &#34;datetime&#34;,
+            &#34;epsg&#34;,
+            &#34;url&#34;,
+            &#34;geometry&#34;,
+        ]
+        df = pd.DataFrame(data=d, columns=columns)
+        df[&#34;datetime&#34;] = pd.to_datetime(df[&#34;datetime&#34;])
+        df = df.sort_values(by=[&#34;datetime&#34;], ascending=True)
+        df = df.reset_index(drop=True)
+        return df
+
+    @lru_cache(maxsize=20)
     def ndvi_bands_links(self, items, max_cloud_cover=100, s3_links=False):
         &#34;&#34;&#34;
         retrieves ndvi band urls for found collection of images
         Arguments:
-            items {list} -- collection of images found for
+            items {tuple} -- collection of images found for
                 a time range and location
         Keyword Arguments:
             max_cloud_cover {int} -- max allowed cloud cover
@@ -267,7 +369,7 @@ class Catalog:
             list -- list of links to all ndvi bands
         &#34;&#34;&#34;
         links = []
-        for i in items:
+        for i in list(items):
             if i.properties[&#34;eo:cloud_cover&#34;] &lt;= max_cloud_cover:
                 if i.collection_id == &#34;HLSS30.v2.0&#34;:
                     bands = S30BANDS
@@ -313,7 +415,7 @@ def providers(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@lru_cache(maxsize=2)
+<pre><code class="python">@lru_cache(maxsize=20)
 def connect_to_provider(self, provider=None):
     if not provider:
         provider = self.provider_name
@@ -326,7 +428,7 @@ def connect_to_provider(self, provider=None):
 <dd>
 <div class="desc"><p>retrieves ndvi band urls for found collection of images</p>
 <h2 id="arguments">Arguments</h2>
-<p>items {list} &ndash; collection of images found for
+<p>items {tuple} &ndash; collection of images found for
 a time range and location
 Keyword Arguments:
 max_cloud_cover {int} &ndash; max allowed cloud cover
@@ -339,12 +441,12 @@ start with s3:// (default: {False})</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@lru_cache(maxsize=2)
+<pre><code class="python">@lru_cache(maxsize=20)
 def ndvi_bands_links(self, items, max_cloud_cover=100, s3_links=False):
     &#34;&#34;&#34;
     retrieves ndvi band urls for found collection of images
     Arguments:
-        items {list} -- collection of images found for
+        items {tuple} -- collection of images found for
             a time range and location
     Keyword Arguments:
         max_cloud_cover {int} -- max allowed cloud cover
@@ -355,7 +457,7 @@ def ndvi_bands_links(self, items, max_cloud_cover=100, s3_links=False):
         list -- list of links to all ndvi bands
     &#34;&#34;&#34;
     links = []
-    for i in items:
+    for i in list(items):
         if i.properties[&#34;eo:cloud_cover&#34;] &lt;= max_cloud_cover:
             if i.collection_id == &#34;HLSS30.v2.0&#34;:
                 bands = S30BANDS
@@ -415,8 +517,12 @@ format: 2017-01-01T00:00:00Z/2017-12-31T23:59:59Z
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@lru_cache(maxsize=2)
-def search_tiles(self, roi, collections=None, date_range=&#34;2021-05-01/2021-08-01&#34;):
+<pre><code class="python">@lru_cache(maxsize=20)
+def search_tiles(self,
+                 roi,
+                 collections=None,
+                 date_range=&#34;2021-05-01/2021-08-01&#34;
+                 ):
     &#34;&#34;&#34;
     given a datetime range, an ROI geometry and a list of collection names,
         this function retrieves all available data collections
@@ -435,14 +541,72 @@ def search_tiles(self, roi, collections=None, date_range=&#34;2021-05-01/2021-08
     self.connect_to_provider()
     if not collections:
         collections = self.collections
-    print(&#34;type(roi) &#34;, type(roi))
-    if type(roi) == dict:
-        roi = json.dumps(roi)
     results = self.connection.search(
-        collections=collections, intersects=roi, datetime=date_range, limit=250
+        collections=collections,
+        max_items=None,
+        intersects=roi,
+        datetime=date_range,
+        limit=250,
     )
-    self.all_items = results.get_all_items()
+    all_items = results.get_all_items()
+    geom = json.loads(roi)
+    source = Polygon(geom[&#34;coordinates&#34;][0])
+    all_items_containing = []
+    for item in all_items:
+        target = Polygon(item.geometry[&#34;coordinates&#34;][0])
+        if source.within(target):
+            all_items_containing.append(item)
+    self.all_items = tuple(all_items_containing)
     return self.all_items</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.scripts.catalog.Catalog.to_pandas"><code class="name flex">
+<span>def <span class="ident">to_pandas</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_pandas(self):
+    d = []
+    for col in self.all_items:
+        cloud_cover = col.properties[&#34;eo:cloud_cover&#34;]
+        datetime = col.datetime
+        geometry = col.geometry
+        id_val = col.id
+        epsg = epsg_from_id(id_val)
+        links = {}
+        for k, v in col.assets.items():
+            url = url_to_s3(v.href)
+            links[k] = url
+        d.append(
+            [
+                id_val,
+                col,
+                cloud_cover,
+                datetime,
+                epsg,
+                links,
+                geometry,
+            ]
+        )
+    d = np.array(d)
+    columns = [
+        &#34;id&#34;,
+        &#34;item&#34;,
+        &#34;cloud_cover&#34;,
+        &#34;datetime&#34;,
+        &#34;epsg&#34;,
+        &#34;url&#34;,
+        &#34;geometry&#34;,
+    ]
+    df = pd.DataFrame(data=d, columns=columns)
+    df[&#34;datetime&#34;] = pd.to_datetime(df[&#34;datetime&#34;])
+    df = df.sort_values(by=[&#34;datetime&#34;], ascending=True)
+    df = df.reset_index(drop=True)
+    return df</code></pre>
 </details>
 </dd>
 </dl>
@@ -465,12 +629,13 @@ def search_tiles(self, roi, collections=None, date_range=&#34;2021-05-01/2021-08
 <ul>
 <li>
 <h4><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog" href="#dst-hls.dst_hls.scripts.catalog.Catalog">Catalog</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog.connect_to_provider" href="#dst-hls.dst_hls.scripts.catalog.Catalog.connect_to_provider">connect_to_provider</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog.ndvi_bands_links" href="#dst-hls.dst_hls.scripts.catalog.Catalog.ndvi_bands_links">ndvi_bands_links</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog.providers" href="#dst-hls.dst_hls.scripts.catalog.Catalog.providers">providers</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog.read_roi" href="#dst-hls.dst_hls.scripts.catalog.Catalog.read_roi">read_roi</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog.search_tiles" href="#dst-hls.dst_hls.scripts.catalog.Catalog.search_tiles">search_tiles</a></code></li>
+<li><code><a title="dst-hls.dst_hls.scripts.catalog.Catalog.to_pandas" href="#dst-hls.dst_hls.scripts.catalog.Catalog.to_pandas">to_pandas</a></code></li>
 </ul>
 </li>
 </ul>

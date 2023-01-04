@@ -36,11 +36,20 @@ from pathlib import Path
 import geopandas
 import rasterio as rio
 from rasterio.session import AWSSession
-from functools import lru_cache
+from functools import lru_cache, wraps
 import cachetools.func
 from decouple import config
 import requests
 import boto3
+import string
+from pyproj import CRS
+from datetime import datetime
+from contextlib import contextmanager  
+from rasterio import Affine, MemoryFile
+
+
+def url_to_s3(url):
+    return &#34;s3://&#34; + url.split(&#34;.gov/&#34;)[1]
 
 
 def get_project_root():
@@ -61,8 +70,12 @@ def read_roi_from_file(fpath):
         json -- json representation of the roi geometry
     &#34;&#34;&#34;
     field = geopandas.read_file(fpath)
-    roi = json.loads(field.to_json())[&#34;features&#34;][0][&#34;geometry&#34;]
-    roi = json.dumps(roi)
+    features = json.loads(field.to_json())[&#34;features&#34;]
+    if len(features) == 1:
+        roi = features[0][&#34;geometry&#34;]
+        roi = json.dumps(roi)
+    else:
+        roi = features
     return roi
 
 
@@ -129,7 +142,79 @@ def create_session():
         aws_session_token=creds[&#34;sessionToken&#34;],
         region_name=&#34;us-west-2&#34;,
     )
-    return session</code></pre>
+    return session
+
+
+def hash_dict(func):
+    &#34;&#34;&#34;
+    Transform mutable dictionnary Into immutable
+    Useful to be compatible with cache
+    &#34;&#34;&#34;
+
+    class HDict(dict):
+        def __hash__(self):
+            return hash(frozenset(self.items()))
+
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        args = tuple([HDict(arg) if isinstance(arg, dict) else arg for arg in args])
+        kwargs = {k: HDict(v) if isinstance(v, dict) else v for k, v in kwargs.items()}
+        return func(*args, **kwargs)
+
+    return wrapped
+
+
+def mgrs_to_epsg(mgrs):
+    zone = mgrs[:2]
+    mgrs_dir = string.ascii_uppercase.index(mgrs[2])
+    utm_dir = &#34;south&#34; if mgrs_dir &lt; 12 else &#34;north&#34;
+    crs = CRS.from_string(f&#34;+proj=utm +zone={zone} +{utm_dir}&#34;)
+    return crs.to_authority()[1]
+
+
+def epsg_from_id(id_str):
+    mgrs_str = id_str.split(&#34;.&#34;)[2]  # &#39;T14SPG&#39;
+    return mgrs_to_epsg(mgrs_str[1:])  # T is unnecessary
+
+
+def index_from_filenames(file_links):
+    &#39;&#39;&#39;
+    Helper function to create a unique DatetimeIndex + band name
+    &#39;&#39;&#39;
+    return [
+        # f.split(&#39;.&#39;)[-2] + datetime.strptime(f.split(&#39;.&#39;)[-5], &#39;%Y%jT%H%M%S&#39;)
+        f.split(&#39;.&#39;)[-2] + &#39;_&#39; + f.split(&#39;.&#39;)[-5]
+        for f in file_links
+        ]
+
+
+@contextmanager
+def georeference_raster(data, transform):
+    &#34;&#34;&#34;
+    use context manager so DatasetReader and
+    MemoryFile get cleaned up automatically
+
+    Arguments:
+        data {_type_} -- _description_
+        transform {_type_} -- _description_
+
+    Yields:
+        _type_ -- _description_
+    &#34;&#34;&#34;
+    with MemoryFile() as memfile:
+        with memfile.open(
+            driver=&#39;GTiff&#39;,
+            height=1000,
+            width=1000,
+            count=3,
+            dtype=&#39;uint8&#39;,
+            transform=transform,
+        ) as dataset:  # Open as DatasetWriter
+            dataset.write(data)
+            del data
+
+        with memfile.open() as dataset:  # Reopen as DatasetReader
+            yield dataset  # Note yield not return</code></pre>
 </details>
 </section>
 <section>
@@ -171,6 +256,64 @@ def create_session():
         region_name=&#34;us-west-2&#34;,
     )
     return session</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.utilities.helpers.epsg_from_id"><code class="name flex">
+<span>def <span class="ident">epsg_from_id</span></span>(<span>id_str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def epsg_from_id(id_str):
+    mgrs_str = id_str.split(&#34;.&#34;)[2]  # &#39;T14SPG&#39;
+    return mgrs_to_epsg(mgrs_str[1:])  # T is unnecessary</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.utilities.helpers.georeference_raster"><code class="name flex">
+<span>def <span class="ident">georeference_raster</span></span>(<span>data, transform)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>use context manager so DatasetReader and
+MemoryFile get cleaned up automatically</p>
+<h2 id="arguments">Arguments</h2>
+<p>data {<em>type</em>} &ndash; <em>description</em>
+transform {<em>type</em>} &ndash; <em>description</em></p>
+<h2 id="yields">Yields</h2>
+<p><em>type</em> &ndash; <em>description</em></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def georeference_raster(data, transform):
+    &#34;&#34;&#34;
+    use context manager so DatasetReader and
+    MemoryFile get cleaned up automatically
+
+    Arguments:
+        data {_type_} -- _description_
+        transform {_type_} -- _description_
+
+    Yields:
+        _type_ -- _description_
+    &#34;&#34;&#34;
+    with MemoryFile() as memfile:
+        with memfile.open(
+            driver=&#39;GTiff&#39;,
+            height=1000,
+            width=1000,
+            count=3,
+            dtype=&#39;uint8&#39;,
+            transform=transform,
+        ) as dataset:  # Open as DatasetWriter
+            dataset.write(data)
+            del data
+
+        with memfile.open() as dataset:  # Reopen as DatasetReader
+            yield dataset  # Note yield not return</code></pre>
 </details>
 </dd>
 <dt id="dst-hls.dst_hls.utilities.helpers.get_project_root"><code class="name flex">
@@ -234,6 +377,72 @@ def get_temp_creds(ttl_hash=None):
     return requests.get(temp_creds_url).json()</code></pre>
 </details>
 </dd>
+<dt id="dst-hls.dst_hls.utilities.helpers.hash_dict"><code class="name flex">
+<span>def <span class="ident">hash_dict</span></span>(<span>func)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Transform mutable dictionnary Into immutable
+Useful to be compatible with cache</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hash_dict(func):
+    &#34;&#34;&#34;
+    Transform mutable dictionnary Into immutable
+    Useful to be compatible with cache
+    &#34;&#34;&#34;
+
+    class HDict(dict):
+        def __hash__(self):
+            return hash(frozenset(self.items()))
+
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        args = tuple([HDict(arg) if isinstance(arg, dict) else arg for arg in args])
+        kwargs = {k: HDict(v) if isinstance(v, dict) else v for k, v in kwargs.items()}
+        return func(*args, **kwargs)
+
+    return wrapped</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.utilities.helpers.index_from_filenames"><code class="name flex">
+<span>def <span class="ident">index_from_filenames</span></span>(<span>file_links)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Helper function to create a unique DatetimeIndex + band name</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def index_from_filenames(file_links):
+    &#39;&#39;&#39;
+    Helper function to create a unique DatetimeIndex + band name
+    &#39;&#39;&#39;
+    return [
+        # f.split(&#39;.&#39;)[-2] + datetime.strptime(f.split(&#39;.&#39;)[-5], &#39;%Y%jT%H%M%S&#39;)
+        f.split(&#39;.&#39;)[-2] + &#39;_&#39; + f.split(&#39;.&#39;)[-5]
+        for f in file_links
+        ]</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.utilities.helpers.mgrs_to_epsg"><code class="name flex">
+<span>def <span class="ident">mgrs_to_epsg</span></span>(<span>mgrs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mgrs_to_epsg(mgrs):
+    zone = mgrs[:2]
+    mgrs_dir = string.ascii_uppercase.index(mgrs[2])
+    utm_dir = &#34;south&#34; if mgrs_dir &lt; 12 else &#34;north&#34;
+    crs = CRS.from_string(f&#34;+proj=utm +zone={zone} +{utm_dir}&#34;)
+    return crs.to_authority()[1]</code></pre>
+</details>
+</dd>
 <dt id="dst-hls.dst_hls.utilities.helpers.read_roi_from_file"><code class="name flex">
 <span>def <span class="ident">read_roi_from_file</span></span>(<span>fpath)</span>
 </code></dt>
@@ -256,9 +465,26 @@ def get_temp_creds(ttl_hash=None):
         json -- json representation of the roi geometry
     &#34;&#34;&#34;
     field = geopandas.read_file(fpath)
-    roi = json.loads(field.to_json())[&#34;features&#34;][0][&#34;geometry&#34;]
-    roi = json.dumps(roi)
+    features = json.loads(field.to_json())[&#34;features&#34;]
+    if len(features) == 1:
+        roi = features[0][&#34;geometry&#34;]
+        roi = json.dumps(roi)
+    else:
+        roi = features
     return roi</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.utilities.helpers.url_to_s3"><code class="name flex">
+<span>def <span class="ident">url_to_s3</span></span>(<span>url)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def url_to_s3(url):
+    return &#34;s3://&#34; + url.split(&#34;.gov/&#34;)[1]</code></pre>
 </details>
 </dd>
 <dt id="dst-hls.dst_hls.utilities.helpers.with_rio"><code class="name flex">
@@ -323,9 +549,15 @@ costumized for rasterio</dd>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="dst-hls.dst_hls.utilities.helpers.create_session" href="#dst-hls.dst_hls.utilities.helpers.create_session">create_session</a></code></li>
+<li><code><a title="dst-hls.dst_hls.utilities.helpers.epsg_from_id" href="#dst-hls.dst_hls.utilities.helpers.epsg_from_id">epsg_from_id</a></code></li>
+<li><code><a title="dst-hls.dst_hls.utilities.helpers.georeference_raster" href="#dst-hls.dst_hls.utilities.helpers.georeference_raster">georeference_raster</a></code></li>
 <li><code><a title="dst-hls.dst_hls.utilities.helpers.get_project_root" href="#dst-hls.dst_hls.utilities.helpers.get_project_root">get_project_root</a></code></li>
 <li><code><a title="dst-hls.dst_hls.utilities.helpers.get_temp_creds" href="#dst-hls.dst_hls.utilities.helpers.get_temp_creds">get_temp_creds</a></code></li>
+<li><code><a title="dst-hls.dst_hls.utilities.helpers.hash_dict" href="#dst-hls.dst_hls.utilities.helpers.hash_dict">hash_dict</a></code></li>
+<li><code><a title="dst-hls.dst_hls.utilities.helpers.index_from_filenames" href="#dst-hls.dst_hls.utilities.helpers.index_from_filenames">index_from_filenames</a></code></li>
+<li><code><a title="dst-hls.dst_hls.utilities.helpers.mgrs_to_epsg" href="#dst-hls.dst_hls.utilities.helpers.mgrs_to_epsg">mgrs_to_epsg</a></code></li>
 <li><code><a title="dst-hls.dst_hls.utilities.helpers.read_roi_from_file" href="#dst-hls.dst_hls.utilities.helpers.read_roi_from_file">read_roi_from_file</a></code></li>
+<li><code><a title="dst-hls.dst_hls.utilities.helpers.url_to_s3" href="#dst-hls.dst_hls.utilities.helpers.url_to_s3">url_to_s3</a></code></li>
 <li><code><a title="dst-hls.dst_hls.utilities.helpers.with_rio" href="#dst-hls.dst_hls.utilities.helpers.with_rio">with_rio</a></code></li>
 </ul>
 </li>

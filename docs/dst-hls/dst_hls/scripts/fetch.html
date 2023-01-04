@@ -34,13 +34,19 @@ script providing fetching capabilities
 for interaction with HLS server
 &#34;&#34;&#34;
 import json
-from functools import lru_cache
+
+# from functools import lru_cache
 import rioxarray
+from functools import lru_cache
 import pyproj
 from pyproj import Proj
 from shapely.ops import transform
 from shapely.geometry import Polygon
-from ..utilities.helpers import with_rio, create_session
+import xarray as xr
+import rasterio
+import numpy as np
+from ..utilities.helpers import with_rio, create_session, index_from_filenames, georeference_raster
+from ..utilities.constants import S30BANDS, L30BANDS
 
 
 class Fetch:
@@ -48,48 +54,91 @@ class Fetch:
         self._masked_array = None
         self._hls_da = None
 
-    def prepare_geom(self, geom):
-        geom = json.loads(geom)
-        field_shape = Polygon(geom[&#34;coordinates&#34;][0])
-        if self._hls_da is None:
-            print(&#34;ERROR in reading HLS Data Array&#34;)
-            return
-        img_CRS = self._hls_da.rio.crs
-        geom_CRS = Proj(&#34;+proj=longlat +datum=WGS84 +no_defs&#34;,
-                        preserve_units=True)
-        project = pyproj.Transformer.from_proj(geom_CRS, img_CRS)
+    @lru_cache()
+    def preprocess_roi(self, roi, target_epsg):
+        roi = json.loads(roi)
+        field_shape = Polygon(roi[&#34;coordinates&#34;][0])
+        from_CRS = Proj(Proj(&#39;epsg:4326&#39;).to_proj4(), preserve_units=True)
+        to_CRS = Proj(Proj(f&#39;epsg:{target_epsg}&#39;).to_proj4(), preserve_units=True)
+        project = pyproj.Transformer.from_proj(from_CRS, to_CRS)
         geom_transformed = transform(project.transform, field_shape)
         return geom_transformed
 
     @with_rio(create_session())
-    def crop_image(self, link, geom):
-        hls_da = rioxarray.open_rasterio(link, chuncks=True)
-        self._hls_da = hls_da.squeeze(&#34;band&#34;, drop=True)
-        geom_t = self.prepare_geom(geom)
-        self._hls_da_clipped = (
-            rioxarray.open_rasterio(link, chunks=True)
-            .squeeze(&#34;band&#34;, drop=True)
-            .rio.clip([geom_t])
-        )
-        self._masked_array = self._hls_da_clipped.to_masked_array()
-        # hls_da_clip.rio.to_raster(raster_path=&#34;test.tif&#34;, driver=&#34;COG&#34;)
+    def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False):
+        # epsgs = list(dataframe[&#39;epsg&#39;])
+        # if epsgs.count(epsgs[0]) != len(epsgs):
+        #     print(&#39;ERROR, more than one coordinate system found!&#39;)
+        #     return
+        # epsg = epsgs[0]
+        if ids is None:
+            ids = dataframe.id
+        s3_links = []
+        epsg_list = []
+        for idd in ids:
+            df_row = dataframe.loc[dataframe[&#34;id&#34;] == idd]
+            epsg = list(df_row[&#39;epsg&#39;])[0]
+            urls = list(df_row[&#39;url&#39;])[0]
+            for band in bands:
+                if &#39;L30&#39; in idd:
+                    band_name = L30BANDS[band]
+                else:
+                    band_name = S30BANDS[band]
+                s3_links.append(urls[band_name])
+                epsg_list.append(epsg)
+        new_dim = xr.Variable(&#39;uid&#39;, index_from_filenames(s3_links))
+        chunks = dict(band=1, x=256, y=256)
+        # roi = self.preprocess_roi(geom, epsg)
+        tasks = []
+        for link, epsg in zip(s3_links, epsg_list):
+            print(link, epsg)
+            roi = self.preprocess_roi(geom, epsg)
+            print(&#34;roi processed&#34;)
+            task = rioxarray.open_rasterio(link, chunks=chunks).squeeze(&#39;band&#39;, drop=True)
+            print(&#34;squeezed&#34;)
+            task = task.rio.clip([roi])
+            print(&#34;clipped&#34;)
+            tasks.append(task)
+        self._hls_ts_da = xr.concat(tasks, dim=new_dim)
+        # self._hls_ts_da = self._hls_ts_da.rio.clip([roi])
+        arr = self._hls_ts_da.to_masked_array()
+        self._data_arrays = np.ma.masked_array(arr, mask=(arr == -9999), fill_value=-9999)
+        if get_rgb:
+            hls_da = rioxarray.open_rasterio(link, chunks=True)
+            rgb_arrays = []
+            for ix, row in dataframe.iterrows():
+                jpg_url = row[&#39;url&#39;][&#39;browse&#39;]
+                hls_jpg = rioxarray.open_rasterio(jpg_url, chuncks=True)
+                rgb = hls_jpg.values
+                bbox = hls_da.rio.bounds()
+                transform = rasterio.transform.from_bounds(*bbox, width=1000, height=1000)
+                with georeference_raster(rgb, transform) as resampled:
+                    rgb_cropped, out_transform = rasterio.mask.mask(resampled, [roi], crop=True)
+                    # rgb_cropped_meta = resampled.meta
+                    rgb_arrays.append(rgb_cropped)
+            self._rgb_arrays = rgb_arrays
 
     @property
-    @lru_cache(maxsize=10)
-    def masked_array(self):
-        return self._masked_array
+    # @lru_cache(maxsize=10)
+    def data_arrays(self):
+        return self._data_arrays
 
     @property
-    @lru_cache(maxsize=10)
+    # @lru_cache(maxsize=10)
+    def rgb_arrays(self):
+        return self._rgb_arrays
+
+    @property
+    # @lru_cache(maxsize=10)
     def data_array(self):
         return self._hls_da
 
     @property
-    @lru_cache(maxsize=10)
+    # @lru_cache(maxsize=10)
     def data_array_clipped(self):
         return self._hls_da_clipped
 
-    def write_to_file(self, raster_path=&#34;test.tif&#34;):
+    def write_to_file(self, raster_path):
         self._hls_da_clip.rio.to_raster(raster_path=raster_path, driver=&#34;COG&#34;)</code></pre>
 </details>
 </section>
@@ -116,48 +165,91 @@ class Fetch:
         self._masked_array = None
         self._hls_da = None
 
-    def prepare_geom(self, geom):
-        geom = json.loads(geom)
-        field_shape = Polygon(geom[&#34;coordinates&#34;][0])
-        if self._hls_da is None:
-            print(&#34;ERROR in reading HLS Data Array&#34;)
-            return
-        img_CRS = self._hls_da.rio.crs
-        geom_CRS = Proj(&#34;+proj=longlat +datum=WGS84 +no_defs&#34;,
-                        preserve_units=True)
-        project = pyproj.Transformer.from_proj(geom_CRS, img_CRS)
+    @lru_cache()
+    def preprocess_roi(self, roi, target_epsg):
+        roi = json.loads(roi)
+        field_shape = Polygon(roi[&#34;coordinates&#34;][0])
+        from_CRS = Proj(Proj(&#39;epsg:4326&#39;).to_proj4(), preserve_units=True)
+        to_CRS = Proj(Proj(f&#39;epsg:{target_epsg}&#39;).to_proj4(), preserve_units=True)
+        project = pyproj.Transformer.from_proj(from_CRS, to_CRS)
         geom_transformed = transform(project.transform, field_shape)
         return geom_transformed
 
     @with_rio(create_session())
-    def crop_image(self, link, geom):
-        hls_da = rioxarray.open_rasterio(link, chuncks=True)
-        self._hls_da = hls_da.squeeze(&#34;band&#34;, drop=True)
-        geom_t = self.prepare_geom(geom)
-        self._hls_da_clipped = (
-            rioxarray.open_rasterio(link, chunks=True)
-            .squeeze(&#34;band&#34;, drop=True)
-            .rio.clip([geom_t])
-        )
-        self._masked_array = self._hls_da_clipped.to_masked_array()
-        # hls_da_clip.rio.to_raster(raster_path=&#34;test.tif&#34;, driver=&#34;COG&#34;)
+    def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False):
+        # epsgs = list(dataframe[&#39;epsg&#39;])
+        # if epsgs.count(epsgs[0]) != len(epsgs):
+        #     print(&#39;ERROR, more than one coordinate system found!&#39;)
+        #     return
+        # epsg = epsgs[0]
+        if ids is None:
+            ids = dataframe.id
+        s3_links = []
+        epsg_list = []
+        for idd in ids:
+            df_row = dataframe.loc[dataframe[&#34;id&#34;] == idd]
+            epsg = list(df_row[&#39;epsg&#39;])[0]
+            urls = list(df_row[&#39;url&#39;])[0]
+            for band in bands:
+                if &#39;L30&#39; in idd:
+                    band_name = L30BANDS[band]
+                else:
+                    band_name = S30BANDS[band]
+                s3_links.append(urls[band_name])
+                epsg_list.append(epsg)
+        new_dim = xr.Variable(&#39;uid&#39;, index_from_filenames(s3_links))
+        chunks = dict(band=1, x=256, y=256)
+        # roi = self.preprocess_roi(geom, epsg)
+        tasks = []
+        for link, epsg in zip(s3_links, epsg_list):
+            print(link, epsg)
+            roi = self.preprocess_roi(geom, epsg)
+            print(&#34;roi processed&#34;)
+            task = rioxarray.open_rasterio(link, chunks=chunks).squeeze(&#39;band&#39;, drop=True)
+            print(&#34;squeezed&#34;)
+            task = task.rio.clip([roi])
+            print(&#34;clipped&#34;)
+            tasks.append(task)
+        self._hls_ts_da = xr.concat(tasks, dim=new_dim)
+        # self._hls_ts_da = self._hls_ts_da.rio.clip([roi])
+        arr = self._hls_ts_da.to_masked_array()
+        self._data_arrays = np.ma.masked_array(arr, mask=(arr == -9999), fill_value=-9999)
+        if get_rgb:
+            hls_da = rioxarray.open_rasterio(link, chunks=True)
+            rgb_arrays = []
+            for ix, row in dataframe.iterrows():
+                jpg_url = row[&#39;url&#39;][&#39;browse&#39;]
+                hls_jpg = rioxarray.open_rasterio(jpg_url, chuncks=True)
+                rgb = hls_jpg.values
+                bbox = hls_da.rio.bounds()
+                transform = rasterio.transform.from_bounds(*bbox, width=1000, height=1000)
+                with georeference_raster(rgb, transform) as resampled:
+                    rgb_cropped, out_transform = rasterio.mask.mask(resampled, [roi], crop=True)
+                    # rgb_cropped_meta = resampled.meta
+                    rgb_arrays.append(rgb_cropped)
+            self._rgb_arrays = rgb_arrays
 
     @property
-    @lru_cache(maxsize=10)
-    def masked_array(self):
-        return self._masked_array
+    # @lru_cache(maxsize=10)
+    def data_arrays(self):
+        return self._data_arrays
 
     @property
-    @lru_cache(maxsize=10)
+    # @lru_cache(maxsize=10)
+    def rgb_arrays(self):
+        return self._rgb_arrays
+
+    @property
+    # @lru_cache(maxsize=10)
     def data_array(self):
         return self._hls_da
 
     @property
-    @lru_cache(maxsize=10)
+    # @lru_cache(maxsize=10)
     def data_array_clipped(self):
         return self._hls_da_clipped
 
-    def write_to_file(self, raster_path=&#34;test.tif&#34;):
+    def write_to_file(self, raster_path):
         self._hls_da_clip.rio.to_raster(raster_path=raster_path, driver=&#34;COG&#34;)</code></pre>
 </details>
 <h3>Instance variables</h3>
@@ -170,7 +262,7 @@ class Fetch:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-@lru_cache(maxsize=10)
+# @lru_cache(maxsize=10)
 def data_array(self):
     return self._hls_da</code></pre>
 </details>
@@ -183,12 +275,12 @@ def data_array(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-@lru_cache(maxsize=10)
+# @lru_cache(maxsize=10)
 def data_array_clipped(self):
     return self._hls_da_clipped</code></pre>
 </details>
 </dd>
-<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.masked_array"><code class="name">var <span class="ident">masked_array</span></code></dt>
+<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.data_arrays"><code class="name">var <span class="ident">data_arrays</span></code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -196,16 +288,29 @@ def data_array_clipped(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-@lru_cache(maxsize=10)
-def masked_array(self):
-    return self._masked_array</code></pre>
+# @lru_cache(maxsize=10)
+def data_arrays(self):
+    return self._data_arrays</code></pre>
+</details>
+</dd>
+<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.rgb_arrays"><code class="name">var <span class="ident">rgb_arrays</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+# @lru_cache(maxsize=10)
+def rgb_arrays(self):
+    return self._rgb_arrays</code></pre>
 </details>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.crop_image"><code class="name flex">
-<span>def <span class="ident">crop_image</span></span>(<span>*args, **kwargs)</span>
+<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.fetch_images"><code class="name flex">
+<span>def <span class="ident">fetch_images</span></span>(<span>*args, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -225,8 +330,8 @@ def masked_array(self):
     rio_env.__exit__()</code></pre>
 </details>
 </dd>
-<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.prepare_geom"><code class="name flex">
-<span>def <span class="ident">prepare_geom</span></span>(<span>self, geom)</span>
+<dt id="dst-hls.dst_hls.scripts.fetch.Fetch.preprocess_roi"><code class="name flex">
+<span>def <span class="ident">preprocess_roi</span></span>(<span>self, roi, target_epsg)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -234,22 +339,19 @@ def masked_array(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def prepare_geom(self, geom):
-    geom = json.loads(geom)
-    field_shape = Polygon(geom[&#34;coordinates&#34;][0])
-    if self._hls_da is None:
-        print(&#34;ERROR in reading HLS Data Array&#34;)
-        return
-    img_CRS = self._hls_da.rio.crs
-    geom_CRS = Proj(&#34;+proj=longlat +datum=WGS84 +no_defs&#34;,
-                    preserve_units=True)
-    project = pyproj.Transformer.from_proj(geom_CRS, img_CRS)
+<pre><code class="python">@lru_cache()
+def preprocess_roi(self, roi, target_epsg):
+    roi = json.loads(roi)
+    field_shape = Polygon(roi[&#34;coordinates&#34;][0])
+    from_CRS = Proj(Proj(&#39;epsg:4326&#39;).to_proj4(), preserve_units=True)
+    to_CRS = Proj(Proj(f&#39;epsg:{target_epsg}&#39;).to_proj4(), preserve_units=True)
+    project = pyproj.Transformer.from_proj(from_CRS, to_CRS)
     geom_transformed = transform(project.transform, field_shape)
     return geom_transformed</code></pre>
 </details>
 </dd>
 <dt id="dst-hls.dst_hls.scripts.fetch.Fetch.write_to_file"><code class="name flex">
-<span>def <span class="ident">write_to_file</span></span>(<span>self, raster_path='test.tif')</span>
+<span>def <span class="ident">write_to_file</span></span>(<span>self, raster_path)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -257,7 +359,7 @@ def masked_array(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def write_to_file(self, raster_path=&#34;test.tif&#34;):
+<pre><code class="python">def write_to_file(self, raster_path):
     self._hls_da_clip.rio.to_raster(raster_path=raster_path, driver=&#34;COG&#34;)</code></pre>
 </details>
 </dd>
@@ -282,11 +384,12 @@ def masked_array(self):
 <li>
 <h4><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch" href="#dst-hls.dst_hls.scripts.fetch.Fetch">Fetch</a></code></h4>
 <ul class="two-column">
-<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.crop_image" href="#dst-hls.dst_hls.scripts.fetch.Fetch.crop_image">crop_image</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.data_array" href="#dst-hls.dst_hls.scripts.fetch.Fetch.data_array">data_array</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.data_array_clipped" href="#dst-hls.dst_hls.scripts.fetch.Fetch.data_array_clipped">data_array_clipped</a></code></li>
-<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.masked_array" href="#dst-hls.dst_hls.scripts.fetch.Fetch.masked_array">masked_array</a></code></li>
-<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.prepare_geom" href="#dst-hls.dst_hls.scripts.fetch.Fetch.prepare_geom">prepare_geom</a></code></li>
+<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.data_arrays" href="#dst-hls.dst_hls.scripts.fetch.Fetch.data_arrays">data_arrays</a></code></li>
+<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.fetch_images" href="#dst-hls.dst_hls.scripts.fetch.Fetch.fetch_images">fetch_images</a></code></li>
+<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.preprocess_roi" href="#dst-hls.dst_hls.scripts.fetch.Fetch.preprocess_roi">preprocess_roi</a></code></li>
+<li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.rgb_arrays" href="#dst-hls.dst_hls.scripts.fetch.Fetch.rgb_arrays">rgb_arrays</a></code></li>
 <li><code><a title="dst-hls.dst_hls.scripts.fetch.Fetch.write_to_file" href="#dst-hls.dst_hls.scripts.fetch.Fetch.write_to_file">write_to_file</a></code></li>
 </ul>
 </li>

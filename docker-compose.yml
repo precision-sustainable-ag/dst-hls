@@ -1,0 +1,84 @@
+version: '3.6'
+
+services:
+
+  web:
+    build: ./api
+    ports:
+      - 8004:8000
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    volumes:
+      - ./api:/usr/src/app
+    env_file:
+      - ".env"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+    networks:
+      - sharednet
+
+  worker:
+    build: ./api
+    command: celery worker --app=worker.celery --loglevel=info --logfile=logs/celery.log
+    volumes:
+      - ./api:/usr/src/app
+    env_file:
+      - ".env"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+    networks:
+      - sharednet
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - sharednet
+
+  dashboard:
+    build: ./api
+    command:  flower --app=worker.celery --port=5555 --broker=redis://redis:6379/0 --url_prefix=/flower/
+    ports:
+      - 5556:5555
+    env_file:
+      - ".env"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+      - worker
+    networks:
+      - sharednet
+
+  caddy:
+    container_name: rproxy_container
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ".env"
+    volumes:
+      - ./reverse-proxy/Caddyfile:/etc/caddy/Caddyfile
+      - ./reverse-proxy/static:/var/tmp
+      - ./reverse-proxy/data:/data
+      - ./reverse-proxy/config:/config
+      - ./reverse-proxy/ssl:/home
+    networks:
+      - sharednet
+
+networks:
+  sharednet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

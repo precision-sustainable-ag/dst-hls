@@ -3,6 +3,7 @@ collection of helper functions to facilitate functionalities
 """
 import os
 import json
+import numpy as np
 from pathlib import Path
 import geopandas
 import rasterio as rio
@@ -186,3 +187,10 @@ def georeference_raster(data, transform):
 
         with memfile.open() as dataset:  # Reopen as DatasetReader
             yield dataset  # Note yield not return
+
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)

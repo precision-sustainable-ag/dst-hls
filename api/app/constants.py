@@ -1,5 +1,6 @@
 
-API_PREFIX = "/api/v1"
+API_PREFIX = ""
+# API_PREFIX = "/api/v1"
 
 ALLOWED_CORS=["*"]
 

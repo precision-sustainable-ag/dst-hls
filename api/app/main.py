@@ -2,30 +2,31 @@ import os
 import sys
 import uvicorn
 from celery.result import AsyncResult
-from fastapi import FastAPI, APIRouter, HTTPException, Body
+from fastapi import FastAPI, APIRouter, HTTPException, Body, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.encoders import jsonable_encoder
 
+# os.chdir(os.path.join(os.getcwd(), 'app'))
+from app.model import TaskIDModel, TaskRequestModel, TaskResopnseModel
+from app.constants import API_PREFIX, ALLOWED_CORS
+
 os.chdir(os.path.join(os.getcwd(), 'celery'))
-from model import TaskIDModel, TaskRequestModel, TaskResopnseModel
-from constants import API_PREFIX, ALLOWED_CORS
 from worker import create_task
 
 
 root = APIRouter()
 
 
+@root.get("/", include_in_schema=False)
+async def docs_redirect(request: Request):
+    return RedirectResponse(url='/docs')
+
+
 @root.get("/health")
 async def health_check() -> dict:
     """Full health-check endpoint"""
     return {"dst": "ok"}
-
-
-@root.get("/")
-async def hello() -> dict:
-    """Hello endpoint for non-integration testing health check"""
-    return {"message": "Hello!"}
 
 
 @root.post("/tasks", response_model=TaskIDModel, status_code=201)

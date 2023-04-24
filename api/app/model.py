@@ -1,5 +1,5 @@
 from pydantic import BaseModel, create_model
-from constants import SAMPLE_GEOMETRY
+from app.constants import SAMPLE_GEOMETRY
 
 
 class HLSGeomModel(BaseModel):

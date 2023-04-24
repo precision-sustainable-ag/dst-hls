@@ -1,15 +1,15 @@
 covercrop-imagery.org {
     tls /home/certificate.pem /home/key.pem
-    reverse_proxy 10.5.0.1:5556
-}
-
-covercrop-imagery.org/api {
-    tls /home/certificate.pem /home/key.pem
-    reverse_proxy 10.5.0.1:8004
+    reverse_proxy 10.5.0.1:8090
 }
 
 covercrop-imagery.org/flower {
     redir {uri}/
     tls /home/certificate.pem /home/key.pem
     reverse_proxy 10.5.0.1:5556
+}
+
+api.covercrop-imagery.org {
+	tls /home/certificate.pem /home/key.pem
+    reverse_proxy 10.5.0.1:8004
 }

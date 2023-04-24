@@ -1,18 +1,15 @@
-# pull official base image
-FROM python:3.9.5-slim-buster
+FROM python:3.11.3
 
-# set work directory
-WORKDIR /usr/src/app
+WORKDIR /code
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+COPY ./requirements.txt /code/requirements.txt
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-# copy project
-COPY . .
-COPY .netrc /root
+COPY . /code
+COPY celery/.netrc /root
+
+ENV PYTHONUNBUFFERED True
+ENV PORT 8090
+
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $PORT"]

@@ -5,25 +5,42 @@ services:
   web:
     build: ./api
     ports:
-      - 8004:8000
-    command: uvicorn main:app --host 0.0.0.0 --reload
+      - 8090:8090
     volumes:
       - ./api:/usr/src/app
-    env_file:
-      - ".env"
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    env_file:
+      - ".env"
     depends_on:
       - redis
     networks:
       - sharednet
 
+  # web:
+  #   build: ./api
+  #   ports:
+  #     - 8004:8000
+  #     - 8893:8893
+  #   command: uvicorn main:app --host 0.0.0.0 --reload
+  #   volumes:
+  #     - ./api:/usr/src/app
+  #   env_file:
+  #     - ".env"
+  #   environment:
+  #     - CELERY_BROKER_URL=redis://redis:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis:6379/0
+  #   depends_on:
+  #     - redis
+  #   networks:
+  #     - sharednet
+
   worker:
-    build: ./api
+    build: ./api/celery
     command: celery worker --app=worker.celery --loglevel=info --logfile=logs/celery.log
     volumes:
-      - ./api:/usr/src/app
+      - ./api/celery:/usr/src/app
     env_file:
       - ".env"
     environment:
@@ -41,7 +58,7 @@ services:
       - sharednet
 
   dashboard:
-    build: ./api
+    build: ./api/celery
     command:  flower --app=worker.celery --port=5555 --broker=redis://redis:6379/0 --url_prefix=/flower/
     ports:
       - 5556:5555

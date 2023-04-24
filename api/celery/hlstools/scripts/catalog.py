@@ -19,7 +19,8 @@ class Catalog:
     """
 
     def __init__(self, provider="LPCLOUD"):
-        self.collections = ["HLSL30.v2.0", "HLSS30.v2.0"]
+        self.collections = ["HLSS30.v2.0"]
+        # self.collections = ["HLSL30.v2.0", "HLSS30.v2.0"]
         self.provider_name = provider
         self.stac_url = config("STAC_URL", default=False, cast=str)
         setup_netrc()

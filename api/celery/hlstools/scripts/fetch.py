@@ -72,6 +72,7 @@ class Fetch:
         # self._hls_ts_da = self._hls_ts_da.rio.clip([roi])
         arr = self._hls_ts_da.to_masked_array()
         self._data_arrays = np.ma.masked_array(arr, mask=(arr == -9999), fill_value=-9999)
+        self.bbox = self._hls_ts_da.rio.bounds()
         if get_rgb:
             hls_da = rioxarray.open_rasterio(link, chunks=True)
             rgb_arrays = []

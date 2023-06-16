@@ -33,9 +33,12 @@ class Interface:
         self.cat = Catalog()
         start_date = date_range.split('/')[0]
         end_date = date_range.split('/')[1]
+        print("start_date: ", start_date)
+        print("end_date: ", end_date)
         bins = list(pd.date_range(start=start_date, end=end_date, freq='6M').astype(str))
         bins = bins + [end_date]
         res = ['/'.join(x) for x in zip(bins[: -1], bins[1: ])]
+        print("res: ", res)
         df = pd.DataFrame()
         for dates in res:
             colls = self.cat.search_tiles(geometry, date_range=dates)
@@ -45,6 +48,10 @@ class Interface:
         df = df.drop_duplicates(subset=['id'], keep='first')
         df['datetime'] = pd.to_datetime(df['datetime'])
         df['timedelta'] = df['datetime'].diff().dt.total_seconds()
+        ## remove less frequent image paths
+        sat_paths = [el.split(".")[2] for el in list(df.id)]
+        sat_path = max(set(sat_paths), key=sat_paths.count)
+        df = df[df['id'].str.contains(sat_path)]
         ## remove timestamps too close, in this case less than a week
         df = df.loc[~(df['timedelta']<7*24*60)]
         df.reset_index(drop=True, inplace=True)

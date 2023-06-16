@@ -1,5 +1,6 @@
 import os
 import sys
+sys.stdout.flush()
 import uvicorn
 from celery.result import AsyncResult
 from fastapi import FastAPI, APIRouter, HTTPException, Body, Request
@@ -28,7 +29,6 @@ async def health_check() -> dict:
     """Full health-check endpoint"""
     return {"dst": "ok"}
 
-
 @root.post("/tasks", response_model=TaskIDModel, status_code=201)
 async def run_task(payload: TaskRequestModel) -> TaskIDModel:
     task = create_task.delay(jsonable_encoder(payload))
@@ -38,6 +38,7 @@ async def run_task(payload: TaskRequestModel) -> TaskIDModel:
 @root.get("/tasks/{task_id}", response_model=TaskResopnseModel)
 async def get_task_status(task_id: str) -> TaskResopnseModel:
     task_result = AsyncResult(task_id)
+    print(task_result, flush=True)
     result = jsonable_encoder({
         "task_id": task_id,
         "task_status": task_result.status,
@@ -45,7 +46,10 @@ async def get_task_status(task_id: str) -> TaskResopnseModel:
     })
     return JSONResponse(result)
 
+
+
 app = FastAPI(
+    debug=True,
     docs_url=f'{API_PREFIX}/docs',
     redoc_url=f'{API_PREFIX}/redoc',
     openapi_url=f'{API_PREFIX}/openapi.json')

@@ -7,6 +7,7 @@ from time import time
 from pyproj import Proj, transform
 import requests
 import pandas as pd
+from scipy.interpolate import interp1d
 
 from hlstools import interface
 from hlstools.utilities.helpers import NumpyEncoder
@@ -61,44 +62,42 @@ def create_task(payload):
     
     ### calculating biomass from ndvi red edge
     # biomass_array = np.zeros((nr_images, data.shape[1], data.shape[2]))
-    ndvi_re1_first = 0
+    # ndvi_re1_first = 0
     cum_par_gdd_ndvi_re1 = np.zeros(data.shape[1:])
+    bare_ground_ndvi =  0.094545911
+    ndvi_re1_arr = []
     for i in range(nr_images):
         redEdge = data[3*i+0]
         nir = data[3*i+1]
         cloud = data[3*i+2]
-        ndvi_re1 = (nir-redEdge)/(nir+redEdge) - 0.094545911
+        ndvi_re1 = (nir-redEdge)/(nir+redEdge)
+        ndvi_re1_arr.append(ndvi_re1)
+    ndvi_re1_arr = np.array(ndvi_re1_arr)
+    ndvi_re1_arr = ndvi_re1_arr.reshape(ndvi_re1_arr.shape[0], -1)
 
-        
-        # if np.isnan(ndvi_re1).flatten().all():
-        #     print("NAN Array Skipped")
-        #     continue
-            
-        if i==0:
-            ndvi_re1_first = ndvi_re1
-        ndvi_re1_delta = ndvi_re1 - ndvi_re1_first
-        # print("ndvi_re1_delta")
-        # for row in ndvi_re1_delta:
-        #     print(list(row))
-        satellite_date = "20" + dates[i].split(":")[0]
-        weather_row = weather_all.loc[weather_all['Date'] == satellite_date]
-        rad = float(weather_row["Rad"])
-        par = float(weather_row["PAR"])
-        gdd_44 = float(weather_row["GDD_4.4_day"])
-        if gdd_44 <= 0:
-            gdd_44 = 0
-        par_gdd_ndvi_re1 = par * gdd_44 * ndvi_re1_delta
-        # print("par_gdd_ndvi_re1")
-        # for row in par_gdd_ndvi_re1:
-        #     print(list(row))
-        cum_par_gdd_ndvi_re1 += par_gdd_ndvi_re1
-        # print("cum_par_gdd_ndvi_re1")
-        # for row in cum_par_gdd_ndvi_re1:
-        #     print(list(row))
-        
+    x_vals = [list(weather_all.Date.dt.strftime('%Y-%m-%d')).index("20" + el.split(":")[0])  for el in dates]
+    linfit = interp1d(x_vals, ndvi_re1_arr, axis=0)
+    interpolated = linfit(list(range(len(weather_all))))
+    interpolated[0,:] = bare_ground_ndvi
+    interpolated = interpolated - bare_ground_ndvi
+    gdd44 = weather_all['GDD_4.4_day']
+    gdd44[gdd44<0] = 0
+    par_gdd44 = list(weather_all['PAR']*gdd44)
+    par_gdd44 = np.repeat(par_gdd44, interpolated.shape[1]).reshape(-1, interpolated.shape[1])
+    par_gdd44_ndvi = par_gdd44*interpolated
+    cum_par_gdd_ndvi_re1 = np.cumsum(par_gdd44_ndvi, axis=0)
     estimated_biomass_kg_ha = -1246.8 + 3.9025 * cum_par_gdd_ndvi_re1
     estimated_biomass_kg_ha[cum_par_gdd_ndvi_re1 <= 595.064] = 83.1187 + 1.6677 * cum_par_gdd_ndvi_re1[cum_par_gdd_ndvi_re1 <= 595.064]
-        # biomass_array[i, :, :] = estimated_biomass_kg_ha
+    estimated_biomass_kg_ha[cum_par_gdd_ndvi_re1==0] = 0
+
+    # v = estimated_biomass_kg_ha.reshape(len(cum_par_gdd_ndvi_re1), data.shape[1], data.shape[2])[:, cloud!=255].mean(1)
+
+    mask_array = mask[0::3, :, :][-1,:,:]
+    biomass = estimated_biomass_kg_ha[-1].reshape(data.shape[1:])
+    biomass[cloud==255] = 0
+    
+    print('data.shape: ', data.shape)
+    print('biomass shape: ', biomass.shape)
     
     json_dump = json.dumps(
                            {
@@ -107,8 +106,8 @@ def create_task(payload):
                             'dates': dates,
                             'bbox': bbox,
                             'epsg': epsg,
-                            'data_array': estimated_biomass_kg_ha,
-                            'mask_array': mask[0::3, :, :][-1,:,:],
+                            'data_array': biomass,
+                            'mask_array': mask_array,
                             },
                            cls=NumpyEncoder
                           )

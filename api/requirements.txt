@@ -28,3 +28,4 @@ cachetools
 boto3
 rioxarray
 pyproj
+scipy

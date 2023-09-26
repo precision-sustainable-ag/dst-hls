@@ -29,6 +29,8 @@ def setup_netrc():
     sets up netrc file if not done yet
     """
     netrc_path = get_netrc_path()
+    print("netrc path: ", netrc_path)
+    print("netrc config: ", config)
     if not os.path.exists(netrc_path):
         with open(netrc_path, 'a', encoding="utf-8") as the_file:
             machine = config('NASA_MACHINE', cast=str)
@@ -43,10 +45,9 @@ def authenticate():
     """
     authentication method
     """
+    setup_netrc()
     netrc_path = get_netrc_path()
     try:
         netrc(netrc_path).authenticators(config('NASA_MACHINE', cast=str))[0]
     except TypeError:
         print('ERROR in authentication!')
-    # except:
-    #     logger("error in authentication!")

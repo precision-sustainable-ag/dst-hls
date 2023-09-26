@@ -23,7 +23,7 @@ class Fetch:
         self._masked_array = None
         self._hls_da = None
 
-    @lru_cache()
+    # @lru_cache()
     def preprocess_roi(self, roi, target_epsg):
         roi = json.loads(roi)
         field_shape = Polygon(roi["coordinates"][0])

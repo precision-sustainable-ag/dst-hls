@@ -9,7 +9,7 @@ from decouple import config
 from pystac_client import Client
 from shapely.geometry import Polygon
 import pandas as pd
-from ..utilities.auth import setup_netrc, authenticate
+from ..utilities.auth import authenticate
 from ..utilities.helpers import read_roi_from_file, url_to_s3, epsg_from_id
 
 
@@ -23,7 +23,6 @@ class Catalog:
         # self.collections = ["HLSL30.v2.0", "HLSS30.v2.0"]
         self.provider_name = provider
         self.stac_url = config("STAC_URL", default=False, cast=str)
-        setup_netrc()
         authenticate()
 
     @lru_cache(maxsize=2)

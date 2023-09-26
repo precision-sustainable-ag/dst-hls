@@ -79,7 +79,7 @@ def with_rio(session):
 
 
 # ttl caching for time based control on the refresh rate
-@cachetools.func.ttl_cache(maxsize=9999, ttl=1 * 60)
+# @cachetools.func.ttl_cache(maxsize=9999, ttl=1 * 60)
 def get_temp_creds(ttl_hash=None):
     """
     function for getting a temp credential
@@ -98,7 +98,7 @@ def get_temp_creds(ttl_hash=None):
     return requests.get(temp_creds_url).json()
 
 
-@lru_cache(maxsize=2)  # keeping the cache size small for mem leak
+# @lru_cache(maxsize=2)  # keeping the cache size small for mem leak
 def create_session():
     """
     generates an S3 AWS session from

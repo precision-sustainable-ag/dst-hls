@@ -13,6 +13,7 @@ from .fetch import Fetch
 
 class Interface:
     def __init__(self):
+        print('interface initiated ... ')
         self.cat = None
 
     def ndvi_images(self, geometry, date_range="2021-05-01/2021-08-02", max_cloud_cover=10):
@@ -61,6 +62,7 @@ class Interface:
         fch = Fetch()
         print("IN INTERFACE ....")
         fch.fetch_images(df, bands, geometry, get_rgb=False)
+        print("fetch_images done !")
         arr = fch.data_arrays
         nr_images = int(len(arr)/len(bands))
         dates = [datetime.strftime(t, '%y-%m-%d:%H-%M-%S') for t in df.datetime]

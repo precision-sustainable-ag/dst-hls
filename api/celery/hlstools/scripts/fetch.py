@@ -45,19 +45,30 @@ class Fetch:
         temp_aws_s3_token = '/home/.aws_s3_session.json'
         temp_creds_url = config("TEMP_CRED_URL", cast=str)
         if os.path.exists(temp_aws_s3_token):
+            print(f"s3 token exists")
             with open(temp_aws_s3_token) as f:
                 creds = json.load(f)
                 exp_dt = datetime.strptime(creds['expiration'], '%Y-%m-%d %H:%M:%S%z').replace(tzinfo=None)
-                dt = (exp_dt-datetime.utcnow()).seconds/3600
+                dt = (exp_dt-datetime.utcnow()).total_seconds()/3600
+                print(f"current s3 creds: ", creds)
+                print(f"current s3 curr time: ", datetime.utcnow())
+                print(f"current s3 expire time: ", exp_dt)
+                print(f"current s3 expire delta: ", dt)
                 if dt < 0.1:
+                    print("refreshing s3 token ...")
                     creds = requests.get(temp_creds_url).json()
+                    print('new creds: ', creds)
                     with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
+                        print("writing new s3 token file !")
                         json.dump(creds, f, ensure_ascii=False, indent=4)
         else:
+            print("s3 token file not exist !")
             creds = requests.get(temp_creds_url).json()
             with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
+                print("writing new s3 token file !")
                 json.dump(creds, f, ensure_ascii=False, indent=4)
             
+        print("creds: ", creds)
         
         session = boto3.Session(
             aws_access_key_id=creds["accessKeyId"],

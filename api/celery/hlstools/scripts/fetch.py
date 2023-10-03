@@ -49,7 +49,7 @@ class Fetch:
                 creds = json.load(f)
                 exp_dt = datetime.strptime(creds['expiration'], '%Y-%m-%d %H:%M:%S%z').replace(tzinfo=None)
                 dt = (exp_dt-datetime.utcnow()).seconds/3600
-                if dt < 0.95:
+                if dt < 0.1:
                     creds = requests.get(temp_creds_url).json()
                     with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
                         json.dump(creds, f, ensure_ascii=False, indent=4)

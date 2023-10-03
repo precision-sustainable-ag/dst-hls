@@ -52,6 +52,7 @@ services:
       - redis
     networks:
       - sharednet
+    restart: unless-stopped
 
   redis:
     image: redis:6-alpine

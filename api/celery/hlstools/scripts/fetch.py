@@ -35,11 +35,24 @@ class Fetch:
 
     @with_rio(create_session())
     def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False):
-        # epsgs = list(dataframe['epsg'])
-        # if epsgs.count(epsgs[0]) != len(epsgs):
-        #     print('ERROR, more than one coordinate system found!')
-        #     return
-        # epsg = epsgs[0]
+        temp_creds_url = config("TEMP_CRED_URL", cast=str)
+        creds = requests.get(temp_creds_url).json()
+        session = boto3.Session(
+            aws_access_key_id=creds["accessKeyId"],
+            aws_secret_access_key=creds["secretAccessKey"],
+            aws_session_token=creds["sessionToken"],
+            region_name="us-west-2",
+        )
+        
+        rio_env = rio.Env(
+            AWSSession(session),
+            GDAL_DISABLE_READDIR_ON_OPEN="TRUE",
+            GDAL_HTTP_COOKIEFILE=os.path.expanduser("~/cookies.txt"),
+            GDAL_HTTP_COOKIEJAR=os.path.expanduser("~/cookies.txt"),
+        )
+        ###################
+        rio_env.__enter__()
+        ####################
         if ids is None:
             ids = dataframe.id
         s3_links = []
@@ -87,9 +100,10 @@ class Fetch:
                     # rgb_cropped_meta = resampled.meta
                     rgb_arrays.append(rgb_cropped)
             self._rgb_arrays = rgb_arrays
-
+        ###################
+        rio_env.__exit__()
+        ###################
     @property
-    # @lru_cache(maxsize=10)
     def data_arrays(self):
         return self._data_arrays
 

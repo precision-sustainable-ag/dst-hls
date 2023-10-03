@@ -2,18 +2,25 @@
 script providing fetching capabilities
 for interaction with HLS server
 """
+import os
 import json
-
+import numpy as np
+from datetime import datetime
 # from functools import lru_cache
 import rioxarray
 from functools import lru_cache
 import pyproj
+from decouple import config
+import requests
+import boto3
+import string
 from pyproj import Proj
 from shapely.ops import transform
 from shapely.geometry import Polygon
 import xarray as xr
 import rasterio
-import numpy as np
+import rasterio as rio
+from rasterio.session import AWSSession
 from ..utilities.helpers import with_rio, create_session, index_from_filenames, georeference_raster
 from ..utilities.constants import S30BANDS, L30BANDS
 
@@ -33,13 +40,43 @@ class Fetch:
         geom_transformed = transform(project.transform, field_shape)
         return geom_transformed
 
-    @with_rio(create_session())
+    # @with_rio(create_session())
     def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False):
-        # epsgs = list(dataframe['epsg'])
-        # if epsgs.count(epsgs[0]) != len(epsgs):
-        #     print('ERROR, more than one coordinate system found!')
-        #     return
-        # epsg = epsgs[0]
+        temp_aws_s3_token = '/home/.aws_s3_session.json'
+        temp_creds_url = config("TEMP_CRED_URL", cast=str)
+        if os.path.exists(temp_aws_s3_token):
+            with open(temp_aws_s3_token) as f:
+                creds = json.load(f)
+                exp_dt = datetime.strptime(creds['expiration'], '%Y-%m-%d %H:%M:%S%z').replace(tzinfo=None)
+                dt = (exp_dt-datetime.utcnow()).seconds/3600
+                if dt < 0.1:
+                    creds = requests.get(temp_creds_url).json()
+                    with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
+                        json.dump(creds, f, ensure_ascii=False, indent=4)
+        else:
+            creds = requests.get(temp_creds_url).json()
+            with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
+                json.dump(creds, f, ensure_ascii=False, indent=4)
+            
+        
+        session = boto3.Session(
+            aws_access_key_id=creds["accessKeyId"],
+            aws_secret_access_key=creds["secretAccessKey"],
+            aws_session_token=creds["sessionToken"],
+            region_name="us-west-2",
+        )
+        
+        rio_env = rio.Env(
+            AWSSession(session),
+            # GDAL_DISABLE_READDIR_ON_OPEN="TRUE",
+            GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
+            CPL_VSIL_CURL_ALLOWED_EXTENSIONS="TIF",
+            GDAL_HTTP_COOKIEFILE=os.path.expanduser("/home/cookies.txt"),
+            GDAL_HTTP_COOKIEJAR=os.path.expanduser("/home/cookies.txt"),
+        )
+        ###################
+        rio_env.__enter__()
+        ####################
         if ids is None:
             ids = dataframe.id
         s3_links = []
@@ -87,9 +124,10 @@ class Fetch:
                     # rgb_cropped_meta = resampled.meta
                     rgb_arrays.append(rgb_cropped)
             self._rgb_arrays = rgb_arrays
-
+        ###################
+        rio_env.__exit__()
+        ###################
     @property
-    # @lru_cache(maxsize=10)
     def data_arrays(self):
         return self._data_arrays
 

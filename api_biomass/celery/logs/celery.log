@@ -6631,3 +6631,344 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 [2024-02-18 08:09:24,944: INFO/MainProcess] mingle: all alone
 [2024-02-18 08:09:24,962: INFO/MainProcess] celery@7aa41de2d1af ready.
 [2024-02-18 08:09:26,328: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 08:31:59,001: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 08:31:59,014: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 08:32:00,043: INFO/MainProcess] mingle: all alone
+[2024-02-18 08:32:00,063: INFO/MainProcess] celery@f6303584ed8d ready.
+[2024-02-18 08:32:07,354: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 08:38:58,347: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 08:38:58,359: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 08:38:59,389: INFO/MainProcess] mingle: all alone
+[2024-02-18 08:38:59,419: INFO/MainProcess] celery@f6303584ed8d ready.
+[2024-02-18 08:39:01,570: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 08:39:07,452: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/worker/consumer/consumer.py", line 318, in start
+    blueprint.start(self)
+  File "/usr/local/lib/python3.9/site-packages/celery/bootsteps.py", line 119, in start
+    step.start(parent)
+  File "/usr/local/lib/python3.9/site-packages/celery/worker/consumer/consumer.py", line 599, in start
+    c.loop(*c.loop_args())
+  File "/usr/local/lib/python3.9/site-packages/celery/worker/loops.py", line 83, in asynloop
+    next(loop)
+  File "/usr/local/lib/python3.9/site-packages/kombu/asynchronous/hub.py", line 364, in create_loop
+    cb(*cbargs)
+  File "/usr/local/lib/python3.9/site-packages/kombu/transport/redis.py", line 1083, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/usr/local/lib/python3.9/site-packages/kombu/transport/redis.py", line 354, in on_readable
+    chan.handlers[type]()
+  File "/usr/local/lib/python3.9/site-packages/kombu/transport/redis.py", line 688, in _receive
+    ret.append(self._receive_one(c))
+  File "/usr/local/lib/python3.9/site-packages/kombu/transport/redis.py", line 698, in _receive_one
+    response = c.parse_response()
+  File "/usr/local/lib/python3.9/site-packages/redis/client.py", line 3505, in parse_response
+    response = self._execute(conn, conn.read_response)
+  File "/usr/local/lib/python3.9/site-packages/redis/client.py", line 3479, in _execute
+    return command(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/redis/connection.py", line 739, in read_response
+    response = self._parser.read_response()
+  File "/usr/local/lib/python3.9/site-packages/redis/connection.py", line 324, in read_response
+    raw = self._buffer.readline()
+  File "/usr/local/lib/python3.9/site-packages/redis/connection.py", line 256, in readline
+    self._read_from_socket()
+  File "/usr/local/lib/python3.9/site-packages/redis/connection.py", line 201, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2024-02-18 08:39:07,485: ERROR/MainProcess] consumer: Cannot connect to redis://redis:6379/0: Error 111 connecting to redis:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2024-02-18 08:39:09,493: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 08:39:09,509: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 08:39:10,519: INFO/MainProcess] mingle: all alone
+[2024-02-18 08:43:42,225: INFO/MainProcess] Received task: create_task[cf681261-d54f-47e4-afb0-3ddbbd025795]  
+[2024-02-18 08:43:42,229: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-02-18 08:43:42,230: WARNING/ForkPoolWorker-3] netrc path:
+[2024-02-18 08:43:42,230: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-02-18 08:43:42,230: WARNING/ForkPoolWorker-3] netrc config:
+[2024-02-18 08:43:42,230: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7f6006239c70>
+[2024-02-18 08:43:42,231: WARNING/ForkPoolWorker-3] start_date:
+[2024-02-18 08:43:42,231: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-02-18 08:43:42,231: WARNING/ForkPoolWorker-3] end_date:
+[2024-02-18 08:43:42,231: WARNING/ForkPoolWorker-3] 2023-03-03
+[2024-02-18 08:43:42,233: WARNING/ForkPoolWorker-3] res:
+[2024-02-18 08:43:42,233: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-03-03']
+[2024-02-18 08:43:44,321: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-02-18 08:43:44,321: WARNING/ForkPoolWorker-3] s3 token file not exist !
+[2024-02-18 08:43:46,375: WARNING/ForkPoolWorker-3] creds
+[2024-02-18 08:43:46,376: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES4362RCCVC', 'secretAccessKey': '1cZWu5loDV2x3hqYM/qVyAnNF1/qPK7K0QwH7QhF', 'sessionToken': 'FwoGZXIvYXdzECIaDNbUaJoYfJdheigc/yLnAfrJe3rVR1K9e/EpNiQX+utOy1aKT0SKuTgbUqYprJEMnydH9NL3Oj5vQdggcbW8GAKNDtQG61gOUtuw0asfEd3usF4g+RzVGuercg3okB+sxzq47jChNKjsGD0b2IQf681UhKBdxCOz+EWSV34hpfFXic1c5hrGT9JtPP37tEqQvMpSBTfO3N4j4SJrAGQvB1zoSSIDyHxHENB+gYEXwB5jt/W1buS1DKSDii5Yzz2hhulXQyCN+Ep/bd0EsRgmyWmYVwkx92W8l+6NzuCiRox62iE8DpyAh6GAuoFVJ3X74bX5vLtYhyjChseuBjItT2j4Z9qJoykkiQB5gaauA/I+nhrtTXsPMD8XaT1F+n2GxwQkz8nu2/Wjh00Q', 'expiration': '2024-02-18 09:43:46+00:00'}
+[2024-02-18 08:43:46,377: WARNING/ForkPoolWorker-3] writing new s3 token file !
+[2024-02-18 08:43:46,377: WARNING/ForkPoolWorker-3] creds:
+[2024-02-18 08:43:46,377: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES4362RCCVC', 'secretAccessKey': '1cZWu5loDV2x3hqYM/qVyAnNF1/qPK7K0QwH7QhF', 'sessionToken': 'FwoGZXIvYXdzECIaDNbUaJoYfJdheigc/yLnAfrJe3rVR1K9e/EpNiQX+utOy1aKT0SKuTgbUqYprJEMnydH9NL3Oj5vQdggcbW8GAKNDtQG61gOUtuw0asfEd3usF4g+RzVGuercg3okB+sxzq47jChNKjsGD0b2IQf681UhKBdxCOz+EWSV34hpfFXic1c5hrGT9JtPP37tEqQvMpSBTfO3N4j4SJrAGQvB1zoSSIDyHxHENB+gYEXwB5jt/W1buS1DKSDii5Yzz2hhulXQyCN+Ep/bd0EsRgmyWmYVwkx92W8l+6NzuCiRox62iE8DpyAh6GAuoFVJ3X74bX5vLtYhyjChseuBjItT2j4Z9qJoykkiQB5gaauA/I+nhrtTXsPMD8XaT1F+n2GxwQkz8nu2/Wjh00Q', 'expiration': '2024-02-18 09:43:46+00:00'}
+[2024-02-18 08:43:46,423: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022313T160501.v2.0/HLS.S30.T18SUJ.2022313T160501.v2.0.B05.tif
+[2024-02-18 08:43:46,423: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:46,442: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:46,640: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:46,810: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:46,811: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022313T160501.v2.0/HLS.S30.T18SUJ.2022313T160501.v2.0.B08.tif
+[2024-02-18 08:43:46,811: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:46,820: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:46,948: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:47,111: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:47,111: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022313T160501.v2.0/HLS.S30.T18SUJ.2022313T160501.v2.0.Fmask.tif
+[2024-02-18 08:43:47,111: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:47,126: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:47,199: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:47,317: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:47,317: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022325T155549.v2.0/HLS.S30.T18SUJ.2022325T155549.v2.0.B05.tif
+[2024-02-18 08:43:47,317: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:47,326: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:47,467: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:47,581: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:47,582: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022325T155549.v2.0/HLS.S30.T18SUJ.2022325T155549.v2.0.B08.tif
+[2024-02-18 08:43:47,582: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:47,590: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:47,695: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:47,808: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:47,808: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022325T155549.v2.0/HLS.S30.T18SUJ.2022325T155549.v2.0.Fmask.tif
+[2024-02-18 08:43:47,808: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:47,816: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:47,887: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:47,999: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:47,999: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022330T155611.v2.0/HLS.S30.T18SUJ.2022330T155611.v2.0.B05.tif
+[2024-02-18 08:43:47,999: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:48,007: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:48,116: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:48,226: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:48,227: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022330T155611.v2.0/HLS.S30.T18SUJ.2022330T155611.v2.0.B08.tif
+[2024-02-18 08:43:48,227: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:48,234: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:48,369: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:48,481: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:48,481: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022330T155611.v2.0/HLS.S30.T18SUJ.2022330T155611.v2.0.Fmask.tif
+[2024-02-18 08:43:48,481: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:48,489: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:48,568: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:48,678: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:48,678: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022335T155619.v2.0/HLS.S30.T18SUJ.2022335T155619.v2.0.B05.tif
+[2024-02-18 08:43:48,678: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:48,686: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:48,784: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:48,896: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:48,896: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022335T155619.v2.0/HLS.S30.T18SUJ.2022335T155619.v2.0.B08.tif
+[2024-02-18 08:43:48,896: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:48,904: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:49,014: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:49,125: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:49,126: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022335T155619.v2.0/HLS.S30.T18SUJ.2022335T155619.v2.0.Fmask.tif
+[2024-02-18 08:43:49,126: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:49,133: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:49,222: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:49,332: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:49,332: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022343T160651.v2.0/HLS.S30.T18SUJ.2022343T160651.v2.0.B05.tif
+[2024-02-18 08:43:49,332: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:49,340: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:49,424: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:49,540: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:49,540: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022343T160651.v2.0/HLS.S30.T18SUJ.2022343T160651.v2.0.B08.tif
+[2024-02-18 08:43:49,540: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:49,548: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:49,669: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:49,780: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:49,780: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022343T160651.v2.0/HLS.S30.T18SUJ.2022343T160651.v2.0.Fmask.tif
+[2024-02-18 08:43:49,780: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:49,787: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:49,878: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:49,989: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:49,989: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022363T160701.v2.0/HLS.S30.T18SUJ.2022363T160701.v2.0.B05.tif
+[2024-02-18 08:43:49,989: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:49,998: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:50,110: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:50,221: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:50,221: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022363T160701.v2.0/HLS.S30.T18SUJ.2022363T160701.v2.0.B08.tif
+[2024-02-18 08:43:50,221: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:50,229: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:50,334: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:50,446: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:50,446: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2022363T160701.v2.0/HLS.S30.T18SUJ.2022363T160701.v2.0.Fmask.tif
+[2024-02-18 08:43:50,446: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:50,454: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:50,533: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:50,647: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:50,647: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2023035T155441.v2.0/HLS.S30.T18SUJ.2023035T155441.v2.0.B05.tif
+[2024-02-18 08:43:50,647: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:50,655: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:50,763: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:50,892: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:50,892: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2023035T155441.v2.0/HLS.S30.T18SUJ.2023035T155441.v2.0.B08.tif
+[2024-02-18 08:43:50,892: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:50,902: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:50,994: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:51,125: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:51,125: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2023035T155441.v2.0/HLS.S30.T18SUJ.2023035T155441.v2.0.Fmask.tif
+[2024-02-18 08:43:51,125: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:51,135: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:51,240: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:51,387: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:51,387: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2023055T155231.v2.0/HLS.S30.T18SUJ.2023055T155231.v2.0.B05.tif
+[2024-02-18 08:43:51,387: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:51,397: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:51,543: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:51,675: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:51,675: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2023055T155231.v2.0/HLS.S30.T18SUJ.2023055T155231.v2.0.B08.tif
+[2024-02-18 08:43:51,675: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:51,685: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:51,787: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:51,929: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:51,930: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T18SUJ.2023055T155231.v2.0/HLS.S30.T18SUJ.2023055T155231.v2.0.Fmask.tif
+[2024-02-18 08:43:51,930: WARNING/ForkPoolWorker-3] 32618
+[2024-02-18 08:43:51,944: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 08:43:52,025: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 08:43:52,152: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 08:43:54,299: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-02-18 08:43:54,300: WARNING/ForkPoolWorker-3] data shape:
+[2024-02-18 08:43:54,300: WARNING/ForkPoolWorker-3] (24, 21, 31)
+[2024-02-18 08:43:54,306: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:37: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-02-18 08:43:54,310: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:38: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-02-18 08:43:55,324: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:90: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-02-18 08:43:55,329: WARNING/ForkPoolWorker-3] data.shape:
+[2024-02-18 08:43:55,330: WARNING/ForkPoolWorker-3] (24, 21, 31)
+[2024-02-18 08:43:55,330: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-02-18 08:43:55,330: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-02-18 08:43:55,478: INFO/ForkPoolWorker-3] Task create_task[cf681261-d54f-47e4-afb0-3ddbbd025795] succeeded in 13.249426361173391s: '{"time_elapsed": "12.1 seconds", "tile_num": 8, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[406.0462723410646, 406.26076807054085, 506.95163873858957, 448.0923928368764, 599.2707871533363, 537.4080061914149, 436.0762507706183, 208.56471328424624, 449.2065304630405, 463.5270290883105, 383.24667559937365, 341.9210350769718, 327.81840145975735, 396.3706673359946, 358.8892064214606, 315.99031895728024, 388.0236474069294, 364.2036725042864, 352.0474547533143, 375.1170678498633, 399.1431169327519, 398.6782726063383, 306.5889687120866, 318.38528183650214, 421.00477934644147, 322.69822505790023, 284.42320921761547, 617.3591814045859, 380.19150521575193, 237.1645561671255, 368.95946676285246],...'
+[2024-02-18 08:50:38,693: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 08:50:38,719: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 08:50:39,750: INFO/MainProcess] mingle: all alone
+[2024-02-18 08:50:39,768: INFO/MainProcess] celery@c24bfdae0219 ready.
+[2024-02-18 08:50:45,166: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 08:57:19,461: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 08:57:19,475: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 08:57:20,508: INFO/MainProcess] mingle: all alone
+[2024-02-18 08:57:20,524: INFO/MainProcess] celery@a25a0b5bc86b ready.
+[2024-02-18 08:57:25,958: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 09:04:08,893: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 09:04:08,908: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 09:04:09,939: INFO/MainProcess] mingle: all alone
+[2024-02-18 09:04:09,956: INFO/MainProcess] celery@9f981e3593c4 ready.
+[2024-02-18 09:04:15,418: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 09:08:59,992: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 09:09:00,008: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 09:09:01,050: INFO/MainProcess] mingle: all alone
+[2024-02-18 09:09:01,069: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-18 09:09:06,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 09:09:26,925: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 09:09:26,938: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 09:09:27,969: INFO/MainProcess] mingle: all alone
+[2024-02-18 09:09:27,993: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-18 09:09:31,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 09:20:52,496: INFO/MainProcess] Received task: create_task[c212c2f9-62ff-4dbc-b8ed-634e116236cc]  
+[2024-02-18 09:20:52,500: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-02-18 09:20:52,501: WARNING/ForkPoolWorker-3] netrc path:
+[2024-02-18 09:20:52,501: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-02-18 09:20:52,501: WARNING/ForkPoolWorker-3] netrc config:
+[2024-02-18 09:20:52,501: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7f830e5ccc70>
+[2024-02-18 09:20:52,502: WARNING/ForkPoolWorker-3] start_date:
+[2024-02-18 09:20:52,502: WARNING/ForkPoolWorker-3] 2022-11-01
+[2024-02-18 09:20:52,502: WARNING/ForkPoolWorker-3] end_date:
+[2024-02-18 09:20:52,502: WARNING/ForkPoolWorker-3] 2023-05-01
+[2024-02-18 09:20:52,504: WARNING/ForkPoolWorker-3] res:
+[2024-02-18 09:20:52,504: WARNING/ForkPoolWorker-3] ['2022-11-30/2023-05-01']
+[2024-02-18 09:20:54,290: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-02-18 09:20:54,291: WARNING/ForkPoolWorker-3] s3 token file not exist !
+[2024-02-18 09:20:56,087: WARNING/ForkPoolWorker-3] creds
+[2024-02-18 09:20:56,087: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES4VTANWHXP', 'secretAccessKey': 'TtU1rXcyWbq+joxxQ2XK/StumjOePKW/vaN2fpyH', 'sessionToken': 'FwoGZXIvYXdzECMaDJV10lctXoKVVkYQISLnAfJJZ1lO6IjxzpHq81qnloQmbs6LisvfkkggSvb8/gU+Xq4RKrqo+Ts5lKbXT/TZ19yxEpXxK7Rv5nCT1TcaIcoY+roc4QDxF2Hm2WaqFx89msszQCmYO8ja+nmchuoJYlCZKqDiCpgTxnuY9EaS843fg7AQAc8n+jsO2jBuOXXVW4JQrm4eVssWm4m9SyH1RoLV1INJe8XofXlO+2/rKEHGlUWRI0mxZ2avTCfVP7XjVPnAZ53wz40YVkVmCj6IGsQUIcdNzppE7TDi2pvwCydH6MPnvmGcYTMxtEjeJjOP3riQrohglyj4l8euBjItDT94bPREHOnmUFZF2bX5LqnT1cJLdld2Y9iXEy5N8Umsm/T1Co1YoPaSJwIp', 'expiration': '2024-02-18 10:20:56+00:00'}
+[2024-02-18 09:20:56,087: WARNING/ForkPoolWorker-3] writing new s3 token file !
+[2024-02-18 09:20:56,087: WARNING/ForkPoolWorker-3] creds:
+[2024-02-18 09:20:56,088: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES4VTANWHXP', 'secretAccessKey': 'TtU1rXcyWbq+joxxQ2XK/StumjOePKW/vaN2fpyH', 'sessionToken': 'FwoGZXIvYXdzECMaDJV10lctXoKVVkYQISLnAfJJZ1lO6IjxzpHq81qnloQmbs6LisvfkkggSvb8/gU+Xq4RKrqo+Ts5lKbXT/TZ19yxEpXxK7Rv5nCT1TcaIcoY+roc4QDxF2Hm2WaqFx89msszQCmYO8ja+nmchuoJYlCZKqDiCpgTxnuY9EaS843fg7AQAc8n+jsO2jBuOXXVW4JQrm4eVssWm4m9SyH1RoLV1INJe8XofXlO+2/rKEHGlUWRI0mxZ2avTCfVP7XjVPnAZ53wz40YVkVmCj6IGsQUIcdNzppE7TDi2pvwCydH6MPnvmGcYTMxtEjeJjOP3riQrohglyj4l8euBjItDT94bPREHOnmUFZF2bX5LqnT1cJLdld2Y9iXEy5N8Umsm/T1Co1YoPaSJwIp', 'expiration': '2024-02-18 10:20:56+00:00'}
+[2024-02-18 09:20:56,117: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2022361T161659.v2.0/HLS.S30.T17SLS.2022361T161659.v2.0.B05.tif
+[2024-02-18 09:20:56,117: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:56,127: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:56,361: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:56,521: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:56,522: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2022361T161659.v2.0/HLS.S30.T17SLS.2022361T161659.v2.0.B08.tif
+[2024-02-18 09:20:56,522: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:56,530: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:56,641: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:56,761: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:56,761: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2022361T161659.v2.0/HLS.S30.T17SLS.2022361T161659.v2.0.Fmask.tif
+[2024-02-18 09:20:56,761: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:56,771: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:56,889: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:57,010: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:57,010: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023006T161649.v2.0/HLS.S30.T17SLS.2023006T161649.v2.0.B05.tif
+[2024-02-18 09:20:57,010: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:57,019: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:57,147: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:57,263: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:57,263: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023006T161649.v2.0/HLS.S30.T17SLS.2023006T161649.v2.0.B08.tif
+[2024-02-18 09:20:57,263: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:57,271: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:57,383: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:57,497: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:57,497: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023006T161649.v2.0/HLS.S30.T17SLS.2023006T161649.v2.0.Fmask.tif
+[2024-02-18 09:20:57,497: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:57,505: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:57,587: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:57,702: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:57,702: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023051T161311.v2.0/HLS.S30.T17SLS.2023051T161311.v2.0.B05.tif
+[2024-02-18 09:20:57,702: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:57,711: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:57,839: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:57,953: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:57,953: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023051T161311.v2.0/HLS.S30.T17SLS.2023051T161311.v2.0.B08.tif
+[2024-02-18 09:20:57,954: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:57,962: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:58,131: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:58,261: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:58,261: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023051T161311.v2.0/HLS.S30.T17SLS.2023051T161311.v2.0.Fmask.tif
+[2024-02-18 09:20:58,261: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:58,270: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:58,392: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:58,525: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:58,525: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023101T160831.v2.0/HLS.S30.T17SLS.2023101T160831.v2.0.B05.tif
+[2024-02-18 09:20:58,525: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:58,533: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:58,663: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:58,791: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:58,792: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023101T160831.v2.0/HLS.S30.T17SLS.2023101T160831.v2.0.B08.tif
+[2024-02-18 09:20:58,792: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:58,800: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:58,911: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:59,045: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:59,046: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023101T160831.v2.0/HLS.S30.T17SLS.2023101T160831.v2.0.Fmask.tif
+[2024-02-18 09:20:59,046: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:59,055: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:59,149: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:59,268: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:59,268: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023121T160821.v2.0/HLS.S30.T17SLS.2023121T160821.v2.0.B05.tif
+[2024-02-18 09:20:59,268: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:59,277: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:59,407: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:59,545: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:59,546: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023121T160821.v2.0/HLS.S30.T17SLS.2023121T160821.v2.0.B08.tif
+[2024-02-18 09:20:59,546: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:59,554: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:59,679: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:20:59,800: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:20:59,800: WARNING/ForkPoolWorker-3] s3://lp-prod-protected/HLSS30.020/HLS.S30.T17SLS.2023121T160821.v2.0/HLS.S30.T17SLS.2023121T160821.v2.0.Fmask.tif
+[2024-02-18 09:20:59,800: WARNING/ForkPoolWorker-3] 32617
+[2024-02-18 09:20:59,809: WARNING/ForkPoolWorker-3] roi processed
+[2024-02-18 09:20:59,937: WARNING/ForkPoolWorker-3] squeezed
+[2024-02-18 09:21:00,055: WARNING/ForkPoolWorker-3] clipped
+[2024-02-18 09:21:01,440: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-02-18 09:21:01,441: WARNING/ForkPoolWorker-3] data shape:
+[2024-02-18 09:21:01,441: WARNING/ForkPoolWorker-3] (15, 33, 44)
+[2024-02-18 09:21:01,448: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:37: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-02-18 09:21:01,452: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:38: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-02-18 09:21:17,221: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:90: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-02-18 09:21:17,226: WARNING/ForkPoolWorker-3] data.shape:
+[2024-02-18 09:21:17,226: WARNING/ForkPoolWorker-3] (15, 33, 44)
+[2024-02-18 09:21:17,226: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-02-18 09:21:17,226: WARNING/ForkPoolWorker-3] (33, 44)
+[2024-02-18 09:21:17,618: INFO/ForkPoolWorker-3] Task create_task[c212c2f9-62ff-4dbc-b8ed-634e116236cc] succeeded in 25.118507895618677s: '{"time_elapsed": "8.9 seconds", "tile_num": 5, "dates": ["22-12-27:16-24-15", "23-01-06:16-24-13", "23-02-20:16-24-13", "23-04-11:16-24-16", "23-05-01:16-24-16"], "bbox": [-82.26622447166716, 32.87193208855119, -82.25199237621575, 32.863145882811615], "epsg": ["32617", "32617", "32617", "32617", "32617"], "data_array": [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 8996.342835680989, 10827.047425037505, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 9072.144232404396, 10673.743990807045, 11174.245741499837, 11351.499393258193, 10425.954832538826, 8668.568942610855, 9816.14020619125, 14606.107823212262, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,...'

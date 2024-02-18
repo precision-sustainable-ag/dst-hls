@@ -22,18 +22,11 @@ services:
   nitrogen:
     build: ./api_nitrogen
     ports:
-      - 8004:8000
-      - 8893:8893
-    command: uvicorn main:app --host 0.0.0.0 --reload
+      - 8005:8000
     volumes:
-      - ./api_biomass:/usr/src/app
+      - ./api_nitrogen:/code
     env_file:
       - ".env"
-    environment:
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    depends_on:
-      - redis
     networks:
       - sharednet
 

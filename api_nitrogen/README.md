@@ -6,6 +6,11 @@ This API provides information about plant species, plant groups, plant growth st
 
 ### GET /
 
+- Description: Show Documentations
+- Response: Swagger UI
+
+### GET /health
+
 - Description: Check the health status of the API.
 - Response:
   ```json

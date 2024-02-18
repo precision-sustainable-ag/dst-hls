@@ -2,9 +2,24 @@ import json
 from typing import Union
 from fastapi import FastAPI
 from fastapi.exceptions import HTTPException
+from fastapi.responses import RedirectResponse
 from .constants import species, plant_groups, plant_growth_stages
 
-app = FastAPI()
+description = """
+Plants Factors API for Ncalc DST tool. 🌱 🌿 🍀
+"""
+
+app = FastAPI(
+    title="Plants Factors API",
+    description=description,
+    summary="Plants Factors API for Ncalc DST tool",
+    version="0.0.1",
+    terms_of_service="For more information about Precision Sustainable Agriculture projects, please visit https://precisionsustainableag.org/",
+    contact={
+        "name": "Precision Sustainable Agriculture",
+        "url": "https://precisionsustainableag.org/",
+    },
+)
 
 with open('app/assets/plant_growth_lut.json') as fp:
     plant_growth_lut = json.loads(fp.read())
@@ -15,6 +30,11 @@ for key, val in species.items():
 
 
 @app.get("/")
+async def docs_redirect():
+    return RedirectResponse(url='/docs')
+
+
+@app.get("/health")
 def read_root():
     return {"health": "ok"}
 

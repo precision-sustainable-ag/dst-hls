@@ -3,3 +3,4 @@
 .netrc
 **/ssl/
 api/celery/logs/celery.log
+reverse-proxy/config/caddy

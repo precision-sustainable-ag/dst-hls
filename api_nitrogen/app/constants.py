@@ -44,3 +44,12 @@ species = {
     'Vetch, Hairy',
   ],
 }
+
+plant_groups = ['Brassica', 'Broadleaf', 'Grass', 'Legume']
+
+plant_growth_stages = {
+  'Grass': ['pre-stemming', 'stemming', 'post-stemming'],
+  'Brassica': ['pre-flowering', 'post-flowering'],
+  'Legume': ['pre-flowering', 'post-flowering'],
+  'Broadleaf': ['pre-flowering', 'post-flowering'],
+}

@@ -64,6 +64,7 @@ class Fetch:
         else:
             print("s3 token file not exist !")
             creds = requests.get(temp_creds_url).json()
+            print('creds', creds)
             with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
                 print("writing new s3 token file !")
                 json.dump(creds, f, ensure_ascii=False, indent=4)

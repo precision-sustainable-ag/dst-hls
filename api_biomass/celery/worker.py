@@ -66,18 +66,24 @@ def create_task(payload):
     cum_par_gdd_ndvi_re1 = np.zeros(data.shape[1:])
     bare_ground_ndvi =  0.094545911
     ndvi_re1_arr = []
+    cloud_arr = []
     for i in range(nr_images):
         redEdge = data[3*i+0]
         nir = data[3*i+1]
         cloud = data[3*i+2]
         ndvi_re1 = (nir-redEdge)/(nir+redEdge)
         ndvi_re1_arr.append(ndvi_re1)
+        cloud_arr.append(cloud)
     ndvi_re1_arr = np.array(ndvi_re1_arr)
+    cloud_arr = np.array(cloud_arr)
     ndvi_re1_arr = ndvi_re1_arr.reshape(ndvi_re1_arr.shape[0], -1)
 
     x_vals = [list(weather_all.Date.dt.strftime('%Y-%m-%d')).index("20" + el.split(":")[0])  for el in dates]
+    # print('dates: ', dates)
+    # print('x_vals:', x_vals)
     linfit = interp1d(x_vals, ndvi_re1_arr, axis=0)
     interpolated = linfit(list(range(len(weather_all))))
+    # print('interpolated:', interpolated)
     interpolated[0,:] = bare_ground_ndvi
     interpolated = interpolated - bare_ground_ndvi
     gdd44 = weather_all['GDD_4.4_day']
@@ -108,6 +114,12 @@ def create_task(payload):
                             'epsg': epsg,
                             'data_array': biomass,
                             'mask_array': mask_array,
+                            'par_gdd44_ndvi': par_gdd44_ndvi,
+                            'interpolated': interpolated,
+                            'par_gdd44': list(weather_all['PAR']*gdd44),
+                            'ndvi_re1_arr': ndvi_re1_arr,
+                            'cloud': cloud,
+                            'cloud_arr': cloud_arr,
                             },
                            cls=NumpyEncoder
                           )

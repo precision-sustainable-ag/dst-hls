@@ -7032,3 +7032,13 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 [2024-02-18 21:10:04,907: INFO/MainProcess] mingle: all alone
 [2024-02-18 21:10:04,927: INFO/MainProcess] celery@1d66e8c38aea ready.
 [2024-02-18 21:10:06,461: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 22:10:07,001: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 22:10:07,017: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 22:10:08,048: INFO/MainProcess] mingle: all alone
+[2024-02-18 22:10:08,065: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-18 22:10:11,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-18 23:10:10,112: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-18 23:10:10,124: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-18 23:10:11,154: INFO/MainProcess] mingle: all alone
+[2024-02-18 23:10:11,174: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-18 23:10:11,458: INFO/MainProcess] Events of group {task} enabled by remote.

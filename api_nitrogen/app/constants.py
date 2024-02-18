@@ -1,55 +1,55 @@
 species = {
-  'Brassica': [
-    'Brassica, Forage',
-    'Mustard',
-    'Radish, Forage',
-    'Radish, Oilseed',
-    'Rape, Oilseed',
-    'Rapeseed, Forage',
-    'Turnip, Forage',
-    'Turnip, Purple Top',
+  "brassica": [
+    "brassica, forage",
+    "mustard",
+    "radish, forage",
+    "radish, oilseed",
+    "rape, oilseed",
+    "rapeseed, forage",
+    "turnip, forage",
+    "turnip, purple top"
   ],
-  'Broadleaf': [
-    'Phacelia',
-    'Sunflower',
+  "broadleaf": [
+    "phacelia",
+    "sunflower"
   ],
-  'Grass': [
-    'Barley',
-    'Cereal Rye',
-    'Millet, Foxtail',
-    'Millet, Japanese',
-    'Millet, Pearl',
-    'Oats',
-    'Ryegrass, Annual',
-    'Ryegrass, Perennial',
-    'Sorghum',
-    'Sorghum-sudangrass',
-    'Sudangrass',
-    'Teff',
-    'Triticale',
-    'Wheat',
+  "grass": [
+    "barley",
+    "cereal rye",
+    "millet, foxtail",
+    "millet, japanese",
+    "millet, pearl",
+    "oats",
+    "ryegrass, annual",
+    "ryegrass, perennial",
+    "sorghum",
+    "sorghum-sudangrass",
+    "sudangrass",
+    "teff",
+    "triticale",
+    "wheat"
   ],
-  'Legume': [
-    'Alfalfa, Dormant',
-    'Clover, Alsike',
-    'Clover, Balansa',
-    'Clover, Berseem',
-    'Clover, Crimson',
-    'Clover, Red',
-    'Clover, White',
-    'Cowpea',
-    'Pea',
-    'Sunn Hemp',
-    'Sweetclover, Yellow',
-    'Vetch, Hairy',
-  ],
+  "legume": [
+    "alfalfa, dormant",
+    "clover, alsike",
+    "clover, balansa",
+    "clover, berseem",
+    "clover, crimson",
+    "clover, red",
+    "clover, white",
+    "cowpea",
+    "pea",
+    "sunn hemp",
+    "sweetclover, yellow",
+    "vetch, hairy"
+  ]
 }
 
-plant_groups = ['Brassica', 'Broadleaf', 'Grass', 'Legume']
+plant_groups = ['brassica', 'broadleaf', 'grass', 'legume']
 
 plant_growth_stages = {
-  'Grass': ['pre-stemming', 'stemming', 'post-stemming'],
-  'Brassica': ['pre-flowering', 'post-flowering'],
-  'Legume': ['pre-flowering', 'post-flowering'],
-  'Broadleaf': ['pre-flowering', 'post-flowering'],
+  'grass': ['prestemming', 'stemming', 'poststemming'],
+  'brassica': ['preflowering', 'postflowering'],
+  'legume': ['preflowering', 'postflowering'],
+  'broadleaf': ['preflowering', 'postflowering'],
 }

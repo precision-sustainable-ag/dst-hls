@@ -22,7 +22,7 @@ for plant_group in plant_growth_stages:
         'nitrogen_percentage': round(random.uniform(*nitrogen_percentage_range),2),
         'carbohydrates_percentage': round(random.uniform(*carbohydrates_percentage_range),2),
         'holo_cellulose_percentage': round(random.uniform(*holo_cellulose_percentage_range),2),
-        'lignin_cellulose_percentage': round(random.uniform(*lignin_percentage_range),2),
+        'lignin_percentage': round(random.uniform(*lignin_percentage_range),2),
       }
       lut[specie][stage] = factors
     

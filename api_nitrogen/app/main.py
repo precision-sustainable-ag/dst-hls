@@ -32,14 +32,14 @@ for key, val in species.items():
 
 
 class PlantFactors(BaseModel):
-    plant_specie: Optional[str] = Field (Query(..., description="Input a species name"))
+    plant_species: Optional[str] = Field (Query(..., description="Input a species name"))
     growth_stage: Optional[str] = Field (Query(..., description="Type in plant's growth stage"))
     @model_validator(mode='after')
     def check_growth_stage(self) -> 'PlantFactors':
-        if not self.plant_specie in plant_growth_lut.keys():
+        if not self.plant_species in plant_growth_lut.keys():
              raise HTTPException(status_code=422, detail='Wrong choice of plant species')
          
-        if not self.growth_stage in plant_growth_lut[self.plant_specie]:
+        if not self.growth_stage in plant_growth_lut[self.plant_species]:
              raise HTTPException(status_code=422, detail='Wrong plant growing stage was entered')
         return self
 
@@ -60,15 +60,21 @@ def read_species():
 
 
 @app.get("/plantgroups")
-def read_species():
+def read_plantgroups():
     return plant_groups
 
 
 @app.get("/plantgrowthstages")
-def read_species():
+def read_plantgrowthstages():
     return plant_growth_stages
 
 
 @app.get("/plantfactors")
-def read_species(factors: PlantFactors = Depends()):
-    return plant_growth_lut[factors.plant_specie][factors.growth_stage]
+def read_plantfactors():
+    return plant_growth_lut
+
+
+@app.get("/plantfactors")
+def read_plantfactors(factors: PlantFactors = Depends()):
+    return plant_growth_lut[factors.plant_species][factors.growth_stage]
+

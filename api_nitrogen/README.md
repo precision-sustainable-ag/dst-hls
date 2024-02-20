@@ -75,7 +75,7 @@ This API provides information about plant species, plant groups, plant growth st
 
 - Description: Get factors for a specific plant species and growth stage.
 - Parameters:
-  - `plant_specie`: The name of the plant species.
+  - `plant_species`: The name of the plant species.
   - `growth_stage`: The growth stage of the plant.
 - Response: Factors for the specified plant species and growth stage.
   

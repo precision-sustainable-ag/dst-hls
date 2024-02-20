@@ -51,7 +51,7 @@ This API provides information about plant species, plant groups, plant growth st
 - Response:
   ```json
   {
-    "plant_specie_1": {
+    "plant_species_1": {
       "growth_stage_1": {
         "factor_1": value_1,
         "factor_2": value_2,
@@ -64,7 +64,7 @@ This API provides information about plant species, plant groups, plant growth st
       },
       ...
     },
-    "plant_specie_2": {
+    "plant_species_2": {
       ...
     },
     ...

@@ -7082,3 +7082,153 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 [2024-02-19 07:10:35,288: INFO/MainProcess] mingle: all alone
 [2024-02-19 07:10:35,309: INFO/MainProcess] celery@1d66e8c38aea ready.
 [2024-02-19 07:10:36,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 08:10:37,330: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 08:10:37,343: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 08:10:38,373: INFO/MainProcess] mingle: all alone
+[2024-02-19 08:10:38,388: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 08:10:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 09:10:40,228: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 09:10:40,245: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 09:10:41,279: INFO/MainProcess] mingle: all alone
+[2024-02-19 09:10:41,296: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 09:10:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 10:10:43,214: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 10:10:43,227: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 10:10:44,259: INFO/MainProcess] mingle: all alone
+[2024-02-19 10:10:44,287: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 10:10:46,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 11:10:46,375: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 11:10:46,388: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 11:10:47,426: INFO/MainProcess] mingle: all alone
+[2024-02-19 11:10:47,446: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 11:10:51,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 12:10:49,407: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 12:10:49,423: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 12:10:50,460: INFO/MainProcess] mingle: all alone
+[2024-02-19 12:10:50,481: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 12:10:51,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 13:10:52,393: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 13:10:52,410: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 13:10:53,447: INFO/MainProcess] mingle: all alone
+[2024-02-19 13:10:53,465: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 13:10:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 14:10:55,538: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 14:10:55,551: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 14:10:56,585: INFO/MainProcess] mingle: all alone
+[2024-02-19 14:10:56,602: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 14:11:01,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 15:11:00,258: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 15:11:00,272: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 15:11:01,306: INFO/MainProcess] mingle: all alone
+[2024-02-19 15:11:01,328: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 15:11:01,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 16:11:02,432: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 16:11:02,445: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 16:11:03,475: INFO/MainProcess] mingle: all alone
+[2024-02-19 16:11:03,499: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 16:11:06,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 17:11:05,799: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 17:11:05,826: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 17:11:06,871: INFO/MainProcess] mingle: all alone
+[2024-02-19 17:11:06,888: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 17:11:11,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 18:11:09,271: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 18:11:09,289: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 18:11:10,320: INFO/MainProcess] mingle: all alone
+[2024-02-19 18:11:10,336: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 18:11:11,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 19:11:12,341: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 19:11:12,359: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 19:11:13,394: INFO/MainProcess] mingle: all alone
+[2024-02-19 19:11:13,409: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 19:11:16,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 20:11:15,293: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 20:11:15,306: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 20:11:16,338: INFO/MainProcess] mingle: all alone
+[2024-02-19 20:11:16,358: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 20:11:16,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 21:11:18,193: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 21:11:18,210: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 21:11:19,241: INFO/MainProcess] mingle: all alone
+[2024-02-19 21:11:19,258: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 21:11:21,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 22:11:21,690: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 22:11:21,706: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 22:11:22,737: INFO/MainProcess] mingle: all alone
+[2024-02-19 22:11:22,758: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 22:11:26,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-19 23:11:24,361: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-19 23:11:24,374: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-19 23:11:25,407: INFO/MainProcess] mingle: all alone
+[2024-02-19 23:11:25,427: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-19 23:11:26,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 00:11:27,508: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 00:11:27,522: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 00:11:28,566: INFO/MainProcess] mingle: all alone
+[2024-02-20 00:11:28,587: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 00:11:31,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 01:11:30,421: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 01:11:30,436: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 01:11:31,476: INFO/MainProcess] mingle: all alone
+[2024-02-20 01:11:31,491: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 01:11:36,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 02:11:33,734: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 02:11:33,750: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 02:11:34,785: INFO/MainProcess] mingle: all alone
+[2024-02-20 02:11:34,810: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 02:11:36,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 03:11:36,484: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 03:11:36,510: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 03:11:37,541: INFO/MainProcess] mingle: all alone
+[2024-02-20 03:11:37,555: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 03:11:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 04:11:40,109: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 04:11:40,128: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 04:11:41,172: INFO/MainProcess] mingle: all alone
+[2024-02-20 04:11:41,189: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 04:11:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 05:11:42,544: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 05:11:42,559: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 05:11:43,589: INFO/MainProcess] mingle: all alone
+[2024-02-20 05:11:43,608: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 05:11:46,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 06:11:46,001: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 06:11:46,018: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 06:11:47,066: INFO/MainProcess] mingle: all alone
+[2024-02-20 06:11:47,087: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 06:11:51,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 07:11:49,080: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 07:11:49,094: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 07:11:50,129: INFO/MainProcess] mingle: all alone
+[2024-02-20 07:11:50,158: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 07:11:51,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 08:11:52,046: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 08:11:52,059: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 08:11:53,091: INFO/MainProcess] mingle: all alone
+[2024-02-20 08:11:53,115: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 08:11:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 09:11:54,911: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 09:11:54,947: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 09:11:55,983: INFO/MainProcess] mingle: all alone
+[2024-02-20 09:11:56,014: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 09:11:56,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 10:11:57,943: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 10:11:57,956: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 10:11:58,987: INFO/MainProcess] mingle: all alone
+[2024-02-20 10:11:59,006: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 10:12:01,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 11:12:00,995: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 11:12:01,007: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 11:12:02,038: INFO/MainProcess] mingle: all alone
+[2024-02-20 11:12:02,055: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 11:12:06,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 12:12:03,955: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 12:12:03,971: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 12:12:05,002: INFO/MainProcess] mingle: all alone
+[2024-02-20 12:12:05,019: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 12:12:06,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-02-20 13:12:06,848: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-02-20 13:12:06,864: INFO/MainProcess] mingle: searching for neighbors
+[2024-02-20 13:12:07,895: INFO/MainProcess] mingle: all alone
+[2024-02-20 13:12:07,914: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-02-20 13:12:11,459: INFO/MainProcess] Events of group {task} enabled by remote.

@@ -1,8 +1,11 @@
 import json
 from typing import Union
-from fastapi import FastAPI
+from typing_extensions import Self
+from fastapi import FastAPI, Depends, Query
 from fastapi.exceptions import HTTPException
 from fastapi.responses import RedirectResponse
+from pydantic import BaseModel, Field, validator, ValidationError, model_validator
+from typing import List, Optional, Literal
 from .constants import species, plant_groups, plant_growth_stages
 
 description = """
@@ -10,9 +13,8 @@ Plants Factors API for Ncalc DST tool. 🌱 🌿 🍀
 """
 
 app = FastAPI(
-    title="Plants Factors API",
+    title="Plants Factors API - CC-NCALC",
     description=description,
-    summary="Plants Factors API for Ncalc DST tool",
     version="0.0.1",
     terms_of_service="For more information about Precision Sustainable Agriculture projects, please visit https://precisionsustainableag.org/",
     contact={
@@ -27,6 +29,19 @@ with open('app/assets/plant_growth_lut.json') as fp:
 species_lower = {}
 for key, val in species.items():
     species_lower[key.lower()] = [v.lower() for v in val] 
+
+
+class PlantFactors(BaseModel):
+    plant_specie: Optional[str] = Field (Query(..., description="Input a species name"))
+    growth_stage: Optional[str] = Field (Query(..., description="Type in plant's growth stage"))
+    @model_validator(mode='after')
+    def check_growth_stage(self) -> 'PlantFactors':
+        if not self.plant_specie in plant_growth_lut.keys():
+             raise HTTPException(status_code=422, detail='Wrong choice of plant species')
+         
+        if not self.growth_stage in plant_growth_lut[self.plant_specie]:
+             raise HTTPException(status_code=422, detail='Wrong plant growing stage was entered')
+        return self
 
 
 @app.get("/")
@@ -55,17 +70,5 @@ def read_species():
 
 
 @app.get("/plantfactors")
-def read_species():
-    return plant_growth_lut
-
-
-@app.get("/plantfactors/{plant_specie}/{growth_stage}")
-async def plant_fators(plant_specie: str = None, growth_stage: str = None):
-    if not plant_specie in plant_growth_lut.keys():
-        raise HTTPException(status_code=404, detail=f"{plant_specie} doesn't exist and is not a valid plant specie")
-    
-    if not growth_stage in plant_growth_lut[plant_specie]:
-        raise HTTPException(status_code=404, detail=f"{growth_stage} doesn't exist and is not a valid plant growth stage")
-    
-    return plant_growth_lut[plant_specie][growth_stage]
-
+def read_species(factors: PlantFactors = Depends()):
+    return plant_growth_lut[factors.plant_specie][factors.growth_stage]

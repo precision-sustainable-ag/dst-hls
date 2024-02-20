@@ -71,7 +71,7 @@ This API provides information about plant species, plant groups, plant growth st
   }
   ```
 
-### GET /plantfactors/{plant_specie}/{growth_stage}
+### GET /plantfactors?plant_species={plant_species}&growth_stage={growth_stage}
 
 - Description: Get factors for a specific plant species and growth stage.
 - Parameters:

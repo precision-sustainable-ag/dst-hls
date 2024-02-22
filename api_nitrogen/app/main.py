@@ -1,11 +1,13 @@
 import json
-from typing import Union
+import numpy as np
+from typing import Union, List
 from typing_extensions import Self
 from fastapi import FastAPI, Depends, Query
 from fastapi.exceptions import HTTPException
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, Field, validator, ValidationError, model_validator
 from typing import List, Optional, Literal
+from fastapi.middleware.cors import CORSMiddleware
 from .constants import species, plant_groups, plant_growth_stages
 
 description = """
@@ -21,6 +23,15 @@ app = FastAPI(
         "name": "Precision Sustainable Agriculture",
         "url": "https://precisionsustainableag.org/",
     },
+)
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 with open('app/assets/plant_growth_lut.json') as fp:
@@ -69,7 +80,7 @@ def read_plantgrowthstages():
     return plant_growth_stages
 
 
-@app.get("/plantfactors")
+@app.get("/allplantfactors")
 def read_plantfactors():
     return plant_growth_lut
 
@@ -78,3 +89,18 @@ def read_plantfactors():
 def read_plantfactors(factors: PlantFactors = Depends()):
     return plant_growth_lut[factors.plant_species][factors.growth_stage]
 
+
+class BiomassPayload(BaseModel):
+    data_array: List[List[float]] = [[1,2], [3,4]]
+    nitrogen_percentage: float = 0.0
+    carbohydrates_percentage: float = 0.0
+    holo_cellulose_percentage: float = 0.0
+    lignin_percentage: float = 0.0
+    bbox: List[float] = [0,0,0,0]
+    
+
+@app.post("/nitrogen")
+async def read_nitrogen(biomass_payload: BiomassPayload):
+    biomass_payload.data_array = (0.001*np.array(biomass_payload.data_array)**2).tolist()
+    
+    return biomass_payload

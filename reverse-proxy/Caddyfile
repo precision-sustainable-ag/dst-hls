@@ -10,6 +10,6 @@ covercrop-imagery.org/flower {
 }
 
 api.covercrop-imagery.org {
-	tls /home/certificate.pem /home/key.pem
-    reverse_proxy 10.5.0.1:8004
+    tls /home/certificate.pem /home/key.pem
+    reverse_proxy 10.5.0.1:8005
 }

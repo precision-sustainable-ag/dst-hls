@@ -54,13 +54,12 @@ def read_roi_from_file(fpath):
 def with_rio(session):
     """
     decorator to wrap the rasterio operation code and
-    provide the environment contect for GDAL and AWS Session
+    provide the environment context for GDAL and AWS Session
 
     Args:
         session (rasterio.session.AWSSession): an aws session
             costumized for rasterio
     """
-
     def wrap(func):
         def wrapped_f(*args, **kwargs):
             rio_env = rio.Env(

@@ -12,4 +12,4 @@ COPY celery/.netrc /root
 ENV PYTHONUNBUFFERED True
 ENV PORT 8090
 
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $PORT"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --reload"]

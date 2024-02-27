@@ -46,8 +46,6 @@ async def get_task_status(task_id: str) -> TaskResopnseModel:
     })
     return JSONResponse(result)
 
-
-
 app = FastAPI(
     debug=True,
     docs_url=f'{API_PREFIX}/docs',

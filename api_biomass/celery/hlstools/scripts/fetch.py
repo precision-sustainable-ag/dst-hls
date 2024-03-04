@@ -4,6 +4,7 @@ for interaction with HLS server
 """
 import os
 import json
+import time
 import numpy as np
 from datetime import datetime
 # from functools import lru_cache
@@ -41,9 +42,11 @@ class Fetch:
         return geom_transformed
 
     # @with_rio(create_session())
-    def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False):
+    def fetch_images(self, dataframe, bands, geom, ids=None, get_rgb=False, update_func=None):
         temp_aws_s3_token = '/home/.aws_s3_session.json'
         temp_creds_url = config("TEMP_CRED_URL", cast=str)
+        ##### STATE UPDATE #####
+        if update_func: update_func(state='PENDING', meta={'message': f'generate new token'})
         if os.path.exists(temp_aws_s3_token):
             print(f"s3 token exists")
             with open(temp_aws_s3_token) as f:
@@ -70,7 +73,8 @@ class Fetch:
                 json.dump(creds, f, ensure_ascii=False, indent=4)
             
         print("creds: ", creds)
-        
+        ##### STATE UPDATE #####
+        if update_func: update_func(state='PENDING', meta={'message': f'establishing connection with HLS server'})
         session = boto3.Session(
             aws_access_key_id=creds["accessKeyId"],
             aws_secret_access_key=creds["secretAccessKey"],
@@ -104,19 +108,27 @@ class Fetch:
                     band_name = S30BANDS[band]
                 s3_links.append(urls[band_name])
                 epsg_list.append(epsg)
+        ##### STATE UPDATE #####
+        if update_func: update_func(state='PENDING', meta={'message': f'found {int(len(s3_links)/3)} images'})
+        time.sleep(0.1)
         new_dim = xr.Variable('uid', index_from_filenames(s3_links))
         chunks = dict(band=1, x=256, y=256)
         # roi = self.preprocess_roi(geom, epsg)
         tasks = []
+        kk = 1
         for link, epsg in zip(s3_links, epsg_list):
-            print(link, epsg)
+            ##### STATE UPDATE #####
+            if update_func and kk%3==0: update_func(state='PENDING', meta={'message': f'fetching image #{int(kk/3)}/{int(len(s3_links)/3)}'})
+            # print(link, epsg)
             roi = self.preprocess_roi(geom, epsg)
-            print("roi processed")
+            # print(link)
             task = rioxarray.open_rasterio(link, chunks=chunks).squeeze('band', drop=True)
-            print("squeezed")
+            # print("squeezed")
             task = task.rio.clip([roi])
             print("clipped")
             tasks.append(task)
+            kk+=1
+            
         self._hls_ts_da = xr.concat(tasks, dim=new_dim)
         # self._hls_ts_da = self._hls_ts_da.rio.clip([roi])
         arr = self._hls_ts_da.to_masked_array()

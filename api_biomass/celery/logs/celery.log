@@ -4005,3 +4005,1115 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 [2024-03-04 16:28:26,179: INFO/MainProcess] mingle: all alone
 [2024-03-04 16:28:26,215: INFO/MainProcess] celery@1d66e8c38aea ready.
 [2024-03-04 16:28:26,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 17:28:28,357: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 17:28:28,370: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 17:28:29,403: INFO/MainProcess] mingle: all alone
+[2024-03-04 17:28:29,430: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 17:28:31,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 18:28:31,829: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 18:28:31,843: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 18:28:32,875: INFO/MainProcess] mingle: all alone
+[2024-03-04 18:28:32,897: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 18:28:36,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 19:28:34,379: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 19:28:34,393: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 19:28:35,425: INFO/MainProcess] mingle: all alone
+[2024-03-04 19:28:35,444: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 19:28:36,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 20:01:45,139: INFO/MainProcess] Received task: create_task[e0d6e3b8-1783-41e4-9371-ff40b57b44af]  
+[2024-03-04 20:01:45,149: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:01:45,151: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:01:45,151: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:01:45,151: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:01:45,151: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:01:45,152: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:01:45,152: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-03-04 20:01:45,152: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:01:45,152: WARNING/ForkPoolWorker-3] 2023-03-03
+[2024-03-04 20:01:45,154: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:01:45,154: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-03-03']
+[2024-03-04 20:01:46,893: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-03-04 20:01:46,895: WARNING/ForkPoolWorker-3] s3 token exists
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] current s3 creds:
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES4V6NMEQ4O', 'secretAccessKey': '9T1ZPzN37FFphwRZFm6WHLtTHOgdMbZFGXyDrBhY', 'sessionToken': 'FwoGZXIvYXdzEIn//////////wEaDFlRkPH/Zbo+lOAMKCLnARq3c9X3g1LQSV/it3POnXHjeL4fSxOY7OMSOfyEjGzZm2GRXohVHn7vGdnGdu42l4jaoUL23e5BwUhIEqSpdnpqhbDXskWAdHkb0zrhnpSPsGPJUHmWOOms0yyuQo6e2ka7vhTBVIboqZguC7yldOYMGlE5wNuXNfpbp9JtOwtZ0jj49OncL2tcN/0srfEOHngmqssU9PNbYAj0zrtTYbl2qTweZ/+GQoAmprHaN0qi1s3CWNWX0gXfMyTI8jXE48G3yHMPC0rrlPOaOkb94o4pVLUfPcAzAGauRm04S64vQUeNPCdVRSjV6JWvBjItOHsWg8kgR507KHzQtnb49XYfXrko7UyeI9OizJu8/sya1vb4HtKe5jUJLWpn', 'expiration': '2024-03-04 08:12:21+00:00'}
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] current s3 curr time:
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] 2024-03-04 20:01:46.897623
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] current s3 expire time:
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] 2024-03-04 08:12:21
+[2024-03-04 20:01:46,897: WARNING/ForkPoolWorker-3] current s3 expire delta:
+[2024-03-04 20:01:46,898: WARNING/ForkPoolWorker-3] -11.823860374722221
+[2024-03-04 20:01:46,898: WARNING/ForkPoolWorker-3] refreshing s3 token ...
+[2024-03-04 20:01:49,013: WARNING/ForkPoolWorker-3] new creds:
+[2024-03-04 20:01:49,014: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:01:49,014: WARNING/ForkPoolWorker-3] writing new s3 token file !
+[2024-03-04 20:01:49,015: WARNING/ForkPoolWorker-3] creds:
+[2024-03-04 20:01:49,015: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:01:49,576: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:49,871: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:50,105: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:50,368: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:50,607: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:50,836: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:51,099: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:51,449: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:51,695: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:51,940: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:52,218: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:52,477: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:52,814: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:53,053: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:53,309: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:53,549: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:53,781: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:54,031: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:54,328: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:54,563: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:54,849: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:55,162: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:55,498: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:55,732: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:01:58,362: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-03-04 20:01:58,363: WARNING/ForkPoolWorker-3] data shape::::
+[2024-03-04 20:01:58,363: WARNING/ForkPoolWorker-3] (24, 21, 31)
+[2024-03-04 20:01:58,370: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:47: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-03-04 20:01:58,373: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:48: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-03-04 20:01:59,435: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:105: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-03-04 20:01:59,438: WARNING/ForkPoolWorker-3] data.shape:
+[2024-03-04 20:01:59,439: WARNING/ForkPoolWorker-3] (24, 21, 31)
+[2024-03-04 20:01:59,439: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-03-04 20:01:59,439: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-03-04 20:01:59,583: INFO/ForkPoolWorker-3] Task create_task[e0d6e3b8-1783-41e4-9371-ff40b57b44af] succeeded in 14.439301110804081s: '{"time_elapsed": "13.2 seconds", "tile_num": 8, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[406.0462723410646, 406.26076807054085, 506.95163873858957, 448.0923928368764, 599.2707871533363, 537.4080061914149, 436.0762507706183, 208.56471328424624, 449.2065304630405, 463.5270290883105, 383.24667559937365, 341.9210350769718, 327.81840145975735, 396.3706673359946, 358.8892064214606, 315.99031895728024, 388.0236474069294, 364.2036725042864, 352.0474547533143, 375.1170678498633, 399.1431169327519, 398.6782726063383, 306.5889687120866, 318.38528183650214, 421.00477934644147, 322.69822505790023, 284.42320921761547, 617.3591814045859, 380.19150521575193, 237.1645561671255, 368.95946676285246],...'
+[2024-03-04 20:05:52,534: INFO/MainProcess] Received task: create_task[110a63e7-fbb0-4926-8061-7258178cc3d5]  
+[2024-03-04 20:05:52,540: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:05:52,542: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:05:52,543: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:05:52,543: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:05:52,543: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:05:52,544: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:05:52,544: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-03-04 20:05:52,544: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:05:52,544: WARNING/ForkPoolWorker-3] 2023-03-03
+[2024-03-04 20:05:52,545: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:05:52,545: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-03-03']
+[2024-03-04 20:05:54,221: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-03-04 20:05:54,223: WARNING/ForkPoolWorker-3] s3 token exists
+[2024-03-04 20:05:54,223: WARNING/ForkPoolWorker-3] current s3 creds:
+[2024-03-04 20:05:54,223: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:05:54,223: WARNING/ForkPoolWorker-3] current s3 curr time:
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] 2024-03-04 20:05:54.223886
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] current s3 expire time:
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] 2024-03-04 21:01:48
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] current s3 expire delta:
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] 0.9316045399999999
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] creds:
+[2024-03-04 20:05:54,224: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:05:54,532: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:54,729: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:54,912: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,075: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,213: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,366: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,500: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,637: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,774: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:55,909: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:56,045: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:56,193: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:56,380: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:56,564: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:56,725: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:56,888: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,050: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,212: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,352: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,490: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,640: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,788: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:57,934: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:58,084: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:05:58,271: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-03-04 20:05:58,271: WARNING/ForkPoolWorker-3] data shape::::
+[2024-03-04 20:05:58,272: WARNING/ForkPoolWorker-3] (24, 21, 31)
+[2024-03-04 20:05:58,278: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:47: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-03-04 20:05:58,281: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:48: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-03-04 20:05:58,963: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:105: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-03-04 20:05:58,967: WARNING/ForkPoolWorker-3] data.shape:
+[2024-03-04 20:05:58,967: WARNING/ForkPoolWorker-3] (24, 21, 31)
+[2024-03-04 20:05:58,968: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-03-04 20:05:58,968: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-03-04 20:05:59,120: INFO/ForkPoolWorker-3] Task create_task[110a63e7-fbb0-4926-8061-7258178cc3d5] succeeded in 6.582846987992525s: '{"time_elapsed": "5.7 seconds", "tile_num": 8, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[406.0462723410646, 406.26076807054085, 506.95163873858957, 448.0923928368764, 599.2707871533363, 537.4080061914149, 436.0762507706183, 208.56471328424624, 449.2065304630405, 463.5270290883105, 383.24667559937365, 341.9210350769718, 327.81840145975735, 396.3706673359946, 358.8892064214606, 315.99031895728024, 388.0236474069294, 364.2036725042864, 352.0474547533143, 375.1170678498633, 399.1431169327519, 398.6782726063383, 306.5889687120866, 318.38528183650214, 421.00477934644147, 322.69822505790023, 284.42320921761547, 617.3591814045859, 380.19150521575193, 237.1645561671255, 368.95946676285246],...'
+[2024-03-04 20:06:11,788: INFO/MainProcess] Received task: create_task[35fffc44-2b52-416b-89f5-d946ad27b6f6]  
+[2024-03-04 20:06:11,791: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:06:11,794: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:06:11,795: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:06:11,795: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:06:11,795: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:06:11,795: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:06:11,795: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-03-04 20:06:11,795: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:06:11,796: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:06:11,796: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:06:11,796: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-04-30', '2023-04-30/2023-06-03']
+[2024-03-04 20:06:15,093: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-03-04 20:06:15,094: WARNING/ForkPoolWorker-3] s3 token exists
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] current s3 creds:
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] current s3 curr time:
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] 2024-03-04 20:06:15.095485
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] current s3 expire time:
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] 2024-03-04 21:01:48
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] current s3 expire delta:
+[2024-03-04 20:06:15,095: WARNING/ForkPoolWorker-3] 0.9258068788888889
+[2024-03-04 20:06:15,096: WARNING/ForkPoolWorker-3] creds:
+[2024-03-04 20:06:15,096: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:06:15,383: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:15,541: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:15,692: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:15,841: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:15,989: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:16,141: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:16,291: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:16,440: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:16,592: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:16,740: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:16,887: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,033: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,174: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,316: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,452: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,587: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,723: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:17,873: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:18,027: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:18,191: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:18,328: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:18,462: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:18,599: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:18,741: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:19,118: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:19,430: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:19,665: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:19,978: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:20,295: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:20,571: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:20,848: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:21,144: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:21,372: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:21,634: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:21,894: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:22,116: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:22,364: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:22,706: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:22,937: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:23,195: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:23,444: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:23,667: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:23,942: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:24,179: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:24,487: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:24,751: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:25,041: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:25,291: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:25,523: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:25,736: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:25,970: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:26,254: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:26,573: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:26,895: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:06:29,710: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-03-04 20:06:29,711: WARNING/ForkPoolWorker-3] data shape::::
+[2024-03-04 20:06:29,711: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:06:29,720: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:47: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-03-04 20:06:29,724: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:48: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-03-04 20:06:38,042: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:105: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-03-04 20:06:38,045: WARNING/ForkPoolWorker-3] data.shape:
+[2024-03-04 20:06:38,046: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:06:38,046: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-03-04 20:06:38,046: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-03-04 20:06:38,314: INFO/ForkPoolWorker-3] Task create_task[35fffc44-2b52-416b-89f5-d946ad27b6f6] succeeded in 26.524408347904682s: '{"time_elapsed": "17.9 seconds", "tile_num": 18, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21", "23-03-09:16-12-14", "23-03-16:16-02-21", "23-03-26:16-02-22", "23-04-10:16-02-25", "23-04-13:16-12-20", "23-04-20:16-02-25", "23-05-15:16-02-24", "23-05-18:16-12-21", "23-05-25:16-02-27", "23-06-02:16-12-23"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[12237.36712271581, 13997.845006606594, 14433.348626837964, 12986.537484221142, 14181.460829471162, 13140.087267975776, 10772.078646016855, 5429.767333179583, 9239.881167950758, 13537.096351198763, 13728.469812938318, 13283.931942955567, 9723.277956606293, 13076.459634126744, 13632.00472912851,...'
+[2024-03-04 20:07:21,505: INFO/MainProcess] Received task: create_task[3ecba340-c9c1-414a-a2e4-97168e53c6ba]  
+[2024-03-04 20:07:21,509: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:07:21,514: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:07:21,514: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:07:21,515: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:07:21,515: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:07:21,516: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:07:21,516: WARNING/ForkPoolWorker-3] 2032-10-01
+[2024-03-04 20:07:21,516: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:07:21,516: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:07:21,517: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:07:21,517: WARNING/ForkPoolWorker-3] []
+[2024-03-04 20:07:21,523: ERROR/ForkPoolWorker-3] Task create_task[3ecba340-c9c1-414a-a2e4-97168e53c6ba] raised unexpected: KeyError('cloud_cover')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3803, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'cloud_cover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 412, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 704, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/usr/src/app/worker.py", line 40, in create_task
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+  File "/usr/src/app/hlstools/scripts/interface.py", line 48, in ndvi_images
+    df = df.loc[df['cloud_cover'] < max_cloud_cover]
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/frame.py", line 3805, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    raise KeyError(key) from err
+KeyError: 'cloud_cover'
+[2024-03-04 20:08:40,380: INFO/MainProcess] Received task: create_task[224b9e1a-e32f-4a6d-b16a-bf336384ff1e]  
+[2024-03-04 20:08:40,385: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:08:40,387: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:08:40,388: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:08:40,388: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:08:40,388: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:08:40,390: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:08:40,390: WARNING/ForkPoolWorker-3] 2032-10-01
+[2024-03-04 20:08:40,390: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:08:40,390: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:08:40,391: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:08:40,391: WARNING/ForkPoolWorker-3] []
+[2024-03-04 20:08:40,393: ERROR/ForkPoolWorker-3] Task create_task[224b9e1a-e32f-4a6d-b16a-bf336384ff1e] raised unexpected: KeyError('cloud_cover')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3803, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'cloud_cover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 412, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 704, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/usr/src/app/worker.py", line 40, in create_task
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+  File "/usr/src/app/hlstools/scripts/interface.py", line 48, in ndvi_images
+    df = df.loc[df['cloud_cover'] < max_cloud_cover]
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/frame.py", line 3805, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    raise KeyError(key) from err
+KeyError: 'cloud_cover'
+[2024-03-04 20:09:09,015: INFO/MainProcess] Received task: create_task[442f9d2c-0893-4fcb-9f37-f171616b3435]  
+[2024-03-04 20:09:09,018: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:09:09,020: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:09:09,020: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:09:09,020: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:09:09,020: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:09:09,021: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:09:09,021: WARNING/ForkPoolWorker-3] 2032-10-01
+[2024-03-04 20:09:09,021: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:09:09,021: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:09:09,022: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:09:09,022: WARNING/ForkPoolWorker-3] []
+[2024-03-04 20:09:09,024: ERROR/ForkPoolWorker-3] Task create_task[442f9d2c-0893-4fcb-9f37-f171616b3435] raised unexpected: KeyError('cloud_cover')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3803, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'cloud_cover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 412, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 704, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/usr/src/app/worker.py", line 40, in create_task
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+  File "/usr/src/app/hlstools/scripts/interface.py", line 48, in ndvi_images
+    df = df.loc[df['cloud_cover'] < max_cloud_cover]
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/frame.py", line 3805, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    raise KeyError(key) from err
+KeyError: 'cloud_cover'
+[2024-03-04 20:09:26,376: INFO/MainProcess] Received task: create_task[b08a7d7e-a405-40ce-9c6f-23e9503c884e]  
+[2024-03-04 20:09:26,379: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:09:26,381: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:09:26,381: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:09:26,381: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:09:26,381: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:09:26,381: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:09:26,382: WARNING/ForkPoolWorker-3] 2032-10-01
+[2024-03-04 20:09:26,382: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:09:26,382: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:09:26,383: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:09:26,383: WARNING/ForkPoolWorker-3] []
+[2024-03-04 20:09:26,385: ERROR/ForkPoolWorker-3] Task create_task[b08a7d7e-a405-40ce-9c6f-23e9503c884e] raised unexpected: KeyError('cloud_cover')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3803, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'cloud_cover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 412, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 704, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/usr/src/app/worker.py", line 40, in create_task
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+  File "/usr/src/app/hlstools/scripts/interface.py", line 48, in ndvi_images
+    df = df.loc[df['cloud_cover'] < max_cloud_cover]
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/frame.py", line 3805, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    raise KeyError(key) from err
+KeyError: 'cloud_cover'
+[2024-03-04 20:09:30,111: INFO/MainProcess] Received task: create_task[382a3c86-98be-472b-9042-c13f5aa68682]  
+[2024-03-04 20:09:30,114: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:09:30,115: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:09:30,115: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:09:30,115: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:09:30,115: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:09:30,116: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:09:30,116: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-03-04 20:09:30,116: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:09:30,116: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:09:30,117: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:09:30,117: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-04-30', '2023-04-30/2023-06-03']
+[2024-03-04 20:09:33,432: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-03-04 20:09:33,433: WARNING/ForkPoolWorker-3] s3 token exists
+[2024-03-04 20:09:33,434: WARNING/ForkPoolWorker-3] current s3 creds:
+[2024-03-04 20:09:33,434: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:09:33,434: WARNING/ForkPoolWorker-3] current s3 curr time:
+[2024-03-04 20:09:33,434: WARNING/ForkPoolWorker-3] 2024-03-04 20:09:33.434755
+[2024-03-04 20:09:33,434: WARNING/ForkPoolWorker-3] current s3 expire time:
+[2024-03-04 20:09:33,435: WARNING/ForkPoolWorker-3] 2024-03-04 21:01:48
+[2024-03-04 20:09:33,435: WARNING/ForkPoolWorker-3] current s3 expire delta:
+[2024-03-04 20:09:33,435: WARNING/ForkPoolWorker-3] 0.870712681111111
+[2024-03-04 20:09:33,435: WARNING/ForkPoolWorker-3] creds:
+[2024-03-04 20:09:33,435: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:09:33,731: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:33,888: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,033: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,192: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,330: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,469: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,603: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,768: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:34,923: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:35,064: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:35,199: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:35,340: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:35,638: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:35,784: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:35,932: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:36,083: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:36,232: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:36,385: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:36,532: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:36,696: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:36,855: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:37,045: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:37,224: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:37,384: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:37,529: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:37,688: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:37,846: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:38,017: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:38,178: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:38,340: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:38,519: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:38,697: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:38,863: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,012: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,154: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,295: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,443: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,587: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,741: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:39,896: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,052: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,196: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,355: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,504: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,649: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,789: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:40,932: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:41,083: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:41,241: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:41,411: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:41,579: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:41,893: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:42,068: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:42,204: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:09:42,570: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-03-04 20:09:42,571: WARNING/ForkPoolWorker-3] data shape::::
+[2024-03-04 20:09:42,571: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:09:42,577: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:47: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-03-04 20:09:42,581: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:48: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-03-04 20:09:43,550: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:105: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-03-04 20:09:43,554: WARNING/ForkPoolWorker-3] data.shape:
+[2024-03-04 20:09:43,554: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:09:43,554: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-03-04 20:09:43,554: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-03-04 20:09:43,834: INFO/ForkPoolWorker-3] Task create_task[382a3c86-98be-472b-9042-c13f5aa68682] succeeded in 13.720941070467234s: '{"time_elapsed": "12.5 seconds", "tile_num": 18, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21", "23-03-09:16-12-14", "23-03-16:16-02-21", "23-03-26:16-02-22", "23-04-10:16-02-25", "23-04-13:16-12-20", "23-04-20:16-02-25", "23-05-15:16-02-24", "23-05-18:16-12-21", "23-05-25:16-02-27", "23-06-02:16-12-23"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[12237.36712271581, 13997.845006606594, 14433.348626837964, 12986.537484221142, 14181.460829471162, 13140.087267975776, 10772.078646016855, 5429.767333179583, 9239.881167950758, 13537.096351198763, 13728.469812938318, 13283.931942955567, 9723.277956606293, 13076.459634126744, 13632.00472912851,...'
+[2024-03-04 20:12:15,458: INFO/MainProcess] Received task: create_task[62b1a702-4991-459f-8e2f-72b5fce06a59]  
+[2024-03-04 20:12:15,462: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:12:15,463: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:12:15,463: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:12:15,463: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:12:15,463: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:12:15,464: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:12:15,464: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-03-04 20:12:15,464: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:12:15,464: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:12:15,465: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:12:15,465: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-04-30', '2023-04-30/2023-06-03']
+[2024-03-04 20:12:18,171: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] s3 token exists
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] current s3 creds:
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] current s3 curr time:
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] 2024-03-04 20:12:18.173560
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] current s3 expire time:
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] 2024-03-04 21:01:48
+[2024-03-04 20:12:18,173: WARNING/ForkPoolWorker-3] current s3 expire delta:
+[2024-03-04 20:12:18,174: WARNING/ForkPoolWorker-3] 0.8249518527777777
+[2024-03-04 20:12:18,174: WARNING/ForkPoolWorker-3] creds:
+[2024-03-04 20:12:18,174: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:12:18,449: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:18,591: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:18,733: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:18,872: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,014: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,159: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,299: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,442: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,587: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,728: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:19,868: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,024: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,181: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,324: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,468: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,610: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,757: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:20,900: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,043: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,197: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,336: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,477: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,615: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,752: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:21,886: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,021: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,123: INFO/MainProcess] Received task: create_task[0e63c287-986e-45d4-9004-4a37d8ceabbf]  
+[2024-03-04 20:12:22,138: WARNING/ForkPoolWorker-1] interface initiated ...
+[2024-03-04 20:12:22,140: WARNING/ForkPoolWorker-1] netrc path:
+[2024-03-04 20:12:22,140: WARNING/ForkPoolWorker-1] /usr/src/app/.netrc
+[2024-03-04 20:12:22,140: WARNING/ForkPoolWorker-1] netrc config:
+[2024-03-04 20:12:22,141: WARNING/ForkPoolWorker-1] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:12:22,142: WARNING/ForkPoolWorker-1] start_date:
+[2024-03-04 20:12:22,142: WARNING/ForkPoolWorker-1] 2032-10-01
+[2024-03-04 20:12:22,142: WARNING/ForkPoolWorker-1] end_date:
+[2024-03-04 20:12:22,142: WARNING/ForkPoolWorker-1] 2023-06-03
+[2024-03-04 20:12:22,144: WARNING/ForkPoolWorker-1] res:
+[2024-03-04 20:12:22,144: WARNING/ForkPoolWorker-1] []
+[2024-03-04 20:12:22,154: ERROR/ForkPoolWorker-1] Task create_task[0e63c287-986e-45d4-9004-4a37d8ceabbf] raised unexpected: KeyError('cloud_cover')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3803, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'cloud_cover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 412, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 704, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/usr/src/app/worker.py", line 40, in create_task
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+  File "/usr/src/app/hlstools/scripts/interface.py", line 48, in ndvi_images
+    df = df.loc[df['cloud_cover'] < max_cloud_cover]
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/frame.py", line 3805, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    raise KeyError(key) from err
+KeyError: 'cloud_cover'
+[2024-03-04 20:12:22,163: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,328: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,464: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,602: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,739: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:22,873: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:23,009: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:23,143: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:23,438: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:23,582: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:23,720: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:23,900: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,059: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,200: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,343: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,487: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,633: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,777: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:24,925: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,069: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,225: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,372: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,511: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,659: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,803: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:25,957: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:26,110: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:26,267: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:12:26,697: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-03-04 20:12:26,698: WARNING/ForkPoolWorker-3] data shape::::
+[2024-03-04 20:12:26,699: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:12:26,708: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:47: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-03-04 20:12:26,715: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:48: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-03-04 20:12:27,464: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:105: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-03-04 20:12:27,468: WARNING/ForkPoolWorker-3] data.shape:
+[2024-03-04 20:12:27,469: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:12:27,469: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-03-04 20:12:27,469: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-03-04 20:12:27,740: INFO/ForkPoolWorker-3] Task create_task[62b1a702-4991-459f-8e2f-72b5fce06a59] succeeded in 12.279854480177164s: '{"time_elapsed": "11.2 seconds", "tile_num": 18, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21", "23-03-09:16-12-14", "23-03-16:16-02-21", "23-03-26:16-02-22", "23-04-10:16-02-25", "23-04-13:16-12-20", "23-04-20:16-02-25", "23-05-15:16-02-24", "23-05-18:16-12-21", "23-05-25:16-02-27", "23-06-02:16-12-23"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[12237.36712271581, 13997.845006606594, 14433.348626837964, 12986.537484221142, 14181.460829471162, 13140.087267975776, 10772.078646016855, 5429.767333179583, 9239.881167950758, 13537.096351198763, 13728.469812938318, 13283.931942955567, 9723.277956606293, 13076.459634126744, 13632.00472912851,...'
+[2024-03-04 20:12:49,165: INFO/MainProcess] Received task: create_task[792c2fb5-ed11-4f1b-9ee2-66f080e1874e]  
+[2024-03-04 20:12:49,169: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:12:49,171: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:12:49,171: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:12:49,171: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:12:49,171: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:12:49,171: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:12:49,172: WARNING/ForkPoolWorker-3] 2032-10-01
+[2024-03-04 20:12:49,172: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:12:49,172: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:12:49,172: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:12:49,173: WARNING/ForkPoolWorker-3] []
+[2024-03-04 20:12:49,175: ERROR/ForkPoolWorker-3] Task create_task[792c2fb5-ed11-4f1b-9ee2-66f080e1874e] raised unexpected: KeyError('cloud_cover')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3803, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'cloud_cover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 412, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/celery/app/trace.py", line 704, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/usr/src/app/worker.py", line 40, in create_task
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+  File "/usr/src/app/hlstools/scripts/interface.py", line 48, in ndvi_images
+    df = df.loc[df['cloud_cover'] < max_cloud_cover]
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/frame.py", line 3805, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    raise KeyError(key) from err
+KeyError: 'cloud_cover'
+[2024-03-04 20:14:13,667: INFO/MainProcess] Received task: create_task[d86b0886-713d-4180-b286-28192da9e206]  
+[2024-03-04 20:14:13,676: WARNING/ForkPoolWorker-3] interface initiated ...
+[2024-03-04 20:14:13,677: WARNING/ForkPoolWorker-3] netrc path:
+[2024-03-04 20:14:13,678: WARNING/ForkPoolWorker-3] /usr/src/app/.netrc
+[2024-03-04 20:14:13,678: WARNING/ForkPoolWorker-3] netrc config:
+[2024-03-04 20:14:13,678: WARNING/ForkPoolWorker-3] <decouple.AutoConfig object at 0x7fe825357dc0>
+[2024-03-04 20:14:13,679: WARNING/ForkPoolWorker-3] start_date:
+[2024-03-04 20:14:13,679: WARNING/ForkPoolWorker-3] 2022-10-01
+[2024-03-04 20:14:13,679: WARNING/ForkPoolWorker-3] end_date:
+[2024-03-04 20:14:13,679: WARNING/ForkPoolWorker-3] 2023-06-03
+[2024-03-04 20:14:13,680: WARNING/ForkPoolWorker-3] res:
+[2024-03-04 20:14:13,680: WARNING/ForkPoolWorker-3] ['2022-10-31/2023-04-30', '2023-04-30/2023-06-03']
+[2024-03-04 20:14:17,071: WARNING/ForkPoolWorker-3] IN INTERFACE ....
+[2024-03-04 20:14:17,073: WARNING/ForkPoolWorker-3] s3 token exists
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] current s3 creds:
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] current s3 curr time:
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] 2024-03-04 20:14:17.074365
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] current s3 expire time:
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] 2024-03-04 21:01:48
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] current s3 expire delta:
+[2024-03-04 20:14:17,074: WARNING/ForkPoolWorker-3] 0.7919238836111111
+[2024-03-04 20:14:17,075: WARNING/ForkPoolWorker-3] creds:
+[2024-03-04 20:14:17,075: WARNING/ForkPoolWorker-3] {'accessKeyId': 'ASIAZLX6ZES437UATYQS', 'secretAccessKey': 'LZfkjpYuqeovDuDfw5ybEmlQpArXlHz0jyQrbsYZ', 'sessionToken': 'FwoGZXIvYXdzEJX//////////wEaDMpQQhi6j3p6GMpRXyLnAe/r+0+xaRKDhiYtdp9fND3DWO4WnlaFpf/522veiQUluNBzhqYAfSYI61KDayPsGQHRpUb2+t9/ypyehtnnUrHaO/NebJ2U7MtEC3wi9M1fJyWKPbWPkmk2Ttzo0CMbsFQ21U17My7ifUX+cblBVoPAg54gCVvb8QFEc9yL/XDeU4DS5FyK0S0rZSTGvoPNcZ3ltYs/RTUxeq3kdWbXI1wrzbfLhVrHzryXz8EjjADeLcMAU6NS98lJNjOsU7WVSbSDsX1YD1beYsy0T+/TQGP5xa0oW1Rc9B9fX91FGZSGYJXSOB6DPCis0ZivBjIt+86sA370fYhqTbAYYRKIUMLhXj0Sw3sk/nTPk+G4+EgNVHpr7pvC/CcbLUmv', 'expiration': '2024-03-04 21:01:48+00:00'}
+[2024-03-04 20:14:17,381: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:17,525: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:17,665: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:17,800: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:17,938: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,073: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,205: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,339: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,473: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,606: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,739: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:18,875: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:19,158: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:19,299: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:19,436: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:19,604: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:19,784: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:19,957: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,107: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,256: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,399: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,539: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,680: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,827: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:20,971: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,119: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,274: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,420: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,558: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,698: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,835: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:21,973: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,112: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,254: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,391: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,529: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,673: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,808: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:22,943: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,078: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,215: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,358: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,506: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,670: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,824: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:23,968: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,115: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,263: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,406: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,545: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,688: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,839: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:24,995: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:25,157: WARNING/ForkPoolWorker-3] clipped
+[2024-03-04 20:14:25,672: WARNING/ForkPoolWorker-3] fetch_images done !
+[2024-03-04 20:14:25,673: WARNING/ForkPoolWorker-3] data shape::::
+[2024-03-04 20:14:25,673: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:14:25,681: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:47: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy1, xx1 = transform(inProj,outProj,x1,y1)
+[2024-03-04 20:14:25,686: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:48: FutureWarning: This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
+  yy2, xx2 = transform(inProj,outProj,x2,y2)
+[2024-03-04 20:14:26,447: WARNING/ForkPoolWorker-3] /usr/src/app/worker.py:105: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  gdd44[gdd44<0] = 0
+[2024-03-04 20:14:26,451: WARNING/ForkPoolWorker-3] data.shape:
+[2024-03-04 20:14:26,451: WARNING/ForkPoolWorker-3] (54, 21, 31)
+[2024-03-04 20:14:26,451: WARNING/ForkPoolWorker-3] biomass shape:
+[2024-03-04 20:14:26,451: WARNING/ForkPoolWorker-3] (21, 31)
+[2024-03-04 20:14:26,748: INFO/ForkPoolWorker-3] Task create_task[d86b0886-713d-4180-b286-28192da9e206] succeeded in 13.073096998035908s: '{"time_elapsed": "12.0 seconds", "tile_num": 18, "dates": ["22-11-09:16-12-23", "22-11-21:16-02-23", "22-11-26:16-02-23", "22-12-01:16-02-22", "22-12-09:16-12-20", "22-12-29:16-12-18", "23-02-04:16-02-22", "23-02-24:16-02-21", "23-03-09:16-12-14", "23-03-16:16-02-21", "23-03-26:16-02-22", "23-04-10:16-02-25", "23-04-13:16-12-20", "23-04-20:16-02-25", "23-05-15:16-02-24", "23-05-18:16-12-21", "23-05-25:16-02-27", "23-06-02:16-12-23"], "bbox": [-76.9353536500623, 39.03488547875263, -76.92446047382687, 39.029389319191466], "epsg": ["32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618", "32618"], "data_array": [[12237.36712271581, 13997.845006606594, 14433.348626837964, 12986.537484221142, 14181.460829471162, 13140.087267975776, 10772.078646016855, 5429.767333179583, 9239.881167950758, 13537.096351198763, 13728.469812938318, 13283.931942955567, 9723.277956606293, 13076.459634126744, 13632.00472912851,...'
+[2024-03-04 20:28:37,634: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 20:28:37,651: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 20:28:38,685: INFO/MainProcess] mingle: all alone
+[2024-03-04 20:28:38,704: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 20:28:41,461: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 21:28:41,052: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 21:28:41,075: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 21:28:42,107: INFO/MainProcess] mingle: all alone
+[2024-03-04 21:28:42,123: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 21:28:46,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 22:28:44,240: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 22:28:44,253: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 22:28:45,285: INFO/MainProcess] mingle: all alone
+[2024-03-04 22:28:45,307: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 22:28:46,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-04 23:28:47,355: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-04 23:28:47,379: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-04 23:28:48,413: INFO/MainProcess] mingle: all alone
+[2024-03-04 23:28:48,439: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-04 23:28:51,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 00:28:50,607: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 00:28:50,625: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 00:28:51,692: INFO/MainProcess] mingle: all alone
+[2024-03-05 00:28:51,723: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 00:28:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 01:28:54,242: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 01:28:54,255: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 01:28:55,293: INFO/MainProcess] mingle: all alone
+[2024-03-05 01:28:55,326: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 01:28:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 02:28:57,698: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 02:28:57,715: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 02:28:58,750: INFO/MainProcess] mingle: all alone
+[2024-03-05 02:28:58,769: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 02:29:01,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 03:29:00,426: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 03:29:00,439: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 03:29:01,479: INFO/MainProcess] mingle: all alone
+[2024-03-05 03:29:01,516: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 03:29:06,461: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 04:29:04,151: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 04:29:04,171: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 04:29:05,220: INFO/MainProcess] mingle: all alone
+[2024-03-05 04:29:05,240: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 04:29:06,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 05:29:07,111: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 05:29:07,140: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 05:29:08,193: INFO/MainProcess] mingle: all alone
+[2024-03-05 05:29:08,232: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 05:29:11,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 06:29:09,846: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 06:29:09,865: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 06:29:10,897: INFO/MainProcess] mingle: all alone
+[2024-03-05 06:29:10,912: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 06:29:11,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 07:29:12,545: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 07:29:12,558: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 07:29:13,589: INFO/MainProcess] mingle: all alone
+[2024-03-05 07:29:13,604: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 07:29:16,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 08:29:15,976: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 08:29:15,988: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 08:29:17,020: INFO/MainProcess] mingle: all alone
+[2024-03-05 08:29:17,037: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 08:29:21,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 09:29:19,275: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 09:29:19,287: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 09:29:20,321: INFO/MainProcess] mingle: all alone
+[2024-03-05 09:29:20,344: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 09:29:21,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 10:29:22,438: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 10:29:22,454: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 10:29:23,490: INFO/MainProcess] mingle: all alone
+[2024-03-05 10:29:23,508: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 10:29:26,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 11:29:25,465: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 11:29:25,485: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 11:29:26,521: INFO/MainProcess] mingle: all alone
+[2024-03-05 11:29:26,536: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 11:29:31,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 12:29:28,400: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 12:29:28,415: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 12:29:29,454: INFO/MainProcess] mingle: all alone
+[2024-03-05 12:29:29,475: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 12:29:31,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 13:29:32,339: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 13:29:32,354: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 13:29:33,386: INFO/MainProcess] mingle: all alone
+[2024-03-05 13:29:33,403: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 13:29:36,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 14:29:34,924: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 14:29:34,940: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 14:29:35,972: INFO/MainProcess] mingle: all alone
+[2024-03-05 14:29:35,990: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 14:29:36,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 15:29:38,232: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 15:29:38,249: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 15:29:39,283: INFO/MainProcess] mingle: all alone
+[2024-03-05 15:29:39,313: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 15:29:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 16:29:41,251: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 16:29:41,265: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 16:29:42,299: INFO/MainProcess] mingle: all alone
+[2024-03-05 16:29:42,325: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 16:29:46,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 17:29:44,342: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 17:29:44,365: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 17:29:45,419: INFO/MainProcess] mingle: all alone
+[2024-03-05 17:29:45,441: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 17:29:46,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 18:29:48,519: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 18:29:48,538: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 18:29:49,572: INFO/MainProcess] mingle: all alone
+[2024-03-05 18:29:49,605: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 18:29:51,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 19:29:51,056: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 19:29:51,074: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 19:29:52,109: INFO/MainProcess] mingle: all alone
+[2024-03-05 19:29:52,135: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 19:29:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 20:29:55,405: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 20:29:55,419: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 20:29:56,478: INFO/MainProcess] mingle: all alone
+[2024-03-05 20:29:56,503: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 20:30:01,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 21:29:57,588: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 21:29:57,601: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 21:29:58,650: INFO/MainProcess] mingle: all alone
+[2024-03-05 21:29:58,668: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 21:30:01,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 22:30:00,790: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 22:30:00,805: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 22:30:01,841: INFO/MainProcess] mingle: all alone
+[2024-03-05 22:30:01,863: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 22:30:06,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-05 23:30:03,729: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-05 23:30:03,746: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-05 23:30:04,776: INFO/MainProcess] mingle: all alone
+[2024-03-05 23:30:04,807: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-05 23:30:06,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 00:30:06,905: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 00:30:06,918: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 00:30:07,950: INFO/MainProcess] mingle: all alone
+[2024-03-06 00:30:07,974: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 00:30:11,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 01:30:09,853: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 01:30:09,867: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 01:30:10,904: INFO/MainProcess] mingle: all alone
+[2024-03-06 01:30:10,923: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 01:30:11,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 02:30:13,645: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 02:30:13,659: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 02:30:14,694: INFO/MainProcess] mingle: all alone
+[2024-03-06 02:30:14,714: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 02:30:16,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 03:30:16,525: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 03:30:16,541: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 03:30:17,585: INFO/MainProcess] mingle: all alone
+[2024-03-06 03:30:17,615: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 03:30:21,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 04:30:19,396: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 04:30:19,408: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 04:30:20,440: INFO/MainProcess] mingle: all alone
+[2024-03-06 04:30:20,461: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 04:30:21,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 05:30:22,307: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 05:30:22,323: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 05:30:23,355: INFO/MainProcess] mingle: all alone
+[2024-03-06 05:30:23,374: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 05:30:26,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 06:30:25,689: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 06:30:25,702: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 06:30:26,737: INFO/MainProcess] mingle: all alone
+[2024-03-06 06:30:26,762: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 06:30:31,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 07:30:28,256: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 07:30:28,268: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 07:30:29,297: INFO/MainProcess] mingle: all alone
+[2024-03-06 07:30:29,320: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 07:30:31,457: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 08:30:31,230: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 08:30:31,244: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 08:30:32,277: INFO/MainProcess] mingle: all alone
+[2024-03-06 08:30:32,295: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 08:30:36,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 09:30:34,231: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 09:30:34,249: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 09:30:35,293: INFO/MainProcess] mingle: all alone
+[2024-03-06 09:30:35,315: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 09:30:36,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 10:30:37,299: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 10:30:37,315: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 10:30:38,345: INFO/MainProcess] mingle: all alone
+[2024-03-06 10:30:38,361: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 10:30:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 11:30:40,439: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 11:30:40,452: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 11:30:41,484: INFO/MainProcess] mingle: all alone
+[2024-03-06 11:30:41,503: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 11:30:46,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 12:30:43,484: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 12:30:43,497: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 12:30:44,531: INFO/MainProcess] mingle: all alone
+[2024-03-06 12:30:44,550: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 12:30:46,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 13:30:46,901: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 13:30:46,915: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 13:30:47,949: INFO/MainProcess] mingle: all alone
+[2024-03-06 13:30:47,968: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 13:30:51,462: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 14:30:50,136: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 14:30:50,150: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 14:30:51,198: INFO/MainProcess] mingle: all alone
+[2024-03-06 14:30:51,261: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 14:30:51,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 15:30:52,951: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 15:30:52,969: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 15:30:54,006: INFO/MainProcess] mingle: all alone
+[2024-03-06 15:30:54,024: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 15:30:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 16:30:56,239: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 16:30:56,253: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 16:30:57,295: INFO/MainProcess] mingle: all alone
+[2024-03-06 16:30:57,318: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 16:31:01,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 17:30:59,343: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 17:30:59,365: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 17:31:00,407: INFO/MainProcess] mingle: all alone
+[2024-03-06 17:31:00,427: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 17:31:01,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 18:31:03,007: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 18:31:03,042: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 18:31:04,078: INFO/MainProcess] mingle: all alone
+[2024-03-06 18:31:04,098: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 18:31:06,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 19:31:06,697: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 19:31:06,710: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 19:31:07,744: INFO/MainProcess] mingle: all alone
+[2024-03-06 19:31:07,773: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 19:31:11,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 20:31:09,104: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 20:31:09,119: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 20:31:10,150: INFO/MainProcess] mingle: all alone
+[2024-03-06 20:31:10,166: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 20:31:11,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 21:31:12,105: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 21:31:12,118: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 21:31:13,156: INFO/MainProcess] mingle: all alone
+[2024-03-06 21:31:13,176: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 21:31:16,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 22:31:15,273: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 22:31:15,292: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 22:31:16,323: INFO/MainProcess] mingle: all alone
+[2024-03-06 22:31:16,342: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 22:31:16,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-06 23:31:18,261: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-06 23:31:18,276: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-06 23:31:19,316: INFO/MainProcess] mingle: all alone
+[2024-03-06 23:31:19,359: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-06 23:31:21,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 00:31:21,392: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 00:31:21,405: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 00:31:22,443: INFO/MainProcess] mingle: all alone
+[2024-03-07 00:31:22,468: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 00:31:26,461: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 01:31:24,825: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 01:31:24,841: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 01:31:25,874: INFO/MainProcess] mingle: all alone
+[2024-03-07 01:31:25,892: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 01:31:26,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 02:31:27,486: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 02:31:27,499: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 02:31:28,531: INFO/MainProcess] mingle: all alone
+[2024-03-07 02:31:28,547: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 02:31:31,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 03:31:30,394: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 03:31:30,409: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 03:31:31,439: INFO/MainProcess] mingle: all alone
+[2024-03-07 03:31:31,458: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 03:31:36,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 04:31:33,514: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 04:31:33,528: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 04:31:34,561: INFO/MainProcess] mingle: all alone
+[2024-03-07 04:31:34,592: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 04:31:36,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 05:31:36,728: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 05:31:36,742: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 05:31:37,774: INFO/MainProcess] mingle: all alone
+[2024-03-07 05:31:37,792: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 05:31:41,461: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 06:31:39,789: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 06:31:39,802: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 06:31:40,835: INFO/MainProcess] mingle: all alone
+[2024-03-07 06:31:40,856: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 06:31:41,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 07:31:43,055: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 07:31:43,068: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 07:31:44,098: INFO/MainProcess] mingle: all alone
+[2024-03-07 07:31:44,115: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 07:31:46,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 08:31:45,781: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 08:31:45,810: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 08:31:46,843: INFO/MainProcess] mingle: all alone
+[2024-03-07 08:31:46,859: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 08:31:51,461: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 09:31:49,179: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 09:31:49,193: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 09:31:50,226: INFO/MainProcess] mingle: all alone
+[2024-03-07 09:31:50,248: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 09:31:51,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 10:31:51,992: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 10:31:52,005: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 10:31:53,035: INFO/MainProcess] mingle: all alone
+[2024-03-07 10:31:53,050: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 10:31:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 11:31:54,814: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 11:31:54,840: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 11:31:55,881: INFO/MainProcess] mingle: all alone
+[2024-03-07 11:31:55,901: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 11:31:56,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 12:31:57,902: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 12:31:57,915: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 12:31:58,944: INFO/MainProcess] mingle: all alone
+[2024-03-07 12:31:58,966: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 12:32:01,458: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 13:32:01,400: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 13:32:01,424: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 13:32:02,474: INFO/MainProcess] mingle: all alone
+[2024-03-07 13:32:02,503: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 13:32:06,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 14:32:03,875: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 14:32:03,890: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 14:32:04,922: INFO/MainProcess] mingle: all alone
+[2024-03-07 14:32:04,948: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 14:32:06,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 15:32:06,972: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 15:32:06,986: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 15:32:08,021: INFO/MainProcess] mingle: all alone
+[2024-03-07 15:32:08,045: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 15:32:11,459: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 16:32:09,958: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 16:32:09,974: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 16:32:11,010: INFO/MainProcess] mingle: all alone
+[2024-03-07 16:32:11,029: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 16:32:11,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 17:32:13,086: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 17:32:13,102: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 17:32:14,135: INFO/MainProcess] mingle: all alone
+[2024-03-07 17:32:14,153: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 17:32:16,460: INFO/MainProcess] Events of group {task} enabled by remote.
+[2024-03-07 18:32:16,123: INFO/MainProcess] Connected to redis://redis:6379/0
+[2024-03-07 18:32:16,136: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-07 18:32:17,171: INFO/MainProcess] mingle: all alone
+[2024-03-07 18:32:17,192: INFO/MainProcess] celery@1d66e8c38aea ready.
+[2024-03-07 18:32:21,458: INFO/MainProcess] Events of group {task} enabled by remote.

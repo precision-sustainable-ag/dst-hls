@@ -21,6 +21,7 @@ services:
 
   nitrogen:
     build: ./api_nitrogen
+    command: uvicorn app.main:app --host 0.0.0.0 --proxy-headers --reload --port 8000
     ports:
       - 8005:8000
     volumes:

@@ -1,6 +1,7 @@
 ## HLS Satellite Data Toolbox 
 This repo provides functionality to authenticate, fetch and preprocess satellite images from HLS LPDAAC server.
 
+#### See confluence documentation [Here](https://precision-sustainable-ag.atlassian.net/wiki/spaces/AFA/pages/edit-v2/385187873)
 
 ### Installation
 

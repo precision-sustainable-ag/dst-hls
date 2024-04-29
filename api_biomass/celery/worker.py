@@ -3,7 +3,6 @@ import time
 import json
 import geopandas
 import numpy as np
-from time import time
 from pyproj import Proj, transform
 import requests
 import pandas as pd
@@ -13,23 +12,34 @@ from hlstools import interface
 from hlstools.utilities.helpers import NumpyEncoder
 from celery import Celery
 
+
 celery = Celery(__name__)
 celery.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379")
 celery.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379")
 
 
-@celery.task(name="create_task")
-def create_task(payload):
-    t0 = time()
+@celery.task(name="create_task", bind=True)
+def create_task(self, payload):
+    # n = 30
+    # for i in range(0, n):
+    #     self.update_state(state='PROGRESS', meta={'message': ''})
+    #     time.sleep(1)
+
+    # return n
+    ##### STATUS UPDATE #####
+    self.update_state(state='PENDING', meta={'message': 'started'})
+    t0 = time.time()
     task_geometry = json.dumps(payload["geometry"])
     start_date = payload["startDate"]
     end_date = payload["endDate"]
     max_cloud_cover = int(payload["maxCloudCover"])
     date_range=f"{start_date}/{end_date}"
     infc = interface()
-    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover)
-    print('data shape:', np.array(data).shape)
-    time_elapsed = time() - t0
+    ##### STATUS UPDATE #####
+    self.update_state(state='PENDING', meta={'message': 'getting satellite images metadata'})
+    nr_images, dates, bbox, epsg, data, mask = infc.ndvi_images(task_geometry, date_range=date_range, max_cloud_cover=max_cloud_cover, update_func=self.update_state)
+    print('data shape::::', np.array(data).shape)
+    time_elapsed = time.time() - t0
     if len(epsg)>0:
         inProj = Proj(f'epsg:{epsg[0]}')
         outProj = Proj('epsg:4326')
@@ -59,6 +69,8 @@ def create_task(payload):
     weather_parsed['GDD_4.4_day'] = (weather_parsed['Temp_min'] + weather_parsed['Temp_max'])/2 - 4.4
     weather_parsed['Date'] = pd.to_datetime(weather_parsed['date'])
     weather_all = weather_parsed[['Date', 'Rad', 'PAR', 'GDD_4.4_day']]
+    ##### STATUS UPDATE #####
+    self.update_state(state='PENDING', meta={'message': f'received weather data'})
     
     ### calculating biomass from ndvi red edge
     # biomass_array = np.zeros((nr_images, data.shape[1], data.shape[2]))
@@ -68,6 +80,9 @@ def create_task(payload):
     ndvi_re1_arr = []
     cloud_arr = []
     for i in range(nr_images):
+        ##### STATUS UPDATE #####
+        # self.update_state(state='PENDING', meta={'message': f'getting image #{i+1}/{nr_images}'})
+        self.update_state(state='PENDING', meta={'message': f'getting image {i} from {nr_images}'})
         redEdge = data[3*i+0]
         nir = data[3*i+1]
         cloud = data[3*i+2]
@@ -104,7 +119,8 @@ def create_task(payload):
     
     print('data.shape: ', data.shape)
     print('biomass shape: ', biomass.shape)
-    
+    ##### STATUS UPDATE #####
+    self.update_state(state='PENDING', meta={'message': f'biomass data is calculated'})
     json_dump = json.dumps(
                            {
                             'time_elapsed': f"{round(time_elapsed,1)} seconds",

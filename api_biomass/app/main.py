@@ -38,7 +38,7 @@ async def run_task(payload: TaskRequestModel) -> TaskIDModel:
 @root.get("/tasks/{task_id}", response_model=TaskResopnseModel)
 async def get_task_status(task_id: str) -> TaskResopnseModel:
     task_result = AsyncResult(task_id)
-    print(task_result, flush=True)
+    print(task_result)
     result = jsonable_encoder({
         "task_id": task_id,
         "task_status": task_result.status,
@@ -46,12 +46,15 @@ async def get_task_status(task_id: str) -> TaskResopnseModel:
     })
     return JSONResponse(result)
 
+
 app = FastAPI(
     debug=True,
     docs_url=f'{API_PREFIX}/docs',
     redoc_url=f'{API_PREFIX}/redoc',
     openapi_url=f'{API_PREFIX}/openapi.json')
+
 app.include_router(root, prefix=API_PREFIX)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,

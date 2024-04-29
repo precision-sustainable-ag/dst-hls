@@ -16,7 +16,7 @@ class Interface:
         print('interface initiated ... ')
         self.cat = None
 
-    def ndvi_images(self, geometry, date_range="2021-05-01/2021-08-02", max_cloud_cover=10):
+    def ndvi_images(self, geometry, date_range="2021-05-01/2021-08-02", max_cloud_cover=10, update_func=None):
         """
         fetches an ndvi image provided for a certain date and geometry
 
@@ -61,7 +61,7 @@ class Interface:
         bands = ['re1', 'nir', 'cloud']
         fch = Fetch()
         print("IN INTERFACE ....")
-        fch.fetch_images(df, bands, geometry, get_rgb=False)
+        fch.fetch_images(df, bands, geometry, get_rgb=False, update_func=update_func)
         print("fetch_images done !")
         arr = fch.data_arrays
         nr_images = int(len(arr)/len(bands))

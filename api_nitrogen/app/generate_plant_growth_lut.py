@@ -18,15 +18,31 @@ for plant_group in plant_growth_stages:
     lut[specie.lower()] = {}
     for stage in stages:
       stage = stage.lower()
+      n_ = random.uniform(*nitrogen_percentage_range)
+      c_ = random.uniform(*carbohydrates_percentage_range)
+      h_ = random.uniform(*holo_cellulose_percentage_range)
+      l_ = random.uniform(*lignin_percentage_range)
+      
+      n__ = n_/(n_+c_+h_+l_)
+      c__ = c_/(n_+c_+h_+l_)
+      h__ = h_/(n_+c_+h_+l_)
+      l__ = l_/(n_+c_+h_+l_)
+      
+      n = np.round(np.floor(n__*10000)/100, 2)
+      h = np.round(np.floor(h__*10000)/100, 2)
+      l = np.round(np.floor(l__*10000)/100, 2)
+      c = np.round(10000 - (n+h+l)*100)/100
+      
+      print(n+c+h+l, n,c,h,l, specie, stage)
       factors = {
-        'nitrogen_percentage': round(random.uniform(*nitrogen_percentage_range),2),
-        'carbohydrates_percentage': round(random.uniform(*carbohydrates_percentage_range),2),
-        'holo_cellulose_percentage': round(random.uniform(*holo_cellulose_percentage_range),2),
-        'lignin_percentage': round(random.uniform(*lignin_percentage_range),2),
+        'nitrogen_percentage': n,
+        'carbohydrates_percentage': c,
+        'holo_cellulose_percentage': h,
+        'lignin_percentage': l,
       }
       lut[specie][stage] = factors
     
 with open('./assets/plant_growth_lut.json', 'w') as fp:
     json.dump(lut, fp)
     
-pprint(lut)
+# pprint(lut)

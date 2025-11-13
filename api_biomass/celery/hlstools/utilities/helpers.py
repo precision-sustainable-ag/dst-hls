@@ -21,7 +21,31 @@ from rasterio import Affine, MemoryFile
 
 
 def url_to_s3(url):
-    return "s3://" + url.split(".gov/")[1]
+
+    # If already S3 format, return as-is
+    if url.startswith("s3://"):
+        return url
+
+    # Try splitting by .gov/
+    if ".gov/" in url:
+        result = "s3://" + url.split(".gov/")[1]
+        return result
+
+    # Try splitting by domain (for any https/http URL)
+    if "://" in url:
+        print(f"Converting URL: {url}")
+        # Remove protocol
+        without_protocol = url.split("://", 1)[1]
+        # Split by first slash to remove domain
+        parts = without_protocol.split("/", 1)
+        if len(parts) > 1:
+            result = "s3://" + parts[1]
+            print(f"Converted to: {result}")
+            return result
+
+    # If we can't convert, log and return original
+    print(f"WARNING: Could not convert URL to S3 format, returning original: {url}")
+    return url
 
 
 def get_project_root():

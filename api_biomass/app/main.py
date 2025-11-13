@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.encoders import jsonable_encoder
 
 # os.chdir(os.path.join(os.getcwd(), 'app'))
-from app.model import TaskIDModel, TaskRequestModel, TaskResopnseModel
+from app.model import TaskIDModel, TaskRequestModel, TaskResponseModel
 from app.constants import API_PREFIX, ALLOWED_CORS
 
 os.chdir(os.path.join(os.getcwd(), 'celery'))
@@ -35,8 +35,8 @@ async def run_task(payload: TaskRequestModel) -> TaskIDModel:
     return JSONResponse({"task_id": task.id})
 
 
-@root.get("/tasks/{task_id}", response_model=TaskResopnseModel)
-async def get_task_status(task_id: str) -> TaskResopnseModel:
+@root.get("/tasks/{task_id}", response_model=TaskResponseModel)
+async def get_task_status(task_id: str) -> TaskResponseModel:
     task_result = AsyncResult(task_id)
     print(task_result)
     result = jsonable_encoder({

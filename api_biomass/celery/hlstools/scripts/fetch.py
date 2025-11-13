@@ -125,7 +125,7 @@ class Fetch:
             task = rioxarray.open_rasterio(link, chunks=chunks).squeeze('band', drop=True)
             # print("squeezed")
             task = task.rio.clip([roi])
-            print("clipped")
+            # print("clipped")
             tasks.append(task)
             kk+=1
             
@@ -139,7 +139,7 @@ class Fetch:
             rgb_arrays = []
             for ix, row in dataframe.iterrows():
                 jpg_url = row['url']['browse']
-                hls_jpg = rioxarray.open_rasterio(jpg_url, chuncks=True)
+                hls_jpg = rioxarray.open_rasterio(jpg_url, chunks=True)
                 rgb = hls_jpg.values
                 bbox = hls_da.rio.bounds()
                 transform = rasterio.transform.from_bounds(*bbox, width=1000, height=1000)

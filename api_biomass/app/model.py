@@ -16,7 +16,7 @@ class TaskRequestModel(BaseModel):
     geometry: HLSGeomModel
 
     
-class TaskResopnseModel(BaseModel):
+class TaskResponseModel(BaseModel):
     task_id: str
     task_status: str
     task_result: create_model('TaskResult', 

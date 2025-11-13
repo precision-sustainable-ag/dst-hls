@@ -2,3 +2,6 @@ numpy
 fastapi
 pydantic
 uvicorn
+requests==2.28.2
+httpx
+asyncio

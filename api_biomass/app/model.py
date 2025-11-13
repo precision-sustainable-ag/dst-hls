@@ -1,5 +1,6 @@
 from pydantic import BaseModel, create_model
 from app.constants import SAMPLE_GEOMETRY
+from typing import Dict, List, Optional
 
 
 class HLSGeomModel(BaseModel):
@@ -29,4 +30,16 @@ class TaskResponseModel(BaseModel):
                                 mask_array=(list[list[list[bool]]], ...),
                               ) | None
     
+
+class PointModel(BaseModel):
+    camera_id: int
+    lon: float
+    lat: float
+    species: Dict[str, float]
+    biomass_percentile_per_species: Optional[Dict[str, float]]
+
+class GenerateGridRequest(BaseModel):
+    points: List[PointModel]
+    grid_size_meters: Optional[float]
+    species_name: Optional[str]
     

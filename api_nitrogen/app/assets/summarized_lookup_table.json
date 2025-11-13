@@ -1,0 +1,156 @@
+{
+  "Barley": {
+    "2. Stem elongation": {
+      "mean_carb": 62.92340206185567,
+      "mean_cellulose": 33.901855670103096,
+      "mean_lignin": 3.174796492783505,
+      "mean_n": 2.710246413195876
+    },
+    "3. Booting": {
+      "mean_carb": 55.4584375,
+      "mean_cellulose": 40.661875,
+      "mean_lignin": 3.8796874999999997,
+      "mean_n": 1.9457999999999998
+    },
+    "4. Heading/flowering": {
+      "mean_carb": 43.32934210526316,
+      "mean_cellulose": 51.88197368421053,
+      "mean_lignin": 4.788590285526316,
+      "mean_n": 1.6074179610526316
+    },
+    "Unknown growth stage": {
+      "mean_carb": 46.17530612244897,
+      "mean_cellulose": 47.98489795918368,
+      "mean_lignin": 5.839795918367348,
+      "mean_n": 1.3279673469387754
+    }
+  },
+  "Cereal rye": {
+    "2. Stem elongation": {
+      "mean_carb": 53.436171875,
+      "mean_cellulose": 43.288203125,
+      "mean_lignin": 3.275556624859375,
+      "mean_n": 2.5524326864999995
+    },
+    "3. Booting": {
+      "mean_carb": 46.597500000000004,
+      "mean_cellulose": 49.324642857142855,
+      "mean_lignin": 4.078522777142857,
+      "mean_n": 2.0537151434285708
+    },
+    "4. Heading/flowering": {
+      "mean_carb": 32.457844036697246,
+      "mean_cellulose": 61.608486238532116,
+      "mean_lignin": 5.933854898311926,
+      "mean_n": 1.3654971732110093
+    },
+    "Unknown growth stage": {
+      "mean_carb": 37.42615384615385,
+      "mean_cellulose": 57.1368016194332,
+      "mean_lignin": 5.436885236522267,
+      "mean_n": 1.6013969944100421
+    },
+    "1. Tillering": {
+      "mean_carb": 54.875,
+      "mean_cellulose": 41.9475,
+      "mean_lignin": 3.1805600875,
+      "mean_n": 2.648259722
+    }
+  },
+  "Triticale": {
+    "2. Stem elongation": {
+      "mean_carb": 56.92533898305084,
+      "mean_cellulose": 39.6122033898305,
+      "mean_lignin": 3.462457627118644,
+      "mean_n": 2.512908474576271
+    },
+    "3. Booting": {
+      "mean_carb": 43.97064516129032,
+      "mean_cellulose": 51.45741935483872,
+      "mean_lignin": 4.571935483870967,
+      "mean_n": 1.9005935483870968
+    },
+    "4. Heading/flowering": {
+      "mean_carb": 33.76605769230769,
+      "mean_cellulose": 60.41211538461538,
+      "mean_lignin": 5.821811682692308,
+      "mean_n": 1.422621348923077
+    },
+    "Unknown growth stage": {
+      "mean_carb": 37.765,
+      "mean_cellulose": 55.501999999999995,
+      "mean_lignin": 6.733,
+      "mean_n": 1.4520385007999999
+    }
+  },
+  "Hairy vetch": {
+    "4. Heading/flowering": {
+      "mean_carb": 69.15,
+      "mean_cellulose": 23.509999999999998,
+      "mean_lignin": 7.3393049999999995,
+      "mean_n": 3.55216752
+    },
+    "Unknown growth stage": {
+      "mean_carb": 68.63938461538461,
+      "mean_cellulose": 24.300923076923077,
+      "mean_lignin": 7.059425939530769,
+      "mean_n": 3.8037606074754096
+    }
+  },
+  "Oats": {
+    "Unknown growth stage": {
+      "mean_carb": 46.3054794520548,
+      "mean_cellulose": 48.90890410958904,
+      "mean_lignin": 4.785616438356165,
+      "mean_n": 1.888510627945205
+    }
+  },
+  "Wheat": {
+    "4. Heading/flowering": {
+      "mean_carb": 40.5,
+      "mean_cellulose": 54.175,
+      "mean_lignin": 5.3238401,
+      "mean_n": 0.938212
+    },
+    "2. Stem elongation": {
+      "mean_carb": 51.81666666666667,
+      "mean_cellulose": 45.36166666666666,
+      "mean_lignin": 2.8224423,
+      "mean_n": 2.0592642666666667
+    },
+    "1. Tillering": {
+      "mean_carb": 58.76,
+      "mean_cellulose": 39.26166666666666,
+      "mean_lignin": 1.97859135,
+      "mean_n": 2.2116160533333336
+    },
+    "Unknown growth stage": {
+      "mean_carb": 53.96847826086957,
+      "mean_cellulose": 42.75478260869565,
+      "mean_lignin": 3.2766911369565217,
+      "mean_n": 2.5747399474782604
+    }
+  },
+  "Crimson clover": {
+    "Unknown growth stage": {
+      "mean_carb": 63.278819444444444,
+      "mean_cellulose": 29.285555555555554,
+      "mean_lignin": 7.435591100569444,
+      "mean_n": 2.8831329208066667
+    },
+    "4. Heading/flowering": {
+      "mean_carb": 59.6855319148936,
+      "mean_cellulose": 32.32127659574468,
+      "mean_lignin": 7.992259973723405,
+      "mean_n": 2.722310662468085
+    }
+  },
+  "Winter pea": {
+    "Unknown growth stage": {
+      "mean_carb": 63.68062857142856,
+      "mean_cellulose": 30.412000000000003,
+      "mean_lignin": 5.9073714285714285,
+      "mean_n": 3.1212926781714287
+    }
+  }
+}

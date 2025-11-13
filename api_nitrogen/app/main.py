@@ -34,7 +34,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-with open('app/assets/plant_growth_lut.json') as fp:
+with open('app/assets/summarized_lookup_table.json') as fp:
     plant_growth_lut = json.loads(fp.read())
     
 species_lower = {}
@@ -67,7 +67,7 @@ def read_root():
 
 @app.get("/species")
 def read_species():
-    return species_lower
+    return sorted(list(plant_growth_lut.keys()))
 
 
 @app.get("/plantgroups")
@@ -77,7 +77,10 @@ def read_plantgroups():
 
 @app.get("/plantgrowthstages")
 def read_plantgrowthstages():
-    return plant_growth_stages
+    growth_stages = {}
+    for plant in plant_growth_lut.keys():
+        growth_stages[plant] = sorted(list(plant_growth_lut[plant].keys()))
+    return growth_stages
 
 
 @app.get("/allplantfactors")

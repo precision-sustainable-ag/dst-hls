@@ -81,6 +81,7 @@ async def generate_grid(payload: GenerateGridRequest):
         for point in points:
             row_index = int((point['lat'] - min_lat) / grid_size_lat)
             col_index = int((point['lon'] - min_lon) / grid_size_lon)
+            row_index = row_count - 1 - row_index
 
             added = False
             for species, biomass_value in point['species'].items():

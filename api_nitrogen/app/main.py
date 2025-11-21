@@ -127,6 +127,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
     species_biomass_average = biomass_payload.species_biomass_average
 
     biomass_geojson = create_biomass_geojson(data_array, bbox, mode, species_biomass_average)
+    average_weighted_n = 0
 
     if mode == 'satellite' or mode == 'sampled':
 
@@ -209,7 +210,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
                                 min_n = 0
 
                                 try:
-                                    min_n = entry["results"]["surface"][0]["MinNfromFOM"]
+                                    min_n = entry["results"]["surface"][0].get("MinNfromFOM", 0) or 0
                                 except (KeyError, IndexError, TypeError):
                                     print(f"Missing MinNfromFOM for feature {feature_index}")
                                 if i < len(biomass_geojson["features"]):
@@ -222,7 +223,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
 
                             try:
                                 if "surface" in data and data["surface"]:
-                                    min_n = data["surface"][0].get("MinNfromFOM", 0)
+                                    min_n = data["surface"][0].get("MinNfromFOM", 0) or 0
                             except (KeyError, IndexError, TypeError):
                                 print(f"Missing MinNfromFOM for feature {i}")
                             if i < len(biomass_geojson["features"]):
@@ -257,6 +258,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
                 species_lookup_values[s] = plant_growth_lut.get(s).get(growth_stage[index])
 
         lats, lons, biomasses = [], [], []
+        total_weighted_n, number_weighted_n = 0, 0
 
         for feature in biomass_geojson["features"]:
             lon, lat = get_center(feature)
@@ -281,6 +283,10 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
                     weighted_carb += weight * species_props.get("mean_carb", 0)
                     weighted_cell += weight * species_props.get("mean_cellulose", 0)
                     weighted_lign += weight * species_props.get("mean_lignin", 0)
+
+                if weighted_n > 0:
+                    total_weighted_n += weighted_n
+                    number_weighted_n += 1
             else:
                 weighted_n = 0
                 weighted_carb = 0
@@ -367,4 +373,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
                         feature["properties"]["ReqN"] = 0
                         break
 
-    return biomass_geojson
+        if number_weighted_n > 0:
+            average_weighted_n = total_weighted_n / number_weighted_n
+
+    return { "geojson_data" : biomass_geojson, "n": average_weighted_n }

@@ -38,8 +38,32 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-with open('app/assets/summarized_lookup_table.json') as fp:
-    plant_growth_lut = json.loads(fp.read())
+with open('app/assets/summarized_lookup_table_new.json') as fp:
+    group_lut = json.loads(fp.read())
+
+with open('app/assets/species_group_map.json') as fp:
+    species_group_map = json.load(fp)
+
+def build_species_lookup_table(group_lut, species_group_map):
+    species_lut = {}
+
+    for group, species_list in species_group_map.items():
+        group_stages = group_lut.get(group, {})
+
+        for species in species_list:
+            species_lut.setdefault(species, {})
+
+            for stage, values in group_stages.items():
+                species_lut[species][stage] = {
+                    "mean_carb": values.get("mean_carb", 0),
+                    "mean_holocellulose": values.get("mean_holocellulose", 0),
+                    "mean_lignin": values.get("mean_lignin", 0),
+                    "mean_n": values.get("mean_n", 0),
+                }
+
+    return species_lut
+
+plant_growth_lut = build_species_lookup_table(group_lut, species_group_map)
     
 species_lower = {}
 for key, val in species.items():
@@ -76,7 +100,7 @@ def read_species():
 
 @app.get("/plantgroups")
 def read_plantgroups():
-    return plant_groups
+    return sorted(list(species_group_map.keys()))
 
 
 @app.get("/plantgrowthstages")
@@ -160,7 +184,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
                     "end": end,
                     "n": species_lookup_values["mean_n"],
                     "carb": species_lookup_values["mean_carb"],
-                    "cell": species_lookup_values["mean_cellulose"],
+                    "cell": species_lookup_values["mean_holocellulose"],
                     "lign": species_lookup_values["mean_lignin"],
                     "summary": True,
                 }
@@ -281,7 +305,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
 
                     weighted_n += weight * species_props.get("mean_n", 0)
                     weighted_carb += weight * species_props.get("mean_carb", 0)
-                    weighted_cell += weight * species_props.get("mean_cellulose", 0)
+                    weighted_cell += weight * species_props.get("mean_holocellulose", 0)
                     weighted_lign += weight * species_props.get("mean_lignin", 0)
 
                 if weighted_n > 0:

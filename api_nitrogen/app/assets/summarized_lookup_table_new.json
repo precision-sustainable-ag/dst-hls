@@ -1,0 +1,154 @@
+{
+  "Winter cereals": {
+    "1. Tillering": {
+      "mean_carb": 56.54,
+      "n_carb": 14,
+      "mean_holocellulose": 39.849550157142865,
+      "n_holocellulose": 14,
+      "mean_lignin": 2.6654306285714284,
+      "n_lignin": 14,
+      "mean_n": 2.4611267211428576,
+      "n_n": 14
+    },
+    "2. Stem elongation": {
+      "mean_carb": 57.224899713467046,
+      "n_carb": 349,
+      "mean_holocellulose": 42.403277767959885,
+      "n_holocellulose": 349,
+      "mean_lignin": 3.3029546177134668,
+      "n_lignin": 349,
+      "mean_n": 2.5744529270830947,
+      "n_n": 349
+    },
+    "3. Booting": {
+      "mean_carb": 48.81857142857144,
+      "n_carb": 91,
+      "mean_holocellulose": 48.98006052351648,
+      "n_holocellulose": 91,
+      "mean_lignin": 4.176688327032967,
+      "n_lignin": 91,
+      "mean_n": 1.9636046595164836,
+      "n_n": 91
+    },
+    "4. Heading/flowering": {
+      "mean_carb": 34.903775,
+      "n_carb": 400,
+      "mean_holocellulose": 60.06279603567,
+      "n_holocellulose": 400,
+      "mean_lignin": 5.68407331183,
+      "n_lignin": 400,
+      "mean_n": 1.42417798272,
+      "n_n": 400
+    }
+  },
+  "Winter pea": {
+    "1. Vegetative": {
+      "mean_carb": 66.60416666666667,
+      "n_carb": 48,
+      "mean_holocellulose": 33.01812500375,
+      "n_holocellulose": 48,
+      "mean_lignin": 5.216458333333334,
+      "n_lignin": 48,
+      "mean_n": 3.624333330766667,
+      "n_n": 48
+    },
+    "2. Flowering": {
+      "mean_carb": 62.04029411764704,
+      "n_carb": 102,
+      "mean_holocellulose": 35.71774509666666,
+      "n_holocellulose": 102,
+      "mean_lignin": 6.139215686274509,
+      "n_lignin": 102,
+      "mean_n": 3.047984300392157,
+      "n_n": 102
+    }
+  },
+  "Hairy vetch": {
+    "1. Vegetative": {
+      "mean_carb": 67.60858974358973,
+      "n_carb": 156,
+      "mean_holocellulose": 28.97608695966892,
+      "n_holocellulose": 148,
+      "mean_lignin": 7.262598539352564,
+      "n_lignin": 156,
+      "mean_n": 3.7662026629189187,
+      "n_n": 148
+    },
+    "2. Flowering": {
+      "mean_carb": 69.15,
+      "n_carb": 2,
+      "mean_holocellulose": 28.4270535,
+      "n_holocellulose": 2,
+      "mean_lignin": 7.3393049999999995,
+      "n_lignin": 2,
+      "mean_n": 3.55216752,
+      "n_n": 2
+    }
+  },
+  "Crimson clover": {
+    "1. Vegetative": {
+      "mean_carb": 60.10360215053764,
+      "n_carb": 186,
+      "mean_holocellulose": 30.709587201118286,
+      "n_holocellulose": 186,
+      "mean_lignin": 7.5443285939892455,
+      "n_lignin": 186,
+      "mean_n": 2.8922147343879567,
+      "n_n": 186
+    },
+    "2. Flowering": {
+      "mean_carb": 59.6855319148936,
+      "n_carb": 47,
+      "mean_holocellulose": 34.95747185393618,
+      "n_holocellulose": 47,
+      "mean_lignin": 7.992259973723405,
+      "n_lignin": 47,
+      "mean_n": 2.722310662468085,
+      "n_n": 47
+    }
+  },
+  "Brassicas": {
+    "1. Vegetative": {
+      "mean_carb": 56.03424242424243,
+      "n_carb": 33,
+      "mean_holocellulose": 28.401123736363637,
+      "n_holocellulose": 33,
+      "mean_lignin": 5.989393939393938,
+      "n_lignin": 33,
+      "mean_n": 2.726053687272728,
+      "n_n": 33
+    },
+    "2. Flowering": {
+      "mean_carb": 56.03424242424243,
+      "n_carb": 33,
+      "mean_holocellulose": 28.401123736363637,
+      "n_holocellulose": 33,
+      "mean_lignin": 5.989393939393938,
+      "n_lignin": 33,
+      "mean_n": 2.726053687272728,
+      "n_n": 33
+    }
+  },
+  "Buckwheat": {
+    "1. Vegetative": {
+      "mean_carb": 45.61333333333334,
+      "n_carb": 3,
+      "mean_holocellulose": 41.945099400000004,
+      "n_holocellulose": 3,
+      "mean_lignin": 8.133333333333333,
+      "n_lignin": 3,
+      "mean_n": 2.6884103413333333,
+      "n_n": 3
+    },
+    "2. Flowering": {
+      "mean_carb": 45.61333333333334,
+      "n_carb": 3,
+      "mean_holocellulose": 41.945099400000004,
+      "n_holocellulose": 3,
+      "mean_lignin": 8.133333333333333,
+      "n_lignin": 3,
+      "mean_n": 2.6884103413333333,
+      "n_n": 3
+    }
+  }
+}

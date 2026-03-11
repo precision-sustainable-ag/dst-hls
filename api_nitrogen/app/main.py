@@ -863,3 +863,30 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
         )
 
     return {"message": "Prescription generated", "geojson_data": final_geojson, "field_summary": field_summary}
+
+@app.post("/export-shapefile")
+async def export_shapefile(payload: Dict[str, Any]):
+    geojson = payload.get("geojson")
+
+    gdf = gpd.GeoDataFrame.from_features(geojson["features"], crs="EPSG:4326")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmpdir_path = Path(tmpdir)
+        shapefile_name = "prescription"
+        shapefile_path = tmpdir_path / f"{shapefile_name}.shp"
+        gdf.to_file(shapefile_path, driver='ESRI Shapefile')
+
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for file in tmpdir_path.glob(f"{shapefile_name}.*"):
+                zipf.write(file, file.name)
+
+        zip_buffer.seek(0)
+        zip_bytes = zip_buffer.read()
+
+        # Return bytes directly
+        return Response(
+            content=zip_bytes,
+            media_type="application/zip",
+            headers={"Content-Disposition": f"attachment; filename={shapefile_name}.zip"}
+        )

@@ -65,9 +65,9 @@ def build_species_lookup_table(group_lut, species_group_map):
 
 plant_growth_lut = build_species_lookup_table(group_lut, species_group_map)
     
-species_lower = {}
-for key, val in species.items():
-    species_lower[key.lower()] = [v.lower() for v in val] 
+# species_lower = {}
+# for key, val in species.items():
+#     species_lower[key.lower()] = [v.lower() for v in val]
 
 
 class PlantFactors(BaseModel):
@@ -96,6 +96,10 @@ def read_root():
 @app.get("/species")
 def read_species():
     return sorted(list(plant_growth_lut.keys()))
+
+@app.get("/species/{group}")
+def read_species_group(group):
+    return sorted(list(species_group_map.get(group, [])))
 
 
 @app.get("/plantgroups")
@@ -170,15 +174,15 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
             lons.append(lon)
             biomasses.append(biomass)
 
-        batch_size = 30
+        batch_size = 10
         MAX_RETRIES = 3
         RETRY_DELAY = 2
 
         async with httpx.AsyncClient(timeout=30.0) as client:
             for i in range(0, len(lats), batch_size):
                 query_params = {
-                    "lat": lats[i:i+batch_size],
-                    "lon": lons[i:i+batch_size],
+                    "lat": [round(v, 5) for v in lats[i:i+batch_size]],
+                    "lon": [round(v, 5) for v in lons[i:i+batch_size]],
                     "biomass": biomasses[i:i+batch_size],
                     "start": start,
                     "end": end,
@@ -226,6 +230,7 @@ async def read_nitrogen(biomass_payload: BiomassPayload):
                                     feature_index = i + j
                                     if feature_index < len(biomass_geojson["features"]):
                                         biomass_geojson["features"][feature_index]["properties"]["MinNfromFOM"] = 0
+                                        biomass_geojson["features"][feature_index]["properties"]["ReqN"] = 0
                                 break
 
                         elif isinstance(data, list):

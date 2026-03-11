@@ -5,3 +5,7 @@ uvicorn
 requests==2.28.2
 httpx
 asyncio
+shapely
+pyproj
+geopandas
+fiona

@@ -1,6 +1,6 @@
 {
   "Winter cereals": {
-    "1. Tillering": {
+    "Not jointed": {
       "mean_carb": 56.54,
       "n_carb": 14,
       "mean_holocellulose": 39.849550157142865,
@@ -10,7 +10,7 @@
       "mean_n": 2.4611267211428576,
       "n_n": 14
     },
-    "2. Stem elongation": {
+    "Jointed": {
       "mean_carb": 57.224899713467046,
       "n_carb": 349,
       "mean_holocellulose": 42.403277767959885,
@@ -20,7 +20,7 @@
       "mean_n": 2.5744529270830947,
       "n_n": 349
     },
-    "3. Booting": {
+    "Booting": {
       "mean_carb": 48.81857142857144,
       "n_carb": 91,
       "mean_holocellulose": 48.98006052351648,
@@ -30,7 +30,7 @@
       "mean_n": 1.9636046595164836,
       "n_n": 91
     },
-    "4. Heading/flowering": {
+    "Heading": {
       "mean_carb": 34.903775,
       "n_carb": 400,
       "mean_holocellulose": 60.06279603567,
@@ -39,20 +39,30 @@
       "n_lignin": 400,
       "mean_n": 1.42417798272,
       "n_n": 400
+    },
+    "Unknown growth stage": {
+      "mean_carb": 46.1162760675273,
+      "n_carb": 1007,
+      "mean_holocellulose": 45.28955265032933,
+      "n_holocellulose": 999,
+      "mean_lignin": 4.079968665065541,
+      "n_lignin": 1007,
+      "mean_n": 2.103813069005005,
+      "n_n": 999
     }
   },
   "Winter pea": {
-    "1. Vegetative": {
-      "mean_carb": 66.60416666666667,
-      "n_carb": 48,
-      "mean_holocellulose": 33.01812500375,
-      "n_holocellulose": 48,
-      "mean_lignin": 5.216458333333334,
-      "n_lignin": 48,
-      "mean_n": 3.624333330766667,
-      "n_n": 48
+    "Vegetative": {
+      "mean_carb": 65.61554347826086,
+      "n_carb": 92,
+      "mean_holocellulose": 31.642998287608698,
+      "n_holocellulose": 92,
+      "mean_lignin": 5.775652173913042,
+      "n_lignin": 92,
+      "mean_n": 3.2074676091304344,
+      "n_n": 92
     },
-    "2. Flowering": {
+    "Flowering": {
       "mean_carb": 62.04029411764704,
       "n_carb": 102,
       "mean_holocellulose": 35.71774509666666,
@@ -64,51 +74,51 @@
     }
   },
   "Hairy vetch": {
-    "1. Vegetative": {
-      "mean_carb": 67.60858974358973,
-      "n_carb": 156,
-      "mean_holocellulose": 28.97608695966892,
-      "n_holocellulose": 148,
-      "mean_lignin": 7.262598539352564,
-      "n_lignin": 156,
-      "mean_n": 3.7662026629189187,
-      "n_n": 148
+    "Vegetative": {
+      "mean_carb": 68.34417475728156,
+      "n_carb": 103,
+      "mean_holocellulose": 27.217903739168424,
+      "n_holocellulose": 95,
+      "mean_lignin": 7.344615263485437,
+      "n_lignin": 103,
+      "mean_n": 3.6984378215747364,
+      "n_n": 95
     },
-    "2. Flowering": {
-      "mean_carb": 69.15,
-      "n_carb": 2,
-      "mean_holocellulose": 28.4270535,
-      "n_holocellulose": 2,
-      "mean_lignin": 7.3393049999999995,
-      "n_lignin": 2,
-      "mean_n": 3.55216752,
-      "n_n": 2
+    "Flowering": {
+      "mean_carb": 66.2870909090909,
+      "n_carb": 55,
+      "mean_holocellulose": 31.99298403290909,
+      "n_holocellulose": 55,
+      "mean_lignin": 7.1117929090909096,
+      "n_lignin": 55,
+      "mean_n": 3.8754679291345457,
+      "n_n": 55
     }
   },
   "Crimson clover": {
-    "1. Vegetative": {
-      "mean_carb": 60.10360215053764,
-      "n_carb": 186,
-      "mean_holocellulose": 30.709587201118286,
-      "n_holocellulose": 186,
-      "mean_lignin": 7.5443285939892455,
-      "n_lignin": 186,
-      "mean_n": 2.8922147343879567,
-      "n_n": 186
+    "Vegetative": {
+      "mean_carb": 59.84985294117647,
+      "n_carb": 136,
+      "mean_holocellulose": 29.318700156014707,
+      "n_holocellulose": 136,
+      "mean_lignin": 7.459302341779412,
+      "n_lignin": 136,
+      "mean_n": 3.056234865647059,
+      "n_n": 136
     },
-    "2. Flowering": {
-      "mean_carb": 59.6855319148936,
-      "n_carb": 47,
-      "mean_holocellulose": 34.95747185393618,
-      "n_holocellulose": 47,
-      "mean_lignin": 7.992259973723405,
-      "n_lignin": 47,
-      "mean_n": 2.722310662468085,
-      "n_n": 47
+    "Flowering": {
+      "mean_carb": 60.25680412371134,
+      "n_carb": 97,
+      "mean_holocellulose": 34.71795026108247,
+      "n_holocellulose": 97,
+      "mean_lignin": 7.880579574896908,
+      "n_lignin": 97,
+      "mean_n": 2.579923711383093,
+      "n_n": 97
     }
   },
   "Brassicas": {
-    "1. Vegetative": {
+    "Vegetative": {
       "mean_carb": 56.03424242424243,
       "n_carb": 33,
       "mean_holocellulose": 28.401123736363637,
@@ -118,7 +128,7 @@
       "mean_n": 2.726053687272728,
       "n_n": 33
     },
-    "2. Flowering": {
+    "Flowering": {
       "mean_carb": 56.03424242424243,
       "n_carb": 33,
       "mean_holocellulose": 28.401123736363637,
@@ -130,7 +140,7 @@
     }
   },
   "Buckwheat": {
-    "1. Vegetative": {
+    "Vegetative": {
       "mean_carb": 45.61333333333334,
       "n_carb": 3,
       "mean_holocellulose": 41.945099400000004,
@@ -140,7 +150,7 @@
       "mean_n": 2.6884103413333333,
       "n_n": 3
     },
-    "2. Flowering": {
+    "Flowering": {
       "mean_carb": 45.61333333333334,
       "n_carb": 3,
       "mean_holocellulose": 41.945099400000004,

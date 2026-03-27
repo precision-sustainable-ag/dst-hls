@@ -260,6 +260,7 @@ async def calculate_nitrogen_pm3d(biomass_geojson, species, growth_stage, start,
                     # feature["properties"]["ReqN"] = 0
                     break
 
+    average_weighted_n, average_n_credit = 0, 0
     if number_weighted_n > 0:
         average_weighted_n = total_weighted_n / number_weighted_n
 
@@ -832,6 +833,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
         elif category == 4: # cap
             req_n = target_n - min(n_credit, (25 * 1.12085))
 
+        feature["properties"]["ReqNWithoutTreatment"] = max(target_n - n_credit, 0) / multiplier
         feature["properties"]["ReqN"] = max(req_n, 0) / multiplier
         feature["properties"]["MinNfromFOM"] = n_credit * 0.8922 # convert kg/ha to lb/ac
         feature["properties"]["biomass_average"] *= 0.8922 # convert kg/ha to lb/ac

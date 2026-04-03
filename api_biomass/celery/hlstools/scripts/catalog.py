@@ -7,7 +7,7 @@ import numpy as np
 from functools import lru_cache
 from decouple import config
 from pystac_client import Client
-from shapely.geometry import Polygon
+from shapely.geometry import shape
 import pandas as pd
 from ..utilities.auth import authenticate
 from ..utilities.helpers import read_roi_from_file, url_to_s3, epsg_from_id
@@ -86,25 +86,29 @@ class Catalog:
         self.connect_to_provider()
         if not collections:
             collections = self.collections
+
+        roi_json = json.loads(roi) if isinstance(roi, str) else roi
+        roi_shape = shape(roi_json)
+        roi_bbox = list(roi_shape.bounds)
+
         results = self.connection.search(
             collections=collections,
-            max_items=None,
-            intersects=roi,
+            bbox=roi_bbox,
             datetime=date_range,
             limit=250,
         )
         all_items = results.get_all_items()
-        geom = json.loads(roi)
-        source = Polygon(geom["coordinates"][0])
         all_items_containing = []
         for item in all_items:
-            target = Polygon(item.geometry["coordinates"][0])
-            if source.within(target):
+            item_geom = shape(item.geometry)
+            if roi_shape.within(item_geom):
                 all_items_containing.append(item)
         self.all_items = tuple(all_items_containing)
         return self.all_items
 
     def to_pandas(self):
+        if not self.all_items:
+            return pd.DataFrame(columns=["id", "item", "cloud_cover", "datetime", "epsg", "url", "geometry"])
         d = []
         for col in self.all_items:
             cloud_cover = col.properties["eo:cloud_cover"]

@@ -28,6 +28,8 @@ class TaskResponseModel(BaseModel):
                                 bbox=(list[float], ...), 
                                 data_array=(list[list[list[int]]], ...),
                                 mask_array=(list[list[list[bool]]], ...),
+                                error=(bool, False),
+                                message=(str, None),
                               ) | None
     
 

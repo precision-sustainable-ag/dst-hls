@@ -45,6 +45,8 @@ class Interface:
             colls = self.cat.search_tiles(geometry, date_range=dates)
             colls_df = self.cat.to_pandas()
             df = pd.concat([df, colls_df])
+        if df.shape[0] < 1:
+            return 0, [], [], [], np.array([]), np.array([])
         df = df.loc[df['cloud_cover'] < max_cloud_cover]
         df = df.drop_duplicates(subset=['id'], keep='first')
         df['datetime'] = pd.to_datetime(df['datetime'])
@@ -56,8 +58,6 @@ class Interface:
         ## remove timestamps too close, in this case less than a week
         df = df.loc[~(df['timedelta']<7*24*60)]
         df.reset_index(drop=True, inplace=True)
-        if df.shape[0]<1:
-            return 0, [], [], [], np.array([]), np.array([])
         bands = ['re1', 'nir', 'cloud']
         fch = Fetch()
         print("IN INTERFACE ....")

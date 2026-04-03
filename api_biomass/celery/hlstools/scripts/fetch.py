@@ -48,31 +48,31 @@ class Fetch:
         ##### STATE UPDATE #####
         if update_func: update_func(state='PENDING', meta={'message': f'generate new token'})
         if os.path.exists(temp_aws_s3_token):
-            print(f"s3 token exists")
+            # print(f"s3 token exists")
             with open(temp_aws_s3_token) as f:
                 creds = json.load(f)
                 exp_dt = datetime.strptime(creds['expiration'], '%Y-%m-%d %H:%M:%S%z').replace(tzinfo=None)
                 dt = (exp_dt-datetime.utcnow()).total_seconds()/3600
-                print(f"current s3 creds: ", creds)
-                print(f"current s3 curr time: ", datetime.utcnow())
-                print(f"current s3 expire time: ", exp_dt)
-                print(f"current s3 expire delta: ", dt)
+                # print(f"current s3 creds: ", creds)
+                # print(f"current s3 curr time: ", datetime.utcnow())
+                # print(f"current s3 expire time: ", exp_dt)
+                # print(f"current s3 expire delta: ", dt)
                 if dt < 0.1:
-                    print("refreshing s3 token ...")
+                    # print("refreshing s3 token ...")
                     creds = requests.get(temp_creds_url).json()
-                    print('new creds: ', creds)
+                    # print('new creds: ', creds)
                     with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
-                        print("writing new s3 token file !")
+                        # print("writing new s3 token file !")
                         json.dump(creds, f, ensure_ascii=False, indent=4)
         else:
-            print("s3 token file not exist !")
+            # print("s3 token file not exist !")
             creds = requests.get(temp_creds_url).json()
-            print('creds', creds)
+            # print('creds', creds)
             with open(temp_aws_s3_token, 'w', encoding='utf-8') as f:
-                print("writing new s3 token file !")
+                # print("writing new s3 token file !")
                 json.dump(creds, f, ensure_ascii=False, indent=4)
             
-        print("creds: ", creds)
+        # print("creds: ", creds)
         ##### STATE UPDATE #####
         if update_func: update_func(state='PENDING', meta={'message': f'establishing connection with HLS server'})
         session = boto3.Session(

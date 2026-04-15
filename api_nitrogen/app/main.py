@@ -562,6 +562,7 @@ class GenerateGridRequest(BaseModel):
     multiplier: float = 1.0
     has_fixed_rate: bool = False
     target_n: float = 0.0
+    no_prescription: bool = False # Used for RCPP-Report-Only fields where we want nitrogen credit calculation but not prescription generation
 
 @app.post("/prescription")
 async def prescription(payload: GenerateGridRequest, format: str = Query("geojson", pattern="^(geojson|shapefile)$")):
@@ -576,6 +577,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     multiplier = payload.multiplier
     has_fixed_rate = payload.has_fixed_rate
     target_n = payload.target_n
+    no_prescription = payload.no_prescription
 
     combined_geom = shape(field_geometry)
     centroid = combined_geom.centroid
@@ -794,10 +796,12 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
                 "biomass_count": b["biomass_count"],
                 "biomass_average": b["biomass_average"],
                 "species_biomass_average": b["species_biomass_average"],
-                "category": category,
-                # "color": CATEGORY_COLORS[category],
-                "target_n_weighted_avg": b["target_n_weighted_avg"],
             }
+
+            # Only add "category" and "target_n_weighted_avg" if no_prescription is False
+            if not no_prescription:
+                properties["category"] = category
+                properties["target_n_weighted_avg"] = b["target_n_weighted_avg"]
 
             prescription_features.append({
                 "type": "Feature",
@@ -820,21 +824,24 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     final_geojson, _ , average_n_credit = await calculate_nitrogen_pm3d(geojson_data, species_list, growth_stage, start, end)
 
     for feature in final_geojson["features"]:
-        category = feature["properties"].get("category", 0)
-        target_n = feature["properties"].get("target_n_weighted_avg", 0) * multiplier
         n_credit = feature["properties"].get("MinNfromFOM", 0)
 
-        if category == 1: # control
-            req_n = target_n
-        elif category == 2: # full
-            req_n = target_n - n_credit
-        elif category == 3: # average
-            req_n = target_n - average_n_credit
-        elif category == 4: # cap
-            req_n = target_n - min(n_credit, (25 * 1.12085))
+        if not no_prescription:
+            category = feature["properties"].get("category", 0)
+            target_n = feature["properties"].get("target_n_weighted_avg", 0) * multiplier
 
-        feature["properties"]["ReqNWithoutTreatment"] = max(target_n - n_credit, 0) / multiplier
-        feature["properties"]["ReqN"] = max(req_n, 0) / multiplier
+            if category == 1: # control
+                req_n = target_n
+            elif category == 2: # full
+                req_n = target_n - n_credit
+            elif category == 3: # average
+                req_n = target_n - average_n_credit
+            elif category == 4: # cap
+                req_n = target_n - min(n_credit, (25 * 1.12085))
+
+            feature["properties"]["ReqNWithoutTreatment"] = max(target_n - n_credit, 0) / multiplier
+            feature["properties"]["ReqN"] = max(req_n, 0) / multiplier
+
         feature["properties"]["MinNfromFOM"] = n_credit * 0.8922 # convert kg/ha to lb/ac
         feature["properties"]["biomass_average"] *= 0.8922 # convert kg/ha to lb/ac
 

@@ -15,7 +15,7 @@ from .utilities.helpers import create_biomass_geojson, get_center
 import httpx
 import asyncio
 from shapely.geometry import shape, box, Point
-from shapely.ops import transform
+from shapely.ops import transform, unary_union
 from pyproj import Transformer
 import tempfile
 import zipfile
@@ -604,10 +604,23 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             geom_data = feature.geometry
             geom = shape(geom_data)
             geom_m = transform(to_projected.transform, geom)
+
+            # Only consider area that intersects with the field_geometry
+            clipped_geom_m = geom_m.intersection(combined_geom_m)
+            if clipped_geom_m.is_empty:
+                continue
+
             all_features_m.append({
-                'geometry': geom_m,
+                'geometry': clipped_geom_m,
                 'properties': feature.properties
             })
+
+        # Redefine field geomtery to union of clipped input features
+        # If input_features are a subset or field_geometry, combined_geom_m shrinks to their union;
+        # If input_features are a superset, it's already clipped to field boundary via all_features_m.
+        valid_input_area_m = unary_union([f['geometry'] for f in all_features_m]) if all_features_m else None
+        if valid_input_area_m is not None:
+            combined_geom_m = valid_input_area_m
 
     side = 63.615 # 63.615^2 m^2 = 1 acre
     minx, miny, maxx, maxy = combined_geom_m.bounds # min_lon, min_lat, max_lon, max_lat
@@ -839,7 +852,6 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             elif category == 4: # cap
                 req_n = target_n - min(n_credit, (25 * 1.12085))
 
-            feature["properties"]["ReqNWithoutTreatment"] = max(target_n - n_credit, 0) / multiplier
             feature["properties"]["ReqN"] = max(req_n, 0) / multiplier
 
         feature["properties"]["MinNfromFOM"] = n_credit * 0.8922 # convert kg/ha to lb/ac

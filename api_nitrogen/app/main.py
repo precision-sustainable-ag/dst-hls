@@ -545,6 +545,93 @@ def generate_random_points(payload: GeneratePointsPayload):
 
     return {"points": points}
 
+class GeneratePointsNewPayload(BaseModel):
+    boundary_id: str
+    model_name: str
+    model_version: str
+    geometry: GeoJSONGeometry
+    count: int = 100
+
+@app.post("/generate-points-new")
+def generate_random_points_new(payload: GeneratePointsNewPayload):
+    try:
+        geometry = payload.geometry.model_dump()
+        boundary_id = payload.boundary_id
+        model_name = payload.model_name
+        model_version = payload.model_version
+        count = payload.count
+
+        points = []
+        geom = shape(geometry)
+        minx, miny, maxx, maxy = geom.bounds
+
+        while len(points) < count:
+            random_pt = Point(random.uniform(minx, maxx), random.uniform(miny, maxy))
+
+            if geom.contains(random_pt):
+                index = len(points) + 1
+                img_name = f"IMG_{boundary_id[:5]}_{index:03d}_{uuid.uuid4().hex[:8]}.jpg"
+                points.append({
+                    "job_name": f"Simulated_{boundary_id}",
+                    "boundary_id": boundary_id,
+                    "model_name": model_name,
+                    "model_version": model_version,
+                    "camera": "Sony",
+                    "image_type": "RGB",
+                    "image_name": img_name,
+                    "inference_score": round(random.uniform(0.85, 0.99), 4),
+                    "gps_location": [random_pt.x, random_pt.y],
+                    "output": {
+                        "winter_cereals_biomass": round(random.uniform(100, 150), 6),
+                        "winter_pea_biomass": round(random.uniform(40, 60), 6),
+                    },
+                    "created_at": datetime.utcnow().isoformat()
+                })
+
+        return {"points": points}
+
+    except Exception as e:
+        print(f"Geometry processing error: {str(e)}")
+
+GROWTH_STAGE_ORDER = [
+    "Unknown growth stage",
+    "Not jointed",
+    "Jointed",
+    "Booting",
+    "Heading",
+    "Vegetative",
+    "Flowering"
+]
+
+def get_stage_priority(stage):
+    try:
+        return GROWTH_STAGE_ORDER.index(stage)
+    except ValueError:
+        return -1
+
+def resolve_group_growth_stages(species_list, growth_stage):
+    """
+    returns group_list mapped from species_list and their respective growth stages
+    if multiple species from one group exist, only one group is returned with the most advanced growth stage
+    """
+    group_to_best_stage = {}
+
+    for s, current_stage in zip(species_list, growth_stage, strict=True):
+        group_name = next((g for g, members in species_group_map.items() if s in members), s)
+        
+        if group_name not in group_to_best_stage:
+            group_to_best_stage[group_name] = current_stage
+        else:
+            # If multiple species from the same group, use the most advanced growth stage
+            existing_stage = group_to_best_stage[group_name]
+            if get_stage_priority(current_stage) > get_stage_priority(existing_stage):
+                group_to_best_stage[group_name] = current_stage
+
+    species_list_new = list(group_to_best_stage.keys())
+    growth_stage_list_new = list(group_to_best_stage.values())
+
+    return species_list_new, growth_stage_list_new
+
 class PointModel(BaseModel):
     lon: float
     lat: float

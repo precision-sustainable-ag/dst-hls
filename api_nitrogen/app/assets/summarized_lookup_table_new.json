@@ -1,5 +1,5 @@
 {
-  "Winter cereals": {
+  "winter_cereals": {
     "Not jointed": {
       "mean_carb": 56.54,
       "n_carb": 14,
@@ -51,7 +51,7 @@
       "n_n": 999
     }
   },
-  "Winter pea": {
+  "winter_pea": {
     "Vegetative": {
       "mean_carb": 65.61554347826086,
       "n_carb": 92,
@@ -73,7 +73,7 @@
       "n_n": 102
     }
   },
-  "Hairy vetch": {
+  "hairy_vetch": {
     "Vegetative": {
       "mean_carb": 68.34417475728156,
       "n_carb": 103,
@@ -95,7 +95,7 @@
       "n_n": 55
     }
   },
-  "Crimson clover": {
+  "crimson_clover": {
     "Vegetative": {
       "mean_carb": 59.84985294117647,
       "n_carb": 136,
@@ -117,7 +117,7 @@
       "n_n": 97
     }
   },
-  "Brassicas": {
+  "brassicas": {
     "Vegetative": {
       "mean_carb": 56.03424242424243,
       "n_carb": 33,
@@ -139,7 +139,7 @@
       "n_n": 33
     }
   },
-  "Buckwheat": {
+  "buckwheat": {
     "Vegetative": {
       "mean_carb": 45.61333333333334,
       "n_carb": 3,

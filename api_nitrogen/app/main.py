@@ -22,6 +22,8 @@ import zipfile
 from pathlib import Path
 import geopandas as gpd
 import io
+from datetime import datetime
+import uuid
 
 description = """
 Plants Factors API for Ncalc DST tool. 🌱 🌿 🍀
@@ -136,10 +138,10 @@ def read_plantfactors(factors: PlantFactors = Depends()):
 async def calculate_nitrogen_pm3d(biomass_geojson, species, growth_stage, start, end):
     species_lookup_values = {}
     for index, s in enumerate(species):
-        if not plant_growth_lut.get(s).get(growth_stage[index]):
-            species_lookup_values[s] = plant_growth_lut.get(s).get("Unknown growth stage")
+        if not group_lut.get(s).get(growth_stage[index]):
+            species_lookup_values[s] = group_lut.get(s).get("Unknown growth stage")
         else:
-            species_lookup_values[s] = plant_growth_lut.get(s).get(growth_stage[index])
+            species_lookup_values[s] = group_lut.get(s).get(growth_stage[index])
 
     total_weighted_n, number_weighted_n = 0, 0
     total_n_credit, number_n_credit = 0, 0
@@ -544,11 +546,9 @@ def generate_random_points(payload: GeneratePointsPayload):
     return {"points": points}
 
 class PointModel(BaseModel):
-    camera_id: int
     lon: float
     lat: float
     species: Dict[str, float]
-    biomass_percentile_per_species: Optional[Dict[str, float]]
 
 class GenerateGridRequest(BaseModel):
     points: List[PointModel]
@@ -578,6 +578,8 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     has_fixed_rate = payload.has_fixed_rate
     target_n = payload.target_n
     no_prescription = payload.no_prescription
+
+    species_list_new, growth_stage_list_new = resolve_group_growth_stages(species_list, growth_stage)
 
     combined_geom = shape(field_geometry)
     centroid = combined_geom.centroid
@@ -704,12 +706,12 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             field_species_weight = species_total_biomass / total_field_biomass
 
             try:
-                species_index = species_list.index(species)
-                current_growth_stage = growth_stage[species_index]
+                species_index = species_list_new.index(species)
+                current_growth_stage = growth_stage_list_new[species_index]
             except (ValueError, IndexError):
                 current_growth_stage = "Unknown growth stage"
 
-            s_props = plant_growth_lut.get(species, {}).get(current_growth_stage, {}) or plant_growth_lut.get(species, {}).get("Unknown growth stage", {})
+            s_props = group_lut.get(species, {}).get(current_growth_stage, {}) or group_lut.get(species, {}).get("Unknown growth stage", {})
 
             field_weighted_n += field_species_weight * s_props.get("mean_n", 0)
             field_weighted_carb += field_species_weight * s_props.get("mean_carb", 0)
@@ -834,7 +836,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
         "features": prescription_features
     }
 
-    final_geojson, _ , average_n_credit = await calculate_nitrogen_pm3d(geojson_data, species_list, growth_stage, start, end)
+    final_geojson, _ , average_n_credit = await calculate_nitrogen_pm3d(geojson_data, species_list_new, growth_stage_list_new, start, end)
 
     for feature in final_geojson["features"]:
         n_credit = feature["properties"].get("MinNfromFOM", 0)

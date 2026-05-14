@@ -1,8 +1,8 @@
 {
-  "Winter cereals": ["Barley", "Cereal rye", "Wheat", "Oats", "Triticale"],
-  "Winter pea": ["Winter pea"],
-  "Hairy vetch": ["Hairy vetch"],
-  "Crimson clover": ["Crimson clover"],
-  "Brassicas": ["Brassica", "Canola", "Radish"],
-  "Buckwheat": ["Buckwheat"]
+  "winter_cereals": ["Barley", "Cereal rye", "Wheat", "Oats", "Triticale"],
+  "winter_pea": ["Winter pea"],
+  "hairy_vetch": ["Hairy vetch"],
+  "crimson_clover": ["Crimson clover"],
+  "brassicas": ["Brassica", "Canola", "Radish"],
+  "buckwheat": ["Buckwheat"]
 }

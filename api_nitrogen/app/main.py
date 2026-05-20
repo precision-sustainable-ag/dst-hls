@@ -6,7 +6,7 @@ from typing import Union, List, Dict, Any
 from typing_extensions import Self
 from fastapi import FastAPI, Depends, Query
 from fastapi.exceptions import HTTPException
-from fastapi.responses import RedirectResponse, Response
+from fastapi.responses import RedirectResponse, Response, JSONResponse
 from pydantic import BaseModel, Field, validator, ValidationError, model_validator
 from typing import List, Optional, Literal
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,8 +14,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from .utilities.helpers import create_biomass_geojson, get_center
 import httpx
 import asyncio
+import shapely
 from shapely.geometry import shape, box, Point
 from shapely.ops import transform, unary_union
+from shapely.validation import make_valid
 from pyproj import Transformer
 import tempfile
 import zipfile
@@ -728,32 +730,42 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     species_all = set()
 
     # Calculate biomass sums and counts for each grid cell
-    for point in points:
-        pt = Point(point['lon'], point['lat'])
-        pt_m = transform(to_projected.transform, pt)
+    lons = np.array([p['lon'] for p in points])
+    lats = np.array([p['lat'] for p in points])
 
-        # Calculate the grid index
-        col_index = int((pt_m.x - minx) // side)
-        row_index = int((pt_m.y - miny) // side)
+    # Batch transform all coordinates
+    xs, ys = to_projected.transform(lons, lats)
 
-        if not combined_geom_m.buffer(0.01).intersects(pt_m):
-            # print(f"Skipping point {point}: outside grid area.")
+    # Vectorized grid index computation
+    col_indices = np.floor((xs - minx) / side).astype(int)
+    row_indices = np.floor((ys - miny) / side).astype(int)
+
+    # Handle edge cases where point falls exactly on the max boundary
+    col_indices = np.clip(col_indices, 0, col_count - 1)
+    row_indices = np.clip(row_indices, 0, row_count - 1)
+
+    # Check if the points fall within the boundary and create a boolean mask for it
+    prepared_geom = combined_geom_m.buffer(0.01)
+    inside_mask = shapely.contains(prepared_geom, shapely.points(xs, ys))
+
+    all_species = set(k for p in points for k in p['species'].keys())
+
+    # Initiliaze species-wise array
+    for species in all_species:
+        species_biomass_sum[species] = np.zeros((row_count, col_count))
+        species_biomass_count[species] = np.zeros((row_count, col_count), dtype=int)
+
+    # Calculate biomass sums and counts for each grid cell
+    for i, point in enumerate(points):
+
+        if not inside_mask[i]:
             continue
 
-        # Handle edge cases where point falls exactly on the max boundary
-        if col_index == col_count:
-            col_index -= 1
-        if row_index == row_count:
-            row_index -= 1
-
+        row_index, col_index = row_indices[i], col_indices[i]
         added = False
         for species, biomass_value in point['species'].items():
             if not np.isfinite(biomass_value) or biomass_value < 0:
                 continue
-
-            if species not in species_biomass_sum:
-                species_biomass_sum[species] = np.zeros((row_count, col_count))
-                species_biomass_count[species] = np.zeros((row_count, col_count), dtype=int)
 
             # conversion: g/m^2 (camera output) to kg/ha (/surface API input)
             biomass_value *= 10
@@ -776,7 +788,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     species_biomass_average = {}
     for species in species_all:
         with np.errstate(invalid='ignore', divide='ignore'):
-            avg = species_biomass_sum[species] / species_biomass_count[species]
+            avg = species_biomass_sum[species] / biomass_count
         avg[np.isnan(avg)] = 0
         species_biomass_average[species] = avg.tolist()
 
@@ -818,6 +830,9 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
 
     total_area_acres = combined_geom_m.area / 4046.86
     max_blocks = math.floor(total_area_acres * 0.10) # number of blocks covering 10% of total area for all categories except capped treatment
+
+    # Fix potential invalidity from reprojection or unary_union
+    combined_geom_m = make_valid(combined_geom_m)
 
     # Calculate weighted average target nitrogen for each grid cell
     for c_idx, x in enumerate(np.arange(minx, maxx, side)):
@@ -917,6 +932,12 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     build_geojson_features(cat4, 4)
 
     prescription_features.sort(key=lambda x: (x["properties"]["row"], x["properties"]["col"]))
+
+    if len(prescription_features) == 0:
+        return JSONResponse(
+        status_code=400,
+        content={"message": "No prescription features found."}
+    )
 
     geojson_data = {
         "type": "FeatureCollection",

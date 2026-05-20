@@ -962,10 +962,14 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             elif category == 4: # cap
                 req_n = target_n - min(n_credit, (25 * 1.12085))
 
-            feature["properties"]["ReqN"] = max(req_n, 0) / multiplier
+            feature["properties"]["ReqN"] = max(req_n, 0) * 0.8922 # convert kg/ha to lb/ac
 
         feature["properties"]["MinNfromFOM"] = n_credit * 0.8922 # convert kg/ha to lb/ac
         feature["properties"]["biomass_average"] *= 0.8922 # convert kg/ha to lb/ac
+        feature["properties"]["species_biomass_average"] = {
+            species: value * 0.8922 # convert kg/ha to lb/ac
+            for species, value in feature["properties"]["species_biomass_average"].items()
+        }
 
     if format == "shapefile":
         gdf = gpd.GeoDataFrame.from_features(final_geojson["features"], crs="EPSG:4326")

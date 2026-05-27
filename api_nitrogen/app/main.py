@@ -536,12 +536,12 @@ def generate_random_points(payload: GeneratePointsPayload):
                 "lon": random_pt.x,
                 "lat": random_pt.y,
                 "species": {
-                    "Oats": round(random.uniform(100, 150), 6),
-                    "Winter pea": round(random.uniform(40, 60), 6)
+                    "winter_cereals": round(random.uniform(100, 150), 6),
+                    "crimson_clover": round(random.uniform(40, 60), 6)
                 },
                 "biomass_percentile_per_species": {
-                    "Oats": round(random.random(), 4),
-                    "Winter pea": round(random.random(), 4)
+                    "winter_cereals": round(random.random(), 4),
+                    "crimson_clover": round(random.random(), 4)
                 }
             })
 

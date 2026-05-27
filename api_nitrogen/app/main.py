@@ -167,10 +167,10 @@ async def calculate_nitrogen_pm3d(biomass_geojson, species, growth_stage, start,
                 # print(species_name, weight)
                 species_props = species_lookup_values.get(species_name, {})
 
-                weighted_n += weight * species_props.get("mean_n", 0)
-                weighted_carb += weight * species_props.get("mean_carb", 0)
-                weighted_cell += weight * species_props.get("mean_holocellulose", 0)
-                weighted_lign += weight * species_props.get("mean_lignin", 0)
+                weighted_n += weight * species_props.get("mean_n", 2.726053687272728)
+                weighted_carb += weight * species_props.get("mean_carb", 56.03424242424243)
+                weighted_cell += weight * species_props.get("mean_holocellulose", 28.401123736363637)
+                weighted_lign += weight * species_props.get("mean_lignin", 5.989393939393938)
 
             if weighted_n > 0:
                 total_weighted_n += weighted_n
@@ -652,6 +652,7 @@ class GenerateGridRequest(BaseModel):
     has_fixed_rate: bool = False
     target_n: float = 0.0
     no_prescription: bool = False # Used for RCPP-Report-Only fields where we want nitrogen credit calculation but not prescription generation
+    input_mode: str = ""
 
 @app.post("/prescription")
 async def prescription(payload: GenerateGridRequest, format: str = Query("geojson", pattern="^(geojson|shapefile)$")):
@@ -667,6 +668,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
     has_fixed_rate = payload.has_fixed_rate
     target_n = payload.target_n
     no_prescription = payload.no_prescription
+    input_mode = payload.input_mode
 
     species_list_new, growth_stage_list_new = resolve_group_growth_stages(species_list, growth_stage)
 
@@ -767,8 +769,8 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             if not np.isfinite(biomass_value) or biomass_value < 0:
                 continue
 
-            # conversion: g/m^2 (camera output) to kg/ha (/surface API input)
-            biomass_value *= 10
+            # conversion: g/0.5m^2 (camera output) to kg/ha (/surface API input)
+            biomass_value *= 20
 
             biomass_sum[row_index, col_index] += biomass_value
             species_biomass_sum[species][row_index, col_index] += biomass_value
@@ -812,10 +814,10 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
 
             s_props = group_lut.get(species, {}).get(current_growth_stage, {}) or group_lut.get(species, {}).get("Unknown growth stage", {})
 
-            field_weighted_n += field_species_weight * s_props.get("mean_n", 0)
-            field_weighted_carb += field_species_weight * s_props.get("mean_carb", 0)
-            field_weighted_cell += field_species_weight * s_props.get("mean_holocellulose", 0)
-            field_weighted_lign += field_species_weight * s_props.get("mean_lignin", 0)
+            field_weighted_n += field_species_weight * s_props.get("mean_n",  2.726053687272728)
+            field_weighted_carb += field_species_weight * s_props.get("mean_carb", 45.61333333333334)
+            field_weighted_cell += field_species_weight * s_props.get("mean_holocellulose", 41.945099400000004)
+            field_weighted_lign += field_species_weight * s_props.get("mean_lignin", 5.989393939393938)
 
     field_summary = {
         "avg_biomass": avg_field_biomass,
@@ -951,7 +953,10 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
 
         if not no_prescription:
             category = feature["properties"].get("category", 0)
-            target_n = feature["properties"].get("target_n_weighted_avg", 0) * multiplier
+            if input_mode == 'nitrogen':
+                target_n = feature["properties"].get("target_n_weighted_avg", 0) * 1.12085 # convert lb/ac to kg/ha
+            else:
+                target_n = feature["properties"].get("target_n_weighted_avg", 0) * multiplier # conversion to kg/ha already included in multiplier
 
             if category == 1: # control
                 req_n = target_n
@@ -963,8 +968,9 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
                 req_n = target_n - min(n_credit, (25 * 1.12085))
 
             feature["properties"]["ReqN"] = max(req_n, 0) * 0.8922 # convert kg/ha to lb/ac
+            feature["properties"]["ReqN_product"] = max(req_n, 0) / multiplier
 
-        feature["properties"]["MinNfromFOM"] = n_credit * 0.8922 # convert kg/ha to lb/ac
+        feature["properties"]["MinNfromFOM"] = round(n_credit * 0.8922) # convert kg/ha to lb/ac
         feature["properties"]["biomass_average"] *= 0.8922 # convert kg/ha to lb/ac
         feature["properties"]["species_biomass_average"] = {
             species: value * 0.8922 # convert kg/ha to lb/ac

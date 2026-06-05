@@ -145,131 +145,110 @@ async def calculate_nitrogen_pm3d(biomass_geojson, species, growth_stage, start,
         else:
             species_lookup_values[s] = group_lut.get(s).get(growth_stage[index])
 
-    total_weighted_n, number_weighted_n = 0, 0
-    total_n_credit, number_n_credit = 0, 0
+    features = biomass_geojson["features"]
 
-    for feature in biomass_geojson["features"]:
+    # Pre-compute weighted properties for all features upfront
+    query_params_list = []
+    for feature in features:
         lon, lat = get_center(feature)
         biomass = float(feature["properties"]["biomass_average"])
-
         species_data = feature["properties"].get("species_biomass_average", {})
 
         if species_data and biomass > 0:
             total_biomass = sum(species_data.values())
-
-            weighted_n = 0
-            weighted_carb = 0
-            weighted_cell = 0
-            weighted_lign = 0
+            weighted_n, weighted_carb, weighted_cell, weighted_lign = 0, 0, 0, 0
 
             for species_name, species_biomass in species_data.items():
                 weight = species_biomass / total_biomass
-                # print(species_name, weight)
                 species_props = species_lookup_values.get(species_name, {})
-
                 weighted_n += weight * species_props.get("mean_n", 2.726053687272728)
                 weighted_carb += weight * species_props.get("mean_carb", 56.03424242424243)
                 weighted_cell += weight * species_props.get("mean_holocellulose", 28.401123736363637)
                 weighted_lign += weight * species_props.get("mean_lignin", 5.989393939393938)
-
-            if weighted_n > 0:
-                total_weighted_n += weighted_n
-                number_weighted_n += 1
         else:
-            weighted_n = 0
-            weighted_carb = 0
-            weighted_cell = 0
-            weighted_lign = 0
+            weighted_n = weighted_carb = weighted_cell = weighted_lign = 0
 
-        MAX_RETRIES = 3
-        RETRY_DELAY = 2
+        query_params_list.append({
+            "lat": lat,
+            "lon": lon,
+            "biomass": biomass,
+            "start": start,
+            "end": end,
+            "n": weighted_n,
+            "carb": weighted_carb,
+            "cell": weighted_cell,
+            "lign": weighted_lign,
+            "summary": True,
+        })
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            query_params = {
-                "lat": lat,
-                "lon": lon,
-                "biomass": biomass,
-                "start": start,
-                "end": end,
-                "n": weighted_n,
-                "carb": weighted_carb,
-                "cell": weighted_cell,
-                "lign": weighted_lign,
-                "summary": True,
-            }
-            # print(query_params)
-
+    # Fire all requests concurrently
+    MAX_RETRIES = 3
+    RETRY_DELAY = 2
+    semaphore = asyncio.Semaphore(15)
+    async def fetch_single(client, params):
+        print(params)
+        async with semaphore:
             for attempt in range(MAX_RETRIES):
                 try:
-                    response = await client.get("https://developapi.covercrop-ncalc.org/surface", params=query_params)
+                    response = await client.get("https://developapi.covercrop-ncalc.org/surface", params=params)
                 except httpx.RequestError as e:
                     print(f"Request error {type(e).__name__}: {repr(e)} (attempt {attempt + 1})")
                     if attempt < MAX_RETRIES - 1:
                         await asyncio.sleep(RETRY_DELAY)
                         continue
-                    else:
-                        # Set 0 for this feature
-                        feature["properties"]["properties"]["MinNfromFOM"] = 0
-                        # feature["properties"]["properties"]["ReqN"] = 0
-                        break
+                    return 0
 
                 if response.status_code == 200:
                     try:
                         data = response.json()
                     except Exception as e:
                         print(f"JSON decode error: {e}")
-                        data = {}
+                        return 0
 
                     if isinstance(data, dict) and "error" in data:
                         print(f"Error from API: {data['error']} (attempt {attempt + 1})")
                         if data['error'] == 'No SSURGO data found':
-                            attempt = MAX_RETRIES # No retries needed here
+                            return 0  # No retries needed here
                         if attempt < MAX_RETRIES - 1:
                             await asyncio.sleep(RETRY_DELAY)
                             continue
-                        else:
-                            feature["properties"]["MinNfromFOM"] = 0
-                            # feature["properties"]["ReqN"] = 0
-                            break
+                        return 0
 
                     elif isinstance(data, dict):
-                        min_n = 0
-
                         try:
                             if "surface" in data and data["surface"]:
-                                min_n = data["surface"][0].get("MinNfromFOM", 0) or 0
+                                return data["surface"][0].get("MinNfromFOM", 0) or 0
                         except (KeyError, IndexError, TypeError):
                             print("Missing MinNfromFOM for feature")
-                        feature["properties"]["MinNfromFOM"] = min_n
-                        # feature["properties"]["ReqN"] = target_n - min_n
-                        if min_n > 0:
-                            area = feature["properties"].get("area_acres", 0)
-                            total_n_credit += min_n * area
-                            number_n_credit += area
-                        break
-
-                    else:
-                        print(f"Unexpected response structure: {data}")
-                        if attempt < MAX_RETRIES - 1:
-                            await asyncio.sleep(RETRY_DELAY)
-                            continue
-                        else:
-                            feature["properties"]["MinNfromFOM"] = 0
-                            # feature["properties"]["ReqN"] = 0
-                            break
-
+                        return 0
                 else:
                     print(f"Error: {response.status_code}, {response.text}")
-                    feature["properties"]["MinNfromFOM"] = 0
-                    # feature["properties"]["ReqN"] = 0
-                    break
+                    return 0
+            return 0
 
-    average_weighted_n, average_n_credit = 0, 0
-    if number_weighted_n > 0:
-        average_weighted_n = total_weighted_n / number_weighted_n
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        results = await asyncio.gather(
+            *[fetch_single(client, params) for params in query_params_list]
+        )
 
-    if number_n_credit > 0:
-        average_n_credit = total_n_credit / number_n_credit
+    # Assign results back and compute averages
+    total_weighted_n, number_weighted_n = 0, 0
+    total_n_credit, number_n_credit = 0, 0
+
+    for feature, min_n, params in zip(features, results, query_params_list, strict=True):
+        feature["properties"]["MinNfromFOM"] = min_n
+
+        if min_n > 0:
+            area = feature["properties"].get("area_acres", 0)
+            total_n_credit += min_n * area
+            number_n_credit += area
+
+        if params["n"] > 0:
+            total_weighted_n += params["n"]
+            number_weighted_n += 1
+
+    average_weighted_n = total_weighted_n / number_weighted_n if number_weighted_n > 0 else 0
+    average_n_credit = total_n_credit / number_n_credit if number_n_credit > 0 else 0
 
     return biomass_geojson, average_weighted_n, average_n_credit
 

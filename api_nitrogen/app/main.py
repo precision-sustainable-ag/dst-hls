@@ -238,7 +238,7 @@ async def calculate_nitrogen_pm3d(biomass_geojson, species, growth_stage, start,
     for feature, min_n, params in zip(features, results, query_params_list, strict=True):
         feature["properties"]["MinNfromFOM"] = min_n
 
-        if min_n > 0:
+        if min_n >= 0:
             area = feature["properties"].get("area_acres", 0)
             total_n_credit += min_n * area
             number_n_credit += area
@@ -808,6 +808,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
 
     complete_blocks = []
     incomplete_blocks = []
+    zero_biomass_blocks = []
 
     total_area_acres = combined_geom_m.area / 4046.86
     max_blocks = math.floor(total_area_acres * 0.10) # number of blocks covering 10% of total area for all categories except capped treatment
@@ -821,7 +822,7 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             grid_cell = box(x, y, x + side, y + side)
             cell_intersection = grid_cell.intersection(combined_geom_m)
 
-            if cell_intersection.is_empty or biomass_average[r_idx, c_idx] == 0:
+            if cell_intersection.is_empty:
                 continue
 
             weighted_average = 0
@@ -869,16 +870,35 @@ async def prescription(payload: GenerateGridRequest, format: str = Query("geojso
             }
 
             if combined_geom_m.covers(grid_cell):
-                complete_blocks.append(block)
+                if biomass_average[r_idx, c_idx] == 0:
+                    zero_biomass_blocks.append(block)
+                else:
+                    complete_blocks.append(block)
             else:
                 incomplete_blocks.append(block)
 
     random.shuffle(complete_blocks)
 
-    cat1 = complete_blocks[:max_blocks] # control
-    cat2 = complete_blocks[max_blocks:2 * max_blocks] # full
-    cat3 = complete_blocks[2 * max_blocks:3 * max_blocks] # average
-    cat4 = complete_blocks[3 * max_blocks:] + incomplete_blocks # cap
+    zero_count = len(zero_biomass_blocks)
+
+    if zero_count <= max_blocks:
+        # control gets all zero biomass blocks + required complete blocks to reach 10%
+        needed = max_blocks - zero_count
+        cat1 = zero_biomass_blocks + complete_blocks[:needed]
+        remaining = complete_blocks[needed:]
+        
+        cat2 = remaining[:max_blocks] # full
+        cat3 = remaining[max_blocks:2 * max_blocks] # average
+        cat4 = remaining[2 * max_blocks:] + incomplete_blocks # cap
+
+    else:
+        # cat1 exceeds 10%, distribute remaining complete blocks in 1:1:7 ratio
+        cat1 = zero_biomass_blocks
+        n = len(complete_blocks)
+        split = math.ceil(n / 9)
+        cat2 = complete_blocks[:split] # full
+        cat3 = complete_blocks[split:2 * split] # average
+        cat4 = complete_blocks[2 * split:] + incomplete_blocks # cap
 
     prescription_features = []
 

@@ -36,8 +36,9 @@ class Interface:
         end_date = date_range.split('/')[1]
         print("start_date: ", start_date)
         print("end_date: ", end_date)
-        bins = list(pd.date_range(start=start_date, end=end_date, freq='6M').astype(str))
-        bins = bins + [end_date]
+        bins = list(pd.date_range(start=start_date, end=end_date, freq=pd.DateOffset(months=6)).astype(str))
+        if bins[-1] != end_date:
+            bins = bins + [end_date]
         res = ['/'.join(x) for x in zip(bins[: -1], bins[1: ])]
         print("res: ", res)
         df = pd.DataFrame()

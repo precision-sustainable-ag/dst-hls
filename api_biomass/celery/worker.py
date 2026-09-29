@@ -44,7 +44,13 @@ def create_task(self, payload):
         if nr_images == 0:
             return {
                 'error': True,
-                'message': 'No imagery found for the specified date range, location, or cloud cover threshold. Try expanding your date range or increasing the max cloud cover.'
+                'message': 'No imagery found for the specified date range, location, and cloud cover threshold. Try expanding your date range or increasing the max cloud cover.'
+            }
+
+        if nr_images < 2:
+            return {
+                'error': True,
+                'message': 'Insufficient imagery found for the specified date range, location, and cloud cover threshold. Try expanding your date range or choosing a different location.'
             }
 
         print('data shape::::', np.array(data).shape)
@@ -275,7 +281,7 @@ def create_biomass_geojson_projected(biomass_data, bbox, epsg_code=None):
     else:
         # fallback: operate in Web Mercator if no epsg provided
         web_mercator = Proj("EPSG:3857")
-        wgs84 = Proj("EPSG:4326")
+        # wgs84 = Proj("EPSG:4326")
 
         merc_x_min, merc_y_min = web_mercator(lon_min, lat_min)
         merc_x_max, merc_y_max = web_mercator(lon_max, lat_max)

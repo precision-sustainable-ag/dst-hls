@@ -11,6 +11,7 @@ from fastapi.responses import RedirectResponse, Response, JSONResponse
 from pydantic import BaseModel, Field, validator, ValidationError, model_validator
 from typing import List, Optional, Literal
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 # from .constants import species, plant_groups
 from .utilities.helpers import create_biomass_geojson, get_center
 import httpx
@@ -52,6 +53,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# Gzip responses for clients that send Accept-Encoding: gzip (browsers do automatically).
+# GeoJSON compresses ~10x; level 5 is much faster than the default 9 for nearly the same size.
+app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)
 
 with open('app/assets/summarized_lookup_table_new.json') as fp:
     group_lut = json.loads(fp.read())
@@ -1058,13 +1062,15 @@ def resolve_column(gdf, canonical: str):
                 best, best_len = col, len(n)
     return best
 
-@app.post("/points-to-polygon")
-async def points_to_polygon(payload: Dict[str, Any]):
-    geojson = payload.get("geojson")
+def build_swaths(geojson):
+    """
+    Turn as-applied points into swath rectangles.
+    Returns (swaths in a UTM CRS, None) on success or (None, JSONResponse) on bad input.
+    """
     FT = 0.3048
 
     if not geojson or not geojson.get("features"):
-        return JSONResponse(status_code=400, content={"message": "No features provided."})
+        return None, JSONResponse(status_code=400, content={"message": "No features provided."})
 
     gdf = gpd.GeoDataFrame.from_features(geojson["features"], crs="EPSG:4326")
 
@@ -1077,7 +1083,7 @@ async def points_to_polygon(payload: Dict[str, Any]):
 
     missing = [wanted[k] for k, v in resolved.items() if v is None]
     if missing:
-        return JSONResponse(
+        return None, JSONResponse(
             status_code=400,
             content={
                 "message": f"Missing required properties: {missing}",
@@ -1088,7 +1094,7 @@ async def points_to_polygon(payload: Dict[str, Any]):
     cols = list(resolved.values())
     gdf = gdf[gdf.geometry.geom_type == "Point"].dropna(subset=cols + ["geometry"])
     if gdf.empty:
-        return JSONResponse(status_code=400, content={"message": "No usable point records."})
+        return None, JSONResponse(status_code=400, content={"message": "No usable point records."})
 
     # Project to UTM so we can work in meters.
     c_lon = gdf.geometry.x.mean()
@@ -1124,32 +1130,51 @@ async def points_to_polygon(payload: Dict[str, Any]):
     # Records logged while stopped have no along-track extent.
     g = g[g["area_m2"] > 0]
     if g.empty:
-        return JSONResponse(status_code=400, content={"message": "All records were degenerate."})
+        return None, JSONResponse(status_code=400, content={"message": "All records were degenerate."})
 
-    out = json.loads(g.to_crs("EPSG:4326").to_json())
+    return g, None
+
+def swath_summary(g):
+    return {
+        "polygon_count": len(g),
+        "median_area_m2": float(g["area_m2"].median()),
+        "total_area_acres": float(g["area_m2"].sum() / 4046.8564224),
+    }
+
+@app.post("/points-to-polygon")
+async def points_to_polygon(payload: Dict[str, Any]):
+    g, err = build_swaths(payload.get("geojson"))
+    if err is not None:
+        return err
 
     return {
         "message": "Swath polygons generated",
-        "geojson_data": out,
-        "summary": {
-            "polygon_count": len(g),
-            "median_area_m2": float(g["area_m2"].median()),
-            "total_area_acres": float(g["area_m2"].sum() / 4046.8564224),
-        },
+        "geojson_data": json.loads(g.to_crs("EPSG:4326").to_json()),
+        "summary": swath_summary(g),
     }
 
 @app.post("/swaths-to-cells")
 async def swaths_to_cells(payload: Dict[str, Any]):
-    swaths_fc = payload.get("swaths")
+    """""
+    Builds the swaths from the as-applied points (same as /points-to-polygon) and
+    aggregates them into prescription cells in one call, so the swath GeoJSON never
+    has to be round-tripped through the client.
+    """""
     presc_fc = payload.get("prescription")
 
     centered_swaths_only = payload.get("centered_swaths_only", False)
     threshold = payload.get("threshold", 10)
     remove_intersection = payload.get("remove_intersection", True)
+    include_swaths = payload.get("include_swaths", False)
     TARGET_COL = payload.get("target_col", "ReqN_product")  # prescription column a swath's rate is compared against
-    print(remove_intersection)
 
-    g = gpd.GeoDataFrame.from_features(swaths_fc["features"], crs="EPSG:4326")
+    if not presc_fc or not presc_fc.get("features"):
+        return JSONResponse(status_code=400, content={"message": "No prescription provided."})
+
+    g, err = build_swaths(payload.get("geojson"))
+    if err is not None:
+        return err
+
     presc = gpd.GeoDataFrame.from_features(presc_fc["features"], crs="EPSG:4326")
 
     # Project both layers to the same UTM zone before any area maths.
@@ -1287,4 +1312,11 @@ async def swaths_to_cells(payload: Dict[str, Any]):
     print(f"{len(cell_summary)} cells summarised (centered_swaths_only={centered_swaths_only})")
 
     geojson_data = json.loads(cell_summary.to_crs("EPSG:4326").to_json())
-    return {"message": "Cell summary generated", "geojson_data": geojson_data}
+    response = {
+        "message": "Cell summary generated",
+        "geojson_data": geojson_data,
+        "swath_summary": swath_summary(g),
+    }
+    if include_swaths:
+        response["swaths_geojson"] = json.loads(g.to_crs("EPSG:4326").to_json())
+    return response

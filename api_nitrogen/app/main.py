@@ -2,6 +2,7 @@ import json
 import numpy as np
 import math
 import random
+import re
 from typing import Union, List, Dict, Any
 from typing_extensions import Self
 from fastapi import FastAPI, Depends, Query
@@ -26,6 +27,7 @@ import geopandas as gpd
 import io
 from datetime import datetime
 import uuid
+from collections import defaultdict
 
 description = """
 Plants Factors API for Ncalc DST tool. 🌱 🌿 🍀
@@ -1010,6 +1012,10 @@ async def export_shapefile(payload: Dict[str, Any]):
 
     gdf = gpd.GeoDataFrame.from_features(geojson["features"], crs="EPSG:4326")
 
+    gdf.geometry = gdf.geometry.make_valid()
+    gdf = gdf.explode(index_parts=False)
+    gdf = gdf[gdf.geometry.type == 'Polygon']
+
     with tempfile.TemporaryDirectory() as tmpdir:
         tmpdir_path = Path(tmpdir)
         shapefile_name = "prescription"
@@ -1030,3 +1036,255 @@ async def export_shapefile(payload: Dict[str, Any]):
             media_type="application/zip",
             headers={"Content-Disposition": f"attachment; filename={shapefile_name}.zip"}
         )
+
+def _norm(name: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", name.lower())
+
+def resolve_column(gdf, canonical: str):
+    """
+    Find the column matching a canonical Deere field name, tolerating the
+    DBF 10-char truncation applied when the export is a shapefile.
+    'Swth Wdth(ft)' -> 'Swth_Wdth_', 'Distance(ft)' -> 'Distance_f'.
+    """
+    target = _norm(canonical)
+    best, best_len = None, 0
+    for col in gdf.columns:
+        n = _norm(col)
+        if not n:
+            continue
+        # Either side may be the truncated one.
+        if target.startswith(n) or n.startswith(target):
+            if len(n) > best_len:
+                best, best_len = col, len(n)
+    return best
+
+@app.post("/points-to-polygon")
+async def points_to_polygon(payload: Dict[str, Any]):
+    geojson = payload.get("geojson")
+    FT = 0.3048
+
+    if not geojson or not geojson.get("features"):
+        return JSONResponse(status_code=400, content={"message": "No features provided."})
+
+    gdf = gpd.GeoDataFrame.from_features(geojson["features"], crs="EPSG:4326")
+
+    wanted = {
+        "track": "Track(deg)",
+        "distance": "Distance(ft)",
+        "swath": "Swth Wdth(ft)",
+    }
+    resolved = {k: resolve_column(gdf, v) for k, v in wanted.items()}
+
+    missing = [wanted[k] for k, v in resolved.items() if v is None]
+    if missing:
+        return JSONResponse(
+            status_code=400,
+            content={
+                "message": f"Missing required properties: {missing}",
+                "available": list(gdf.columns),
+            },
+        )
+
+    cols = list(resolved.values())
+    gdf = gdf[gdf.geometry.geom_type == "Point"].dropna(subset=cols + ["geometry"])
+    if gdf.empty:
+        return JSONResponse(status_code=400, content={"message": "No usable point records."})
+
+    # Project to UTM so we can work in meters.
+    c_lon = gdf.geometry.x.mean()
+    c_lat = gdf.geometry.y.mean()
+    zone = int((c_lon + 180) / 6) + 1
+    utm = f"+proj=utm +zone={zone} +{'north' if c_lat >= 0 else 'south'} +datum=WGS84 +units=m"
+    g = gdf.to_crs(utm).reset_index(drop=True)
+
+    theta = np.radians(g[resolved["track"]].to_numpy(float))
+    half_l = g[resolved["distance"]].to_numpy(float) * FT / 2
+    half_w = g[resolved["swath"]].to_numpy(float) * FT / 2
+
+    ax, ay = np.sin(theta) * half_l, np.cos(theta) * half_l   # along track
+    px, py = np.cos(theta) * half_w, -np.sin(theta) * half_w  # across track
+
+    x, y = g.geometry.x.to_numpy(), g.geometry.y.to_numpy()
+
+    # Add original point and id as properties to the swath polygon
+    reprojected_g = g.to_crs("EPSG:4326").geometry
+    g["center_lon"], g["center_lat"] = reprojected_g.x.to_numpy(), reprojected_g.y.to_numpy()
+    g["swath_id"] = np.arange(len(g))
+
+    corners = np.stack([
+        np.column_stack([x - ax - px, y - ay - py]),
+        np.column_stack([x + ax - px, y + ay - py]),
+        np.column_stack([x + ax + px, y + ay + py]),
+        np.column_stack([x - ax + px, y - ay + py]),
+    ], axis=1)
+
+    g["geometry"] = shapely.polygons(shapely.linearrings(corners))
+    g["area_m2"] = g.geometry.area
+
+    # Records logged while stopped have no along-track extent.
+    g = g[g["area_m2"] > 0]
+    if g.empty:
+        return JSONResponse(status_code=400, content={"message": "All records were degenerate."})
+
+    out = json.loads(g.to_crs("EPSG:4326").to_json())
+
+    return {
+        "message": "Swath polygons generated",
+        "geojson_data": out,
+        "summary": {
+            "polygon_count": len(g),
+            "median_area_m2": float(g["area_m2"].median()),
+            "total_area_acres": float(g["area_m2"].sum() / 4046.8564224),
+        },
+    }
+
+@app.post("/swaths-to-cells")
+async def swaths_to_cells(payload: Dict[str, Any]):
+    swaths_fc = payload.get("swaths")
+    presc_fc = payload.get("prescription")
+
+    centered_swaths_only = payload.get("centered_swaths_only", False)
+    threshold = payload.get("threshold", 10)
+    remove_intersection = payload.get("remove_intersection", True)
+    TARGET_COL = payload.get("target_col", "ReqN_product")  # prescription column a swath's rate is compared against
+    print(remove_intersection)
+
+    g = gpd.GeoDataFrame.from_features(swaths_fc["features"], crs="EPSG:4326")
+    presc = gpd.GeoDataFrame.from_features(presc_fc["features"], crs="EPSG:4326")
+
+    # Project both layers to the same UTM zone before any area maths.
+    c = presc.geometry.representative_point()
+    zone = int((float(c.x.mean()) + 180) / 6) + 1
+    hemi = "north" if float(c.y.mean()) >= 0 else "south"
+    utm = f"+proj=utm +zone={zone} +{hemi} +datum=WGS84 +units=m"
+
+    g = g.to_crs(utm)
+    presc = presc.to_crs(utm)
+    presc_cells = presc[["row", "col", "geometry"]].copy()
+
+    
+    '''
+    Build two structures: swaths_per_cell and centers_per_cell
+
+    swaths_per_cell - a swath intersects with which prescription cell(s)
+    centers_per_cell - the center of a swath lies in which prescription cell
+
+    Both the structures will be of the following format:
+    { prescription_cell_id: [swath_1, swath_2, ... , swath_n] }
+    where   prescription_cell_id = (row, col) of the prescription cell
+            swath_n = {"swath_id": sid, "area_m2": <area of intersection of the swath with the cell>, "geom": <geometry of the intersection>}
+
+    swaths_per_cell will have every (swath, cell) fragment it intersects with.
+    centers_per_cell will only the fragment in the cell the swath's centre falls in, so each swath contributes to exactly one cell.
+    '''
+
+    # Rebuild the centre points from the stored lon/lat.
+    centers = gpd.GeoDataFrame(
+        {"swath_id": g["swath_id"].to_numpy()},
+        geometry=gpd.points_from_xy(g["center_lon"], g["center_lat"], crs="EPSG:4326"),
+    ).to_crs(g.crs)
+
+    # Find the cell each swath's centre lands in (one swath -> one cell).
+    centers_in_cells = gpd.sjoin(centers, presc_cells, predicate="within", how="inner")
+    center_cell = {
+        int(t.swath_id): (int(t.row), int(t.col))
+        for t in centers_in_cells.itertuples(index=False)
+    }
+
+    # overlay splits every swath at cell boundaries -> one row per (swath, cell) pair;
+    # keep_geom_type drops any line/point slivers.
+    fragments = gpd.overlay(
+        g[["swath_id", "geometry"]], presc_cells, how="intersection", keep_geom_type=True
+    )
+    fragments["frag_area_m2"] = fragments.geometry.area
+
+    swaths_per_cell = defaultdict(list)
+    centers_per_cell = defaultdict(list)
+    for t in fragments.itertuples(index=False):
+        sid = int(t.swath_id)
+        key = (int(t.row), int(t.col))
+        member = {"swath_id": sid, "area_m2": float(t.frag_area_m2), "geom": t.geometry}
+        swaths_per_cell[key].append(member)
+        if center_cell.get(sid) == key:
+            centers_per_cell[key].append(member)
+
+    print(f"{len(centers_in_cells)}/{len(centers)} centres inside a cell, {len(centers_per_cell)} cells populated")
+    print(f"{len(fragments)} (swath, cell) fragments across {len(swaths_per_cell)} cells")
+
+    RATE_COL = resolve_column(g, "Rt Apd Liq")
+    if RATE_COL is None:
+        return JSONResponse(
+            status_code=400,
+            content={"message": "No applied-rate column found.", "available": list(g.columns)},
+        )
+
+    '''
+    # Per-cell aggregation: for every prescription cell, take the swaths that
+    # belong to it, area-weight their applied rate, and combine their geometry.
+    '''
+
+    # Per-swath / per-cell lookups.
+    presc_cell_geom = dict(zip(zip(presc_cells["row"], presc_cells["col"], strict=True), presc_cells.geometry, strict=True))
+    presc_cell_target = dict(zip(zip(presc["row"], presc["col"], strict=True), presc[TARGET_COL].astype(float), strict=True))
+    swath_rate = dict(zip(g["swath_id"], g[RATE_COL].astype(float), strict=True))
+
+    # Iterate the structure chosen by the flag: centres or intersections.
+    structure = centers_per_cell if centered_swaths_only else swaths_per_cell
+
+    rows = []
+    for key, members in structure.items():
+        if key not in presc_cell_geom:
+            continue
+
+        ids = [m["swath_id"] for m in members]
+        weights = np.array([m["area_m2"] for m in members], float)
+        geoms = [m["geom"] for m in members]
+
+        rates = np.array([swath_rate[i] for i in ids], float)
+
+        # Remove overlapped area - update geometry and re-weight the weights
+        if remove_intersection and len(geoms) > 1:
+            # The region covered by >=2 swaths equals the union of the pairwise swath intersections.
+            # Find the overlapping pairs with a spatial index, union those areas, then subtract from every swath.
+            tree = shapely.STRtree(geoms)
+            ia, ib = tree.query(geoms, predicate="intersects")
+            overlap_parts = [geoms[a].intersection(geoms[b]) for a, b in zip(ia, ib, strict=True) if a < b]
+            if overlap_parts:
+                overlap = shapely.union_all(overlap_parts)
+                geoms = [gm.difference(overlap) for gm in geoms]
+            # Reweight by each swath's singly-covered area.
+            weights = np.array([gm.area for gm in geoms], float)
+
+        # Drop outlier swaths: rate more than `threshold` above or below the cell's prescription target.
+        target = presc_cell_target.get(key)
+        if target is not None and threshold is not None:
+            keep = np.abs(rates - target) <= threshold
+            if not keep.any():
+                continue    # every swath was an outlier -> no cell
+            ids = [i for i, k in zip(ids, keep, strict=True) if k]
+            geoms = [gm for gm, k in zip(geoms, keep, strict=True) if k]
+            weights = weights[keep]
+            rates = rates[keep]
+
+        # Combine the surviving fragments (clipped to the cell).
+        clipped = shapely.union_all(geoms)
+
+        wavg = np.average(rates, weights=weights) if weights.sum() > 0 else np.nan
+
+        rows.append({
+            "row": key[0],
+            "col": key[1],
+            "n_swaths": len(ids),
+            "weighted_rate": wavg,
+            "combined_area_m2": clipped.area,
+            "geometry": clipped,
+        })
+
+    if not rows:
+        return JSONResponse(status_code=400, content={"message": "No cells summarised."})
+
+    cell_summary = gpd.GeoDataFrame(rows, geometry="geometry", crs=g.crs)
+    print(f"{len(cell_summary)} cells summarised (centered_swaths_only={centered_swaths_only})")
+
+    geojson_data = json.loads(cell_summary.to_crs("EPSG:4326").to_json())
+    return {"message": "Cell summary generated", "geojson_data": geojson_data}
